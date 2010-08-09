@@ -1,0 +1,8 @@
+agw
+build
+changelog.txt
+dist
+include
+iniparse
+*.log
+*.pyc
