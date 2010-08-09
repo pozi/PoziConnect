@@ -4,7 +4,12 @@ import os
 import sys
 
 
-fileName = 'output/PlaceLab.log'
+LOG_DIR = 'output'  # get from ini file?
+if not os.path.exists(LOG_DIR):
+    os.mkdir(LOG_DIR)
+  
+
+fileName = os.path.join(LOG_DIR, 'PlaceLab.log')
 
 formatters = {}
 formatters['console'] = '%(name)-15s: %(levelname)-8s %(message)s'
@@ -16,6 +21,7 @@ isExe = hasattr(sys, "frozen")
 logLevel = logging.INFO
 if isExe:
     logLevel = logging.INFO
+
 
 # set up logging to file - see previous section for more details
 logging.basicConfig(level=logLevel,
