@@ -63,7 +63,7 @@ else:
     appDir = scriptDir 
     rootDir = os.path.realpath(scriptDir + os.path.sep + '..')
 
-configDir = rootDir + os.path.sep + 'config'
+tasksDir = rootDir + os.path.sep + 'tasks'
 logDir = rootDir + os.path.sep + 'output'
 
 appConfigFile = rootDir + os.path.sep + scriptBaseName + '.ini'
@@ -206,7 +206,7 @@ def findIniFiles():
             #fileList.append(os.path.join(rootdir,file))
 
     # Recurse through config directory to find INI files
-    for root, subFolders, files in sorted(os.walk(configDir)):
+    for root, subFolders, files in sorted(os.walk(tasksDir)):
         for file in files:
             if file.lower().endswith(ext):
                 fileList.append(os.path.join(root,file))
