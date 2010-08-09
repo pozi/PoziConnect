@@ -1,7 +1,7 @@
-agw
 build
 changelog.txt
 dist
 include
 *.log
 *.pyc
+.svn
