@@ -127,7 +127,7 @@ class GUI(wx.App):
 
         self.MainLoop()
 
-#
+# GUI
 
 #####################################################
 # Class GUI Main     
@@ -146,8 +146,11 @@ class GUI_Main(Main ):
             self.logger = Logger(loggerName)
 
         # Storage for miscellaneous widgets & buttons (not the OK or Cancel ones)
-        self.widgets = []
         self.buttons = []
+        self.widgets = []   # some widgets get hidden (and some widgets contain text_fields)
+
+        # Storage for the actual items
+        self.text_fields = {}     # each key maps to a text_field widget with a GetValue() method.
 
         #####################################################
         # Clean up template 
@@ -181,102 +184,80 @@ class GUI_Main(Main ):
     # __init__()
 
         
-    def contains_password(self, itemKey):
+    def _is_a_password(self, itemKey):
         """
         Fancy function to find out if any of the password strings are 
         in the itemKey name. If so, this will return true.
         """
         return any( [ x in itemKey.lower() for x in self.options.get('PasswordStrings')])
-    # contains_password()
+    # _is_a_password()
 
 
-    def contains_suffix(self, itemKey, suffixes):
+    def _contains_suffix(self, itemKey, suffixes):
         """
         Check the suffix of the field
         """
         return any( [ itemKey.lower().endswith(x) for x in suffixes])
-    # contains_suffix()
+    # _contains_suffix()
 
 
-    def contains_folder(self, itemKey):
+    def _is_a_folder(self, itemKey):
         """
         Check if the entry field is a folder field
         If so, we open a directory selection dialog upon clicking
         in the field
         """
-        return self.contains_suffix(itemKey, FOLDER_SUFFIXES)
-    # contains_folder()
+        return self._contains_suffix(itemKey, FOLDER_SUFFIXES)
+    # _is_a_folder()
 
 
-    def contains_file(self, itemKey):
+    def _is_a_file(self, itemKey):
         """
         Check if the entry field is a file field
         If so, we open a file selection dialog upon clicking
         in the field
         """
-        return self.contains_suffix(itemKey, FILE_SUFFIXES)
-    # contains_file()
+        return self._contains_suffix(itemKey, FILE_SUFFIXES)
+    # _is_a_file()
 
 
     # Handlers for Main events.
     def OnTaskSelect( self, event = None ):
-
         # Enable Start button
         self.buttonStart.Enable()
 
         selection = self.taskSelect.GetSelection()
         self.LoadTask(selection)
-        pass
+    # OnTaskSelect()
+
+
+    def _show_dialog(self, evt, dialog_cb, title):
     
-
-    def DirectoryDialog(self, evt):
-
         self.buttonStart.Enable()
 
         # Get widget from event
         widget = evt.GetEventObject()
-        widget = widget.text_ctrl     # get the text input field
+        widget = widget.text_field     # get the text input field
 
-        # Prevent other dialogs while we're busy 
-        widget.Disable() 
+        # the dialog is modal - shouldn't need to do this - yertto
+        ## Prevent other dialogs while we're busy 
+        #widget.Disable() 
+        # the dialog is modal - shouldn't need to do this - yertto
 
         # Get folder path from widget and turn
         # it into an absolute path
         path = widget.GetValue()
         abspath = os.path.abspath(path)
 
-        #print path
-        #print abspath
-
-        dirDialog = wx.DirDialog(self, "Choose a directory:", abspath, style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
-
-        # Show dialog and set the new path as a value of the widget
-        if dirDialog.ShowModal() == wx.ID_OK:
-            newpath = dirDialog.GetPath()
-            widget.SetValue(newpath)
-
-        widget.Enable()
-        
-
-    def FileDialog(self, evt):
-
-        self.buttonStart.Enable()
-
-        # Get widget from event
-        widget = evt.GetEventObject()
-
-        # Prevent other dialogs while we're busy 
-        widget.Disable() 
-
-        # Get folder path from widget and turn
-        # it into an absolute path
-        path = widget.GetValue()
-        abspath = os.path.abspath(path)
-
-        defaultDir = os.path.dirname(abspath)
-        defaultFile = os.path.basename(abspath)
-
-        dialog = wx.FileDialog(self, "Choose a file:", defaultDir, defaultFile)
+        dialog = None
+        if   dialog_cb == wx.FileDialog:
+            defaultDir = os.path.dirname(abspath)
+            defaultFile = os.path.basename(abspath)
+            dialog = dialog_cb(self, title, defaultDir, defaultFile)
+        elif dialog_cb == wx.DirDialog:
+            dialog = dialog_cb(self, title, abspath, style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+        else:
+            raise "Shouldn't get here"
 
         # Show dialog and set the new path as a value of the widget
         if dialog.ShowModal() == wx.ID_OK:
@@ -284,7 +265,81 @@ class GUI_Main(Main ):
             widget.SetValue(newpath)
 
         widget.Enable()
+    # _show_dialog()
         
+
+    def _show_directory_dialog(self, evt):
+        self._show_dialog(evt, wx.DirDialog, "Choose a directory:")
+    # _show_directory_dialog()
+
+
+    def _show_file_dialog(self, evt):
+        self._show_dialog(evt, wx.FileDialog, "Choose a file:")
+    # _show_directory_dialog()
+
+
+    def _new_text_field(self, defaultValue, style = 0):
+        text_field = wx.TextCtrl( self.scrolledWindow, wx.ID_ANY, defaultValue , wx.DefaultPosition, wx.DefaultSize, style)
+        text_field.Bind( wx.EVT_TEXT, self.OnEnableButtonStart)   ### - do we need this for *every* text_field?
+        return text_field
+    # _new_text_field()
+
+
+    def _new_password_widget(self, defaultValue):
+        entryWidgetStyle = wx.TE_PASSWORD
+        defaultValue = Crypt().Decrypt(defaultValue)
+        return self._new_text_field(defaultValue, entryWidgetStyle)
+    # _new_password_widget()
+
+
+    def _new_buttoned_widget(self, itemKey, defaultValue, buttonCallback):
+        # Buttoned widget is a grid (BoxSizer) containing a text_field (TextCtrl) & a button (Button)
+        text_field = self._new_text_field(defaultValue)
+        button = wx.Button(self.scrolledWindow, wx.ID_ANY, '...')
+        button.text_field = text_field   # create a link to the text_ctrl widget for the dialog to use
+        button.Bind( wx.EVT_BUTTON, buttonCallback)
+        grid = wx.BoxSizer()
+        grid.Add(text_field, 1)
+        grid.Add(button    , 0)
+
+        # Change value to a file path value
+        absolutePath = os.path.abspath(defaultValue)
+        text_field.SetValue(absolutePath)
+        self.text_fields[itemKey] = text_field
+
+        return grid
+    # _new_buttoned_widget()()
+
+
+    def _add_item(self, itemKey, defaultValue):
+        print 'xxx', itemKey, defaultValue, 'yyy'
+
+        # Replace all underscores with spaces
+        labelText = itemKey.replace('_',' ') 
+
+        labelWidget = wx.StaticText( self.scrolledWindow, wx.ID_ANY, labelText, wx.DefaultPosition, wx.DefaultSize, 0 )
+        proportion, border = 0, 5
+        self.flexGridSizer.Add( labelWidget, proportion, wx.ALIGN_CENTER_VERTICAL|wx.ALL, border )
+        
+        entryWidget = None
+        if   self._is_a_password(itemKey):
+            entryWidget = self._new_password_widget(defaultValue)
+            self.text_fields[itemKey] = entryWidget
+        elif self._is_a_folder(  itemKey):
+            entryWidget = self._new_buttoned_widget(itemKey, defaultValue, self._show_directory_dialog)
+        elif self._is_a_file(    itemKey):
+            entryWidget = self._new_buttoned_widget(itemKey, defaultValue, self._show_file_dialog)
+        else:
+            entryWidget = self._new_text_field(defaultValue)
+            self.text_fields[itemKey] = entryWidget
+
+        self.flexGridSizer.Add( entryWidget , proportion, wx.ALL|wx.EXPAND, border )
+
+        # Keep track of widgets. We need to remove them when another task gets selected
+        # We store them in a list
+        self.widgets += [labelWidget, entryWidget]
+    # _add_item()
+
 
     def LoadTask(self, id):
         self.logger.debug( "Load task:", id)
@@ -321,96 +376,22 @@ class GUI_Main(Main ):
 
         items = self.task.GetSectionItems('User Settings')
         #print "ITEMS", type(items), items
-
         #print "EXAMPLE", self.exampleLabel, dir(self.exampleLabel)
 
         self.fieldsSizer = self.exampleLabel.GetParent()
         self.flexGridSizer = self.fieldsSizer.GetSizer()
-
         #print "FIELD", self.fieldsSizer
         #print "SIZER", self.flexGridSizer
 
         for itemKey, defaultValue in items:
-            print 'xxx', itemKey, defaultValue, 'yyy'
-
-            # Replace all underscores with spaces
-            labelText = itemKey.replace('_',' ') 
-
-            labelWidget = wx.StaticText( self.scrolledWindow, wx.ID_ANY, labelText, wx.DefaultPosition, wx.DefaultSize, 0 )
-            self.flexGridSizer.Add( labelWidget, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
-            
-            entryWidget = None
-
-            entryWidgetStyle = 0
-            if self.contains_password(itemKey):
-                entryWidgetStyle = wx.TE_PASSWORD
-                defaultValue = Crypt().Decrypt(defaultValue)
-
-            # entryWidgetStyle =  wx.TE_PASSWORD if contains_password else 0  # XXX - redundant? - yertto
-
-            entryWidget = wx.TextCtrl( self.scrolledWindow, wx.ID_ANY, defaultValue , wx.DefaultPosition, wx.DefaultSize, entryWidgetStyle)
-                
-            #entryWidget.SetMinSize( self.entryWidgetSize )
-
-            entryWidget.Bind( wx.EVT_SET_FOCUS, self.OnEnableButtonStart)
-
-            if self.contains_folder(itemKey):
-                # Change the entryWidget into a ?grid? containing a TextCtrl & Button
-                text_ctrl1 = entryWidget
-                text_ctrl1.SetEditable(True)
-                button1 = wx.Button(self.scrolledWindow, wx.ID_ANY, '...')
-                button1.text_ctrl = text_ctrl1   # create a link to the text_ctrl widget for the dialog to use
-                button1.Bind( wx.EVT_BUTTON, self.DirectoryDialog)
-                grid = wx.BoxSizer()
-                grid.Add(text_ctrl1, 1)
-                grid.Add(button1   , 0)
-                self.flexGridSizer.Add( grid , 0, wx.ALL|wx.EXPAND, 5 )
-
-                # Change value to a file path value
-                absolutePath = os.path.abspath(defaultValue)
-                entryWidget.SetValue(absolutePath)
-            else:
-              self.flexGridSizer.Add( entryWidget , 0, wx.ALL|wx.EXPAND, 5 )
-
-            if self.contains_file(itemKey):
-                entryWidget.Bind( wx.EVT_SET_FOCUS, self.FileDialog)
-                entryWidget.SetEditable(False)
-
-                # Change value to a file path value
-                absolutePath = os.path.abspath(defaultValue)
-                entryWidget.SetValue(absolutePath)
-
-            # Keep track of widgets. We need to remove them
-            # when another task gets selected
-            # We store them as tuples in a list
-            self.widgets.append((labelWidget, entryWidget, itemKey, defaultValue))
+            self._add_item(itemKey, defaultValue) 
 
         #######
         # Refresh of window (needed)
         self.flexGridSizer.Layout()
         self.Layout()
+    # LoadTask()
             
-
-    def ClearGuiItems(self):
-        if hasattr(self, "widgets"):
-            for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
-                # Hide both the labelWidget and the entryWidget
-                # in one go
-                map(self.flexGridSizer.Hide, (labelWidget, entryWidget))
-
-            self.widgets = []
-
-        if hasattr(self, "buttons"):
-            for button in self.buttons:
-                button.Hide()
-            self.buttons = []
-
-        self.SetStatus()
-        self.gauge.SetValue(0)
-
-        # Repaint the window
-        self.flexGridSizer.Layout()
-
 
     def SetStatus(self, text = ''):
         self.statusText.SetLabel(text)
@@ -420,10 +401,12 @@ class GUI_Main(Main ):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROWWAIT))
         self.taskLabel.Disable()
         self.taskSelect.Disable()
-        if hasattr(self, "widgets"):
-            for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
-                labelWidget.Disable()
-                entryWidget.Disable()
+        #if hasattr(self, "fields"):
+        #    for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
+        #        labelWidget.Disable()
+        #        entryWidget.Disable()
+        for field in self.text_fields.values(): field.Disable() 
+
         self.buttonStart.Disable()
 
 
@@ -431,21 +414,22 @@ class GUI_Main(Main ):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
         self.taskLabel.Enable()
         self.taskSelect.Enable()
-        if hasattr(self, "widgets"):
-            for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
-                labelWidget.Enable()
-                entryWidget.Enable()
+        #if hasattr(self, "fields"):
+        ###   for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
+        ###        labelWidget.Enable()
+        ###        entryWidget.Enable()
+        for field in self.text_fields.values(): field.Enable() 
 
 
-    def GetItems(self):
-        items = {}
-        if hasattr(self, "widgets"):
-            # Take the itemKey as the key and not the label of the labelWidget
-            # Since the label could have had nice string formatting options
-            for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
-                value = entryWidget.GetValue()
-                items[itemKey] = value
-        return items
+#    def GetItems(self):
+#        items = {}
+#        if hasattr(self, "widgets"):
+#            # Take the itemKey as the key and not the label of the labelWidget
+#            # Since the label could have had nice string formatting options
+#            for entryWidget, itemKey in self.widgets:
+#                value = entryWidget.GetValue()
+#                items[itemKey] = value
+#        return items
 
 
     def OnTaskError(self, e):
@@ -481,11 +465,12 @@ class GUI_Main(Main ):
 
     def ClearGuiItems(self):
         if hasattr(self, "widgets"):
-            for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
-                # Hide both the labelWidget and the entryWidget
-                # in one go
-                map(self.flexGridSizer.Hide, (labelWidget, entryWidget))
-
+            ###for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
+            ###    # Hide both the labelWidget and the entryWidget
+            ###    # in one go
+            ###    map(self.flexGridSizer.Hide, (labelWidget, entryWidget))
+            #[self.flexGridSizer.Hide(widget) for widget in self.widgets]  # memory leak?
+            for widget in self.widgets: self.flexGridSizer.Hide(widget)
             self.widgets = []
 
         if hasattr(self, "buttons"):
@@ -498,6 +483,7 @@ class GUI_Main(Main ):
 
         # Repaint the window
         #self.flexGridSizer.Layout()
+    # ClearGuiItems()
 
 
     def OnEnableButtonStart(self, evt = None):
@@ -517,16 +503,14 @@ class GUI_Main(Main ):
         # TODO: find a better way to do this.
         self.task = TaskManager(self.task.options)
 
-        items = self.GetItems()
-
         self.section = 'User Settings'
 
-        for key in items.keys():
+        for key in self.text_fields.keys():
 
-            value = items.get(key)
+            value = self.text_fields[key].GetValue()
             
             # Encrypt password
-            if self.contains_password(key):
+            if self._is_a_password(key):
                 value = Crypt().Encrypt(value)
 
             self.task.config.set(self.section,key, value)
