@@ -19,6 +19,10 @@ from multiprocessing import Process
 
 from GUI_Template import *
 
+
+FILE_SUFFIXES = ['file'] # + ['filmename']
+FOLDER_SUFFIXES = ['dir', 'directory', 'folder', 'fldr']
+
 class GUI(wx.App):
     def __init__(self, options = {}):
         console = options.get('console', 0)
@@ -105,16 +109,15 @@ class GUI(wx.App):
 
 
     def AddTasks(self, taskList):
-        for taskName, taskFile in taskList:
-            self.frame.taskSelect.Append( taskName )
+        if taskList:
+            for taskName, taskFile in taskList:
+                self.frame.taskSelect.Append( taskName )
        
-        if len(taskList) == 1:
-            self.frame.taskSelect.SetSelection(0)
-            self.frame.OnTaskSelect()
-
-        if not taskList:
-            dial = wx.MessageDialog(None, 'Could not find any task!', 'Error',
-                wx.OK | wx.ICON_ERROR)
+            if len(taskList) == 1:
+                self.frame.taskSelect.SetSelection(0)
+                self.frame.OnTaskSelect()
+        else:
+            dial = wx.MessageDialog(None, 'Could not find any task!', 'Error', wx.OK | wx.ICON_ERROR)
             dial.ShowModal()
 
     def Show(self):
@@ -123,6 +126,8 @@ class GUI(wx.App):
         self.frame.Show()
 
         self.MainLoop()
+
+#
 
 #####################################################
 # Class GUI Main     
@@ -173,8 +178,46 @@ class GUI_Main(Main ):
         fontsize = int(self.options['FontSize'])
         font = wx.Font(fontsize, wx.NORMAL, wx.NORMAL, wx.NORMAL, False, fontface)
         self.SetFont(font)
+    # __init__()
 
         
+    def contains_password(self, itemKey):
+        """
+        Fancy function to find out if any of the password strings are 
+        in the itemKey name. If so, this will return true.
+        """
+        return any( [ x in itemKey.lower() for x in self.options.get('PasswordStrings')])
+    # contains_password()
+
+
+    def contains_suffix(self, itemKey, suffixes):
+        """
+        Check the suffix of the field
+        """
+        return any( [ itemKey.lower().endswith(x) for x in suffixes])
+    # contains_suffix()
+
+
+    def contains_folder(self, itemKey):
+        """
+        Check if the entry field is a folder field
+        If so, we open a directory selection dialog upon clicking
+        in the field
+        """
+        return self.contains_suffix(itemKey, FOLDER_SUFFIXES)
+    # contains_folder()
+
+
+    def contains_file(self, itemKey):
+        """
+        Check if the entry field is a file field
+        If so, we open a file selection dialog upon clicking
+        in the field
+        """
+        return self.contains_suffix(itemKey, FILE_SUFFIXES)
+    # contains_file()
+
+
     # Handlers for Main events.
     def OnTaskSelect( self, event = None ):
 
@@ -185,6 +228,7 @@ class GUI_Main(Main ):
         self.LoadTask(selection)
         pass
     
+
     def DirectoryDialog(self, evt):
 
         self.buttonStart.Enable()
@@ -212,6 +256,7 @@ class GUI_Main(Main ):
 
         widget.Enable()
         
+
     def FileDialog(self, evt):
 
         self.buttonStart.Enable()
@@ -239,6 +284,7 @@ class GUI_Main(Main ):
 
         widget.Enable()
         
+
     def LoadTask(self, id):
         self.logger.debug( "Load task:", id)
 
@@ -284,6 +330,7 @@ class GUI_Main(Main ):
         #print "SIZER", self.flexGridSizer
 
         for itemKey, defaultValue in items:
+            print 'xxx', itemKey, defaultValue, 'yyy'
 
             # Replace all underscores with spaces
             labelText = itemKey.replace('_',' ') 
@@ -291,19 +338,15 @@ class GUI_Main(Main ):
             labelWidget = wx.StaticText( self.scrolledWindow, wx.ID_ANY, labelText, wx.DefaultPosition, wx.DefaultSize, 0 )
             self.flexGridSizer.Add( labelWidget, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
             
-
             entryWidget = None
 
-            # Fancy function to find out if any of the password strings are 
-            # in the itemKey name. If so, this will return true.
-            containsPassword = any( [ x in itemKey.lower() for x in self.options.get('PasswordStrings')])
-
             entryWidgetStyle = 0
-            if containsPassword:
+            if self.contains_password(itemKey):
                 entryWidgetStyle = wx.TE_PASSWORD
                 defaultValue = Crypt().Decrypt(defaultValue)
 
-            entryWidgetStyle =  wx.TE_PASSWORD if containsPassword else 0
+            # entryWidgetStyle =  wx.TE_PASSWORD if contains_password else 0  # XXX - redundant? - yertto
+
             entryWidget = wx.TextCtrl( self.scrolledWindow, wx.ID_ANY, defaultValue , wx.DefaultPosition, wx.DefaultSize, entryWidgetStyle)
                 
             #entryWidget.SetMinSize( self.entryWidgetSize )
@@ -311,25 +354,16 @@ class GUI_Main(Main ):
 
             entryWidget.Bind( wx.EVT_SET_FOCUS, self.OnEnableButtonStart)
 
-            # Check if the entry field is a folder field
-            # If so, we open a directory selection dialog upon clicking
-            # in the field
-            folderStrings = ['dir', 'directory', 'folder', 'fldr']
-            containsFolder = any( [ itemKey.lower().endswith(x) for x in folderStrings])
-            if containsFolder:
+            if self.contains_folder(itemKey):
                 entryWidget.Bind( wx.EVT_SET_FOCUS, self.DirectoryDialog)
-                entryWidget.SetEditable(False)
+                ##entryWidget.SetEditable(False)
+                entryWidget.SetEditable(True)
 
                 # Change value to a file path value
                 absolutePath = os.path.abspath(defaultValue)
                 entryWidget.SetValue(absolutePath)
 
-            # Check if the entry field is a file field
-            # If so, we open a file selection dialog upon clicking
-            # in the field
-            fileStrings = ['file']
-            containsFile = any( [ itemKey.lower().endswith(x) for x in fileStrings])
-            if containsFile:
+            if self.contains_file(itemKey):
                 entryWidget.Bind( wx.EVT_SET_FOCUS, self.FileDialog)
                 entryWidget.SetEditable(False)
 
@@ -368,8 +402,10 @@ class GUI_Main(Main ):
         # Repaint the window
         self.flexGridSizer.Layout()
 
+
     def SetStatus(self, text = ''):
         self.statusText.SetLabel(text)
+
 
     def DisableAllFields(self):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROWWAIT))
@@ -381,6 +417,7 @@ class GUI_Main(Main ):
                 entryWidget.Disable()
         self.buttonStart.Disable()
 
+
     def EnableAllFields(self):
         self.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
         self.taskLabel.Enable()
@@ -389,6 +426,7 @@ class GUI_Main(Main ):
             for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
                 labelWidget.Enable()
                 entryWidget.Enable()
+
 
     def GetItems(self):
         items = {}
@@ -400,15 +438,18 @@ class GUI_Main(Main ):
                 items[itemKey] = value
         return items
 
+
     def OnTaskError(self, e):
         message = "ERROR: The task failed with the following message:\n\n" + str(e)
         title = "Task Failed"
         wx.CallAfter(self.OnError, message, title)
 
+
     def onUpdateProgress(self, percentage, status = ''):
         wx.CallAfter(self.gauge.SetValue, int(percentage))
         self.SetStatus(status)
         #self.gauge.SetValue(percentage)
+
 
     def onLongRunDone(self, status = ''):
         wx.CallAfter(self.gauge.SetValue, 100)
@@ -428,6 +469,7 @@ class GUI_Main(Main ):
         #wx.CallAfter(dlg.ShowModal)
         #dlg.Destroy()
  
+
     def ClearGuiItems(self):
         if hasattr(self, "widgets"):
             for labelWidget, entryWidget, itemKey, defaultValue in self.widgets:
@@ -448,9 +490,11 @@ class GUI_Main(Main ):
         # Repaint the window
         #self.flexGridSizer.Layout()
 
+
     def OnEnableButtonStart(self, evt = None):
         # Get widget from event
         self.buttonStart.Enable()
+
 
     def OnStart( self, event ):
 
@@ -472,12 +516,8 @@ class GUI_Main(Main ):
 
             value = items.get(key)
             
-            # Fancy function to find out if any of the password strings are 
-            # in the itemKey name. If so, this will return true.
-            containsPassword = any( [ x in key.lower() for x in self.options.get('PasswordStrings')])
-
             # Encrypt password
-            if containsPassword:
+            if self.contains_password(key):
                 value = Crypt().Encrypt(value)
 
             self.task.config.set(self.section,key, value)
@@ -502,6 +542,7 @@ class GUI_Main(Main ):
                 self.OnError(errorString, 'Task failed')
                 raise
 
+
     def OnError(self, message, title):
         print "on error"
         dlg = wx.MessageDialog(self, 
@@ -513,6 +554,7 @@ class GUI_Main(Main ):
             wx.CallAfter(self.gauge.SetValue, 0)
             wx.CallAfter(self.EnableAllFields)
     
+
     def OnClose(self, event):
         # If the app is busy, the action is a 'Cancel' action:
         # we will stop the task, but not close the app.
@@ -531,7 +573,11 @@ class GUI_Main(Main ):
                 self.task.stop()
         else:
             self.Destroy()
+
+
+# GUI_Main
     
+
 if __name__ == "__main__":
     #print "PIQA GUI: this can only be run as an import"
 
