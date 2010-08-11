@@ -235,6 +235,7 @@ class GUI_Main(Main ):
 
         # Get widget from event
         widget = evt.GetEventObject()
+        widget = widget.text_ctrl     # get the text input field
 
         # Prevent other dialogs while we're busy 
         widget.Disable() 
@@ -350,18 +351,26 @@ class GUI_Main(Main ):
             entryWidget = wx.TextCtrl( self.scrolledWindow, wx.ID_ANY, defaultValue , wx.DefaultPosition, wx.DefaultSize, entryWidgetStyle)
                 
             #entryWidget.SetMinSize( self.entryWidgetSize )
-            self.flexGridSizer.Add( entryWidget , 0, wx.ALL|wx.EXPAND, 5 )
 
             entryWidget.Bind( wx.EVT_SET_FOCUS, self.OnEnableButtonStart)
 
             if self.contains_folder(itemKey):
-                entryWidget.Bind( wx.EVT_SET_FOCUS, self.DirectoryDialog)
-                ##entryWidget.SetEditable(False)
-                entryWidget.SetEditable(True)
+                # Change the entryWidget into a ?grid? containing a TextCtrl & Button
+                text_ctrl1 = entryWidget
+                text_ctrl1.SetEditable(True)
+                button1 = wx.Button(self.scrolledWindow, wx.ID_ANY, '...')
+                button1.text_ctrl = text_ctrl1   # create a link to the text_ctrl widget for the dialog to use
+                button1.Bind( wx.EVT_BUTTON, self.DirectoryDialog)
+                grid = wx.BoxSizer()
+                grid.Add(text_ctrl1, 1)
+                grid.Add(button1   , 0)
+                self.flexGridSizer.Add( grid , 0, wx.ALL|wx.EXPAND, 5 )
 
                 # Change value to a file path value
                 absolutePath = os.path.abspath(defaultValue)
                 entryWidget.SetValue(absolutePath)
+            else:
+              self.flexGridSizer.Add( entryWidget , 0, wx.ALL|wx.EXPAND, 5 )
 
             if self.contains_file(itemKey):
                 entryWidget.Bind( wx.EVT_SET_FOCUS, self.FileDialog)
