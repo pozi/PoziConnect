@@ -287,7 +287,6 @@ def init():
 
 if __name__ == "__main__":
     options, appConfig, taskList = init()
-    print taskList
     if options.useGui:
         options = dict(appConfig.items('GUI')) if appConfig.has_section('GUI') else {}
         showGUI(taskList, options)
