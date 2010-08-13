@@ -22,6 +22,8 @@ from GUI_Template import *
 
 FILE_SUFFIXES = ['file'] # + ['filmename']
 FOLDER_SUFFIXES = ['dir', 'directory', 'folder', 'fldr']
+WIDGET_BORDER = 5
+
 
 class GUI(wx.App):
     def __init__(self, options = {}):
@@ -239,11 +241,6 @@ class GUI_Main(Main ):
         widget = evt.GetEventObject()
         widget = widget.text_field     # get the text input field
 
-        # the dialog is modal - shouldn't need to do this - yertto
-        ## Prevent other dialogs while we're busy 
-        #widget.Disable() 
-        # the dialog is modal - shouldn't need to do this - yertto
-
         # Get folder path from widget and turn
         # it into an absolute path
         path = widget.GetValue()
@@ -257,7 +254,7 @@ class GUI_Main(Main ):
         elif dialog_cb == wx.DirDialog:
             dialog = dialog_cb(self, title, abspath, style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         else:
-            raise "Shouldn't get here"
+            raise Exception("Unknown dialog callback:", dialog_cb)
 
         # Show dialog and set the new path as a value of the widget
         if dialog.ShowModal() == wx.ID_OK:
@@ -312,14 +309,11 @@ class GUI_Main(Main ):
 
 
     def _add_item(self, itemKey, defaultValue):
-        print 'xxx', itemKey, defaultValue, 'yyy'
-
         # Replace all underscores with spaces
         labelText = itemKey.replace('_',' ') 
 
         labelWidget = wx.StaticText( self.scrolledWindow, wx.ID_ANY, labelText, wx.DefaultPosition, wx.DefaultSize, 0 )
-        proportion, border = 0, 5
-        self.flexGridSizer.Add( labelWidget, proportion, wx.ALIGN_CENTER_VERTICAL|wx.ALL, border )
+        self.flexGridSizer.Add( labelWidget, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, WIDGET_BORDER )
         
         entryWidget = None
         if   self._is_a_password(itemKey):
@@ -333,7 +327,7 @@ class GUI_Main(Main ):
             entryWidget = self._new_text_field(defaultValue)
             self.text_fields[itemKey] = entryWidget
 
-        self.flexGridSizer.Add( entryWidget , proportion, wx.ALL|wx.EXPAND, border )
+        self.flexGridSizer.Add( entryWidget , 0, wx.ALL|wx.EXPAND, WIDGET_BORDER )
 
         # Keep track of widgets. We need to remove them when another task gets selected
         # We store them in a list
@@ -374,16 +368,10 @@ class GUI_Main(Main ):
             self.descriptionText.SetLabel(taskDescription)
             self.descriptionText.Show()
 
-        items = self.task.GetSectionItems('User Settings')
-        #print "ITEMS", type(items), items
-        #print "EXAMPLE", self.exampleLabel, dir(self.exampleLabel)
-
         self.fieldsSizer = self.exampleLabel.GetParent()
         self.flexGridSizer = self.fieldsSizer.GetSizer()
-        #print "FIELD", self.fieldsSizer
-        #print "SIZER", self.flexGridSizer
 
-        for itemKey, defaultValue in items:
+        for itemKey, defaultValue in self.task.GetSectionItems('User Settings'):
             self._add_item(itemKey, defaultValue) 
 
         #######
