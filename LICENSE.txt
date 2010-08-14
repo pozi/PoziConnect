@@ -1,0 +1,167 @@
+PlaceLab uses the following software libraries:
+
+ * agw
+ * wxPython
+ * iniparse
+ * wxFormBuilder
+ * RealPyOdbc 
+
+********************************************************************************
+** agw (Latest Revision: 30 Nov 2009, 16.00 GMT)                              **
+********************************************************************************
+http://xoomer.virgilio.it/infinity77/AGW_Docs/index.html
+
+The page http://www.wxpython.org/docs/api/wx.lib.agw-module.html states:
+
+    Copyright: Andrea Gavana License: Same as the version of wxPython 
+    you are using it with.
+
+********************************************************************************
+** wxPython (2.8)                                                             **
+********************************************************************************
+http://en.wikipedia.org/wiki/WxPython#License:
+
+    Being a wrapper, wxPython uses the same free software licence used by 
+    wxWidgets (wxWindows License)—which is approved by Free Software 
+    Foundation and Open Source Initiative.
+
+********************************************************************************
+** wxWidgets (2.8)                                                            **
+********************************************************************************
+http://en.wikipedia.org/wiki/WxWidgets#License:
+
+    wxWidgets is distributed under a custom made licence, similar to the GNU 
+    Lesser General Public License, with an exception stating that derived works
+    in binary form may be distributed on the user's own terms. This licence is 
+    a free software licence, making wxWidgets free software.
+
+or, as stated here http://www.wxwidgets.org/about/newlicen.htm:
+
+    The wxWindows Licence is essentially the L-GPL (Library General Public 
+    Licence), with an exception stating that derived works in binary form may 
+    be distributed on the user's own terms. This is a solution that satisfies 
+    those who wish to produce GPL'ed software using wxWidgets, and also those 
+    producing proprietary software.
+
+********************************************************************************
+** wxFormBuilder (3.1.x)                                                      **
+********************************************************************************
+We use wxFormBuilder to build the GUI. The application itself is GPLv2, however
+we do not distribute the application.
+Whether or not the output of it is GPL is a bit less clear. One of the authors
+states on this page: http://forum.wxformbuilder.org/index.php?topic=313.0:
+    
+    I don't think that the output of wxFB "constitutes 
+    a work based on" wxFB, and therefore, we claim no copyright on it. It is 
+    the work of the user of the program, they can decide what to do with it.
+    -- rjmyst3 (2007-09-21) - Ryan Mulder<rjmyst3@gmail.com>
+
+********************************************************************************
+** iniparse (0.4)                                                             **
+********************************************************************************
+http://code.google.com/p/iniparse/:
+
+    Copyright (c) 2001, 2002, 2003 Python Software Foundation
+    Copyright (c) 2004-2008 Paramjit Oberoi <param.cs.wisc.edu>
+    Copyright (c) 2007 Tim Lauridsen <tla@rasmil.dk>
+    All Rights Reserved.
+
+    iniparse/compat.py and tests/test_compat.py contain code derived from
+    lib/python-2.3/ConfigParser.py and lib/python-2.3/test/test_cfgparse.py
+    respectively.  Other code may contain small snippets from those two files
+    as well.  The Python license (LICENSE-PSF) applies to that code.
+
+    ---------------------------------------------------------------------------
+    The MIT License
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+    The MIT License
+
+********************************************************************************
+** RealPyOdbc (0.1 beta)                                                      **
+********************************************************************************
+http://unipex.it/vario/RealPyOdbc.py:
+
+    # Welcome to RealPyODBC
+    # Version 0.1 beta
+    # This class help you to connect your python script with ODBC engine.
+    # I need at least ctypes 0.9.2 for work.
+    #
+    # This class is not db-api 2.0 compatible. If you want to help me to do it
+    # please modify it and send me an e-mail with your work!
+    # All the comunity will thanks you.
+    #
+    # Please send bugs and reports to michele.petrazzo@unipex.it
+    #
+    # TO-DO
+    # Make compatibility with db-api 2.0, so add:
+    # apilevel, theadsafety, paramstyle, cursor, exceptions, ....
+    #
+    # This software if released with MIT Licence
+
+RealPyOdbc uses ctypes which in turn uses libffi:
+http://sourceforge.net/project/shownotes.php?release_id=278603&group_id=71702
+
+    ctypes license
+
+      Copyright (c) 2000, 2001, 2002, 2003, 2004 Thomas Heller
+
+      Permission is hereby granted, free of charge, to any person
+      obtaining a copy of this software and associated documentation files
+      (the "Software"), to deal in the Software without restriction,
+      including without limitation the rights to use, copy, modify, merge,
+      publish, distribute, sublicense, and/or sell copies of the Software,
+      and to permit persons to whom the Software is furnished to do so,
+      subject to the following conditions:
+
+      The above copyright notice and this permission notice shall be
+      included in all copies or substantial portions of the Software.
+
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+      EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+      MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+      NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+      BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+      ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+      CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
+
+    libffi license
+
+      libffi - Copyright (c) 1996-2003  Red Hat, Inc.
+
+      Permission is hereby granted, free of charge, to any person
+      obtaining a copy of this software and associated documentation files
+      (the ``Software''), to deal in the Software without restriction,
+      including without limitation the rights to use, copy, modify, merge,
+      publish, distribute, sublicense, and/or sell copies of the Software,
+      and to permit persons to whom the Software is furnished to do so,
+      subject to the following conditions:
+
+      The above copyright notice and this permission notice shall be
+      included in all copies or substantial portions of the Software.
+
+      THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND,
+      EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+      MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+      NONINFRINGEMENT.  IN NO EVENT SHALL CYGNUS SOLUTIONS BE LIABLE FOR
+      ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+      CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+      WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
