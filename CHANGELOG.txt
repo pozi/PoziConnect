@@ -1,0 +1,10 @@
+Version 1.2
+https://github.com/groundtruth/PlaceLab/tree/v1.2
+(Sun 15, 2010)
+
+ * Recipes are invoked using eg:
+   app/PlaceLab.py --recipe=recipes/example_01.txt
+   Where, recipies/example_01.txt is just a text file with a list of tasks to run
+   (ie. tasks found in the tasksDir)
+
+ * File and Dir task inputs are now a text field with a "..." button
