@@ -1,3 +1,8 @@
+"""
+This file provide a Crypt class that allows for easy en/decryption
+of strings
+"""
+
 # testing a simple xor encryption/decryption
 # tested with Python24      vegaseat    02oct2005
 # Original Source: http://www.daniweb.com/code/snippet216632.html
@@ -11,6 +16,10 @@ from base64 import b64encode, b64decode
 from logger import *
 
 class Crypt:
+    """
+    Class to encrypt/decrypt any string provided to it
+    Based on: http://www.daniweb.com/code/snippet216632.html 
+    """
     def __init__(self, options = {}):
         loggerName = 'CryptXOR'
         if 'logger' in options:
@@ -33,6 +42,9 @@ class Crypt:
         self.regexp = self.options.get('prefix', '') + self.options.get('base64test', '') + self.options.get('postfix', '')
 
     def Encrypt(self, string):
+        """
+        Returns the encrypted password string
+        """
         self.logger.debug('Encrypt', string)
         password = self.options.get('password')
         encrypted = self.CryptXOR(string, password)
@@ -41,6 +53,12 @@ class Crypt:
         return output
 
     def Decrypt(self, string, hidePassword = False):
+        """
+        Receives a string that either is or has got an encrypted
+        password. Will decrypt it and either return the decrypted
+        password or the password replaced with asterixes (handy 
+        for preventing showing passwords in logs).
+        """
         self.logger.debug('Decrypt', string)
 
         output = string
@@ -66,6 +84,10 @@ class Crypt:
         return output
 
     def IsPassword(self, string):
+        """ 
+        Returns boolean about whether or not a string is 
+        an encrypted password
+        """
         self.logger.debug('isEncrypted', string)
 
         # Force match to be from start to end
@@ -77,6 +99,10 @@ class Crypt:
             return False
 
     def ContainsPassword(self, string):
+        """
+        Returns boolean about whether or not a string contains 
+        an encrypted password
+        """
         self.logger.debug('ContainsPassword', string)
         if re.search(self.regexp, string):
             return True
@@ -87,6 +113,7 @@ class Crypt:
     def CryptXOR(self, string, pw):
         """
         cryptXOR(filename, pw) takes the string and xor encrypts/decrypts it against the password pw
+        Original: http://www.daniweb.com/code/snippet216632.html
         """
         # create two streams in memory the size of the string str2
         # one stream to read from and the other to write the XOR crypted character to

@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+"""
+This file defines PlaceLab's INI configuration parser: ConfigParser
+and two related classes: Item and Items.
+"""
 
 # Make app dir available to the sys path
 import sys
@@ -13,7 +17,15 @@ import StringIO
 from logger import *
 
 class ConfigParser(iniparse.RawConfigParser):
+    """
+    ConfigParser extends iniparse's RawConfigParser and
+    adds custom functionality that is needed for 
+    PlaceLab
+    """
     def __init__(self, options = {}):
+        """
+        Constructor method
+        """
         super(ConfigParser, self).__init__()
 
         # Store default options first
@@ -41,6 +53,14 @@ class ConfigParser(iniparse.RawConfigParser):
             self.logger = Logger(loggerName)
 
     def items(self, section, recurse = False):
+        """
+        Extends original 'items' method and applies some magic
+        to the output, like replacing template strings {....} 
+        with their values.
+        It can also detect boolean-like values (true/false, on/off)
+        and replace them with booleans.
+        And it can lower-case the items if desired.
+        """
         items = Items(super(ConfigParser, self).items(section))
 
         self.logger.debug(items)
@@ -96,9 +116,16 @@ class ConfigParser(iniparse.RawConfigParser):
         #return sections
 
     def GetGlobalSections(self):
+        """
+        Shorthand for return the items from the global section 
+        or an empty list
+        """
         return self.GetOption('globalSections', [])
 
     def GetGlobalVars(self):
+        """
+        Returns all global variables
+        """
         vars = {}
         for globalSection in self.GetGlobalSections():
 
@@ -118,13 +145,23 @@ class ConfigParser(iniparse.RawConfigParser):
         return vars 
 
     def GetOption(self, option, default = None):
+        """
+        Returns an option
+        """
         #self.logger.info("OPTIONS", self.options, option)
         return self.options.get(option, default)
 
     def SetOption(self, option, value = None):
+        """
+        Stores and option
+        """
         self.options[option] = value
 
     def SubstituteVars(self, vars):
+        """
+        Returns a copy of itself but with all variables
+        substituted with their values
+        """
         #self.logger.info("SubstituteVars", vars)
 
         # Create a new config and fill it 
@@ -144,6 +181,9 @@ class ConfigParser(iniparse.RawConfigParser):
         return config
 
     def ToString(self):
+        """
+        Provide a nicely formatted config string of itself
+        """
         # Create a file-like object so we can read/write 
         # Config2 into/from a string
         strio = StringIO.StringIO()
@@ -159,6 +199,9 @@ class ConfigParser(iniparse.RawConfigParser):
         return self.ToString() 
 
 class Item(tuple):
+    """
+    Helper class
+    """
     def __init__(self, item):
         super(Item, self).__init__()
         #self.logger.info("Init: Item", item )
@@ -200,6 +243,9 @@ class Item(tuple):
         return Item((key.lower(), value))
  
 class Items(list):
+    """
+    Helper class
+    """
     def __init__(self, items):
 
         # Transform all items into our own item classes
@@ -227,6 +273,10 @@ class Items(list):
 #for i in re.finditer(r'({(.+?)})',s): s1, s2 = i.groups(); self.logger.info(s1, ":", s2; s0 = s0.replace(s1, d.get(s2)))
 
 if __name__ == "__main__":
+    """
+    Some tests
+    """
+
     d = {'a': 'b', 'Pathway_Settings': 'pathwaysettings', 'Pathway_DSN': 'pathwaydsnyeah'}
 
     f = '../../config/button.ini'

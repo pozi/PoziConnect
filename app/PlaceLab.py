@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-
-import sys
+"""
+PlaceLab provides you with a simple interface for accessing, processing, analysing and exporting your organisation's spatial and aspatial data.
+"""
 
 import iniparse
 import logging
@@ -8,40 +9,31 @@ import logging.config
 import optparse
 import os
 import string
+import sys
 
 # Get version from version file
 from version import version
 
-# Import our own logger
-from lib.logger import *
-
 # Import our own modules
 from lib.configparser import *
 from lib.gui.gui import * 
+from lib.logger import *
 
-
-# Global Variables
-# create logger
+# Create logger
 LOGGER = Logger('main', 'output/PlaceLab.log')
-# create logger
-#l = logging.getLogger("PlaceLab")
-# Global Variables
-
 
 ###############################################
 # Find all INI files in:
 # - root dir
 # - config dir
 def findIniFiles(tasksDir):
+    """ 
+    Will find all .INI files in a provided directory and will return them as 
+    a list
+    """
     fileList = []
     rootdir = '.' 
-    #configdir = rootDir + os.path.sep + 'config' 
     ext = '.ini'
-
-    # Take top level INI files
-    #for f in sorted(os.listdir(rootdir)):
-        #if f.lower().endswith(ext):
-            #fileList.append(os.path.join(rootdir,file))
 
     # Recurse through config directory to find INI files
     for root, subFolders, files in sorted(os.walk(tasksDir)):
@@ -52,37 +44,28 @@ def findIniFiles(tasksDir):
 
 
 def showHeader(text):
+    """
+    Will provide a clearly distinguishable header as logging output
+    """
     string = "#" * 60 + "\n#" + ' ' + text + "\n" + "#" * 60 
     LOGGER.info(string)
 
 
 def showGUI(taskList, options = {}):
+    """
+    Starts the application in GUI mode
+    """
     LOGGER.info("Showing GUI")# , options)
     options['taskList'] = taskList
     app = GUI(options)
-
-    #app.tasks = taskList
-
     app.Show()
-
-
-def showGUIOLD(taskList, options = {}):
-    LOGGER.info("Showing GUI")# , options)
-    app = mainGUI(0)
-
-    # Store the file and profile list in the app
-    #app.files = fileList
-    app.tasks = taskList
-    app.options = options 
-    
-    # Merge default options with ones provided in app INI file
-    app.options.update(options)
-
-    app.Show()
-    #app.MainLoop()
-
 
 def processTasks(taskList):
+    """
+    Loops through a list of tasks and executes them. 
+    This function will be called when the application
+    runs in batch mode (no GUI).
+    """
     for taskName, taskFile in taskList:
         options = {
             'taskName': taskName,
@@ -92,15 +75,14 @@ def processTasks(taskList):
         p.Execute()
 
 
-###############################################
-# Initialise
-# - TODO - this function is too long - need to refactor it
 def init():
+    """
+    Initialises the application. It does all sorts of magic to 
+    figure out where in the file system it resides and whether or 
+    it is run as a Windows executable or not.
+    """
     # Make app dir available to the sys path
     sys.path.extend(['app'])
-
-    # Find out where our script lives and assume that the 
-    # parent directory is the root of the application
 
     # Test whether we are an executable (py2exe)
     isExe = hasattr(sys, "frozen")
@@ -117,11 +99,9 @@ def init():
             scriptPath = '.'
 
     scriptPath = os.path.realpath(scriptPath)
-
     scriptDir = os.path.dirname(scriptPath)
     scriptName = os.path.basename(scriptPath)
     scriptBaseName = scriptName.rstrip('.py').rstrip('.exe')
-
     rootDir = appDir = ''
 
     # We assume that the EXE is always in the root of 
@@ -175,27 +155,7 @@ def init():
     except Exception as e: 
         LOGGER.warn('Error:', e)
 
-    #version = appSettings.get('Version', 'dev')
-
-    #if 'LogFile' in appSettings:
-        #LOGGER.SetFile(appSettings.get('LogFile'))
-
-    #LOGGER.info(os.environ)
-
-    # Logging config file is the processed version of the appConfig
-    # file. This allows us to dynamically configure the location
-    # of the log file, etc.
-    # We need StringIO for the LOGGER to read it.
-    #loggingConfig = StringIO.StringIO(appConfig)
-    #logging.config.fileConfig(loggingConfig)
-
-    #sys.stdout = sys.stderr = LOGGER
-
-    # "application" code
-
-    # example with redirection of sys.stdout
-    #LOGGER = Logger(logDir + os.path.sep + 'output.txt')
-    #sys.stdout = sys.stderr = LOGGER
+    # Log some information
     LOGGER.info("PlaceLab version:", version)
     LOGGER.info("isExe", isExe)
     LOGGER.info("scriptPath", scriptPath)

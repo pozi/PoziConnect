@@ -1,3 +1,7 @@
+""" 
+This file seems to be unused. 
+Cleanup once clear that it is unused indeed.
+"""
 
 import os
 import StringIO
