@@ -1,4 +1,9 @@
-
+"""
+This file has been created as a workaround for the executable
+not needing to load an external image for the logo.
+It contains the base64 encode PlaceLab.png and converts it to
+a StringIO object that gets read by gui.py
+"""
 
 from StringIO import StringIO
 from base64 import b64decode
