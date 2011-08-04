@@ -97,6 +97,7 @@ setup(
                         "bundle_files": 1, #1=all, 2=all except python interpreter
                         "ignores": ['tcl','AppKit','Numeric','Foundation'],
                         "excludes": MODULE_EXCLUDES,
+                        "includes":'decimal',
                         } 
                },
     name = PRODUCT_NAME,
