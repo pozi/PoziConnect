@@ -220,7 +220,7 @@ def init():
     # USED HARDCODED IN OGR.py
     # TODO: don't hardcode
 
-    gdalAppDir = rootDir + '/app/include/release-1310-gdal-1-6-mapserver-5-6/bin/gdal/apps'
+    #gdalAppDir = rootDir + '/app/include/release-1310-gdal-1-6-mapserver-5-6/bin/gdal/apps'
 
     #os.chdir(scriptHome)
 
