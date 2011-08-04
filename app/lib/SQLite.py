@@ -40,16 +40,22 @@ class SQLite():
 
         def regexp_replace(text, pattern, replacement):
 
+            if text is None:
+            	text = ''
+            	
             """
             print "-" * 60
             print "pattern", pattern
             print "replacement", replacement
             print "TEXT IN :", text
+            print "TYPE OF TEXT :", type(text)
             print "MATCH  ", re.search(pattern, text)
             print "FINDALL  ", re.findall(pattern, text)
             """
 
+            	
             output = None
+
 
             # Compile a regular expression speeds up the process
             # Also make search/replace case insensitive
