@@ -22,6 +22,7 @@ import zlib
 from configparser import *
 from logger import *
 from OGR import *
+from ExcelReader import *
 
 # Helper functions
 from utilities import *
@@ -239,7 +240,7 @@ class Task():
         self.logger.debug('ALL', self.items)
 
         # A reference list of file and database formats
-        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF']
+        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF','XLS']
         self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL']
 
     def ParseDataStore(self, store, forcedFormat = None):
@@ -288,6 +289,15 @@ class Task():
                     'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', 'TableName', 'FileExtension'],
                 },
             },
+            'XLS': {
+                '1-File Path': {
+                    'regExp': globalRegs.get('fileFormat'),
+                    'formatRegs': {
+                        'fileExtension' : r'\.xls',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', 'TableName', 'FileExtension'],
+                },
+            },
             'KML': {
                 '1-File Path': {
                     'regExp': globalRegs.get('fileFormat'),
@@ -314,10 +324,17 @@ class Task():
                 },
             },
             'MapInfo File': {
-                '1-File Path': {
+                '1-File Path TAB': {
                     'regExp': globalRegs.get('fileFormat'),
                     'formatRegs': {
                         'fileExtension' : r'\.tab',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', 'TableName', 'FileExtension'],
+                },
+                '2-File Path MIF': {
+                    'regExp': globalRegs.get('fileFormat'),
+                    'formatRegs': {
+                        'fileExtension' : r'\.mif',
                     },
                     'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', 'TableName', 'FileExtension'],
                 },
@@ -470,6 +487,10 @@ class Task():
         # to this defaults to application settting for 'debug'
         # in INI file
         debug = items.get('debug', taskDebug)
+        
+        if items.get('sourceformat')=="XLS":
+        	debug = False
+        
         if debug:
             ogrInfoItems = {
                 'sourceformat': items.get('sourceformat'),
@@ -570,6 +591,22 @@ class Task():
             
             # Perform an ogrinfo
             self.doInfo(ogrItems)
+            
+	    if sourceFormat == 'XLS':
+	    	# We need to process the Excel file into a CSV file - CSV files can then be processed natively by OGR2OGR
+	    	# with the help of:
+	    	# - the CSVT file for the types
+	    	# - the VRT file for layer naming / conversion of XY into a geometry
+	    	# Then, we need to provide the correct items values for the source to OGR2OGR 
+	    	# so that the source is now the resulting CSV (not the Excel file anymore)
+	    	
+	    	# Excel to CSV
+	    	itemsForScript = ogrItems
+	    	try:
+		    	XLSread(itemsForScript,self)
+                except Exception as e:
+                	self.logger.critical("Excel to CSV Failed:", e)
+                	raise
 
         # Perform ogr2ogr, but only if both a source and destination are configured
         if sourceStore and destinationStore:
@@ -612,6 +649,14 @@ class Task():
             # Create indices
             if ogrItems.get('index'):
                 self.doIndex(ogrItems)
+
+	    if ogrItems.get('ogrinfoonly'):
+		ogrinfo = OGRInfo()
+		try:
+			ogrinfo.Process(ogrItems)
+		except Exception as e:
+			self.logger.critical("OGRINFO Failed:", e)
+                	raise
 
         # Execute Post Command (if provided)
         postCommand = self.items.get('PostCommand')

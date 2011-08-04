@@ -5,6 +5,7 @@ import os
 import shutil
 import subprocess
 import sys
+import datetime
 
 from logger import *
 from Crypt import *
@@ -102,6 +103,10 @@ class OGRBase():
         if datasource:
             command += [datasource]
 
+        geometrytype = items.get('geometrytype', "GEOMETRY")
+        if geometrytype:
+            command += ['-nlt', geometrytype]
+        
         sourcetablename = items.get('sourcetablename')
         select = items.get('select')
         where = items.get('where')
@@ -119,10 +124,13 @@ class OGRBase():
         """
 
         if sourcetablename and not sql:
-            sql = "SELECT %s FROM %s" % (select or '*', sourcetablename) 
-            if where:
-                sql += " WHERE %s" % where
-
+            if sourcetablename.replace(" ","")==sourcetablename:
+	    	sql = "SELECT %s FROM %s" % (select or '*', sourcetablename) 
+	    	if where:
+	    		sql += " WHERE %s" % where
+	    else:
+	    	self.logger.debug("Source table name:'%s' contains spaces." % (sourcetablename), items)
+	    	
         if not sql:
             if select:
                 command += ['-select', select]
@@ -143,19 +151,21 @@ class OGRBase():
                 command += ["-update"]
             else:
                 pass
-
+            
         append = items.get('append', False)
         if append:
             command += ["-append"]
 
-        overwrite = items.get('overwrite', True)
+	overwrite = items.get('overwrite', True)        
+
         if overwrite:
 
             # OGR's SQLite driver does not support DROPping tables,
             # so we do it ourselves
-            if os.path.isfile(destination) or format == "PostgreSQL":
+            #if os.path.isfile(destination) or format == "PostgreSQL":
+	    if os.path.isfile(destination):
 
-                if format in ["SQLite", "PostgreSQL"]:
+                if format in ["SQLite"]:
                     if name:
                         # Remove the table from the geometry_columns first
                         sql = "DELETE FROM geometry_columns WHERE f_table_name = '%s'" % (name)
@@ -231,9 +241,120 @@ class OGRBase():
                     command += ["-lco", 'SPATIAL_INDEX=NO']
 
             # Keep existing casing for table and column names (don't make it lower)
-            command += ["-lco", 'LAUNDER=NO']
+            launder = items.get('launder', False)
+            if launder:
+	        command += ["-lco", 'LAUNDER=YES']
+	    else:
+	    	command += ["-lco", 'LAUNDER=NO']
 
+	if format == "PostgreSQL":
+		# Normalisation of object (table, columns...) names
+        	command += ["-lco", 'LAUNDER=YES']
+        	# Using VARCHAR instead of CHAR will lead to labels being trimmed, hence the labelling of features in GeoServer looking better
+        	command += ["-lco", 'PRECISION=NO']
+        	# This maintains the name of the spatial column in non-spatial object to wkb_geometry 
+		if geometrytype != "NONE":
+	        	command += ["-lco", 'GEOMETRY_NAME=the_geom']
+	        # Skipping unsuccessful OGR2OGR commands
+		command += ["-skipfailures"]
+		# Catering for the case where we really want to overwrite the object (changed structure) - by default, we update/append
+		overwrite = items.get('overwrite', False)
+		if overwrite:
+			command += ["-overwrite"]
+		else:
+			command += ["-update"]
+			command += ["-append"]
+
+		# Removing the existing records - so that the append re-populates empty tables
+		if name:
+			# Truncate the table
+			sql = "TRUNCATE TABLE %s" % (name)
+			tmpItems = {
+				'datasource': destination,
+				'sql': sql,
+				'summary': False,
+			}
+			ogrinfo = OGRInfo(tmpItems)
+			ogrinfo.Process()
+		
         return command
+
+    def PostProcess(self, items):
+	try:
+		format = items.get('format', 'CSV')		
+		if format == "PostgreSQL":    
+		        self.logger.debug("POSTPROCESS", items)
+	
+		        ##################################################
+		        name = items.get('name', None)
+		        destination = items.get('destination', "DESTINATION_MISSING")
+		        datasource = items.get('datasource', "SOURCE_MISSING")
+			geometrytype = items.get('geometrytype', "GEOMETRY")
+			viewsupportingspatiallayer = items.get('viewsupportingspatiallayer')
+			viewname = items.get('destinationtablename')
+	
+			if name:
+				# Add a comment to date / time the update of the table
+				d_str=datetime.datetime.now().strftime("%d/%m/%y at %H:%M:%S")
+				
+				# Object type - defaults to TABLE
+				obj_type = "TABLE"
+				if viewsupportingspatiallayer:
+					obj_type = "VIEW"
+				if items.get('ogrinfoonly'):
+					datasource = "Placelab"
+				
+				sql = "COMMENT ON %s %s IS 'Updated on %s (source: PlaceLab)'" % (obj_type,name,d_str)
+				tmpItems = {
+					'datasource': destination,
+					'sql': sql,
+					'summary': False,
+				}
+				ogrinfo = OGRInfo(tmpItems)
+				ogrinfo.Process()
+				
+				if geometrytype =="NONE":
+					# Remove the dummy geometry column in the table
+					# DROP COLUMN IF EXISTS not available in 8.4
+					sql = "ALTER TABLE %s DROP COLUMN %s" % (name,"wkb_geometry")
+					tmpItems = {
+						'datasource': destination,
+						'sql': sql,
+						'summary': False,
+					}
+					ogrinfo = OGRInfo(tmpItems)
+					ogrinfo.Process()
+				
+			# For views: special processing of the geometry_column records 
+			if viewsupportingspatiallayer and viewname:				
+				
+				# Delete the geometry_columns record for this view
+				sql = "DELETE FROM geometry_columns WHERE f_table_name='%s'" % (viewname)
+				tmpItems = {
+					'datasource': destination,
+					'sql': sql,
+					'summary': False,
+				}
+				ogrinfo = OGRInfo(tmpItems)
+				ogrinfo.Process()
+				
+				# Insert the geometry_columns record based on the supporting spatial layer
+				sql = "INSERT INTO geometry_columns SELECT f_table_catalog,f_table_schema,'%s',f_geometry_column,coord_dimension,srid,type FROM geometry_columns WHERE f_table_name='%s'" % (viewname,viewsupportingspatiallayer)
+				tmpItems = {
+					'datasource': destination,
+					'sql': sql,
+					'summary': False,
+				}
+				ogrinfo = OGRInfo(tmpItems)
+				ogrinfo.Process()
+				
+				# We don't remove the record in the geometry_columns table to allow for update/append
+				# If we delete this record, the update/append raises an error
+				
+        except Exception as e:
+            self.logger.info("That didn't work well:", e)
+            self.logger.info("Exiting. Please fix the problem!\n")
+            raise
 
     def CommandToString(self, command):
         commandString = subprocess.list2cmdline(command)
@@ -303,7 +424,11 @@ class OGRBase():
 
             stdout, stderr = process.communicate()
             self.logger.info(stdout)
-            #self.logger.info(stderr)
+            
+            self.logger.info("#" * 60 + "\n#"+ "LOGGING ERRORS FROM EXECUTABLE CALL - START" + '\n')
+            self.logger.info(stderr)
+            self.logger.info("#"+ "LOGGING ERRORS FROM EXECUTABLE CALL - END\n" + "#" * 60 + '\n')
+
             exitCode = process.wait()
             if exitCode != 0:
                 self.logger.info("There were some errors", exitCode)
@@ -380,11 +505,26 @@ class OGRBase():
 
 
             # Remove tmpDestDir (should be empty now)
-            os.rmdir(tmpDestDir)
+            os.rmdir(tmpDestDir)        
 
-        else:
+	else:
+	    # When outputting to tab files, files can not be overwritten easily
+	    # We delete them manually if the overwrite option has been specified
+	    if items.get('format') == 'MapInfo File' and items.get('overwrite'):
+	        self.logger.info("\n# Overwrite option is on: will delete existing files with same name (if they exist)\n")
+	    	(filepath, filename) = os.path.split(items['destinationstore'])
+	    	(shortname, extension) = os.path.splitext(filename)
+	        
+	        #We go throught the possible extensions for MapInfo files that compose a layer and delete the corresponding files if they exists
+	    	for file in (glob.glob(os.path.join(filepath,shortname)+ext) for ext in ('.tab','.id','.map','.dat','.ind')):
+	        	#shutil.move(file, file+'.bak')
+			if file and os.path.isfile(file[0]):
+		        	self.logger.info("# Deleting file: '%s' " % (file[0]))
+		        	os.remove(file[0])
+
             command = self.CreateCommand(items)
             self.ExecuteCommand(command)
+            self.PostProcess(items)
 
 
 class OGR2OGR(OGRBase):
@@ -405,25 +545,39 @@ class OGRInfo(OGRBase):
         command = [self.executable]
 
         sourceformat  = items.get('sourceformat')
-        datasource = items.get('datasource', "SOURCE_MISSING")
+        datasource = items.get('datasource', items.get('destinationstore',"SOURCE AND DESTINATION MISSING"))
 
-        if datasource:
-            command += [datasource]
 
-        for itemName in ['where', 'sql']:
-            itemValue = items.get(itemName, None)
-            if itemValue:
-                command += ['-' + itemName, itemValue ]
-
-        sqlfile = items.get('sqlfile', None)
-        if sqlfile:
-            queryString = " ".join(open(sqlfile, 'r').read().splitlines())
-            command += ["-sql", queryString ]
-
-        layers = items.get('sourcetablename', '')
-        if layers:
-            command += [layers.replace(',', ' ')]
-
+	# Adding support for definitions of views using OGRINFO
+	viewsupportingspatiallayer = items.get('viewsupportingspatiallayer')
+	viewdefinition = items.get('viewdefinition')
+	
+	if viewsupportingspatiallayer and viewdefinition:
+		viewname = items.get('destinationtablename')
+		
+		datasource = items.get('destinationstore')
+		command += [datasource]
+		
+		queryString = "CREATE OR REPLACE VIEW %s AS %s" % (viewname,viewdefinition)
+		command += ["-sql", queryString ]
+	else:
+	        if datasource:
+	            command += [datasource]
+	
+	        for itemName in ['where', 'sql']:
+	            itemValue = items.get(itemName, None)
+	            if itemValue:
+	                command += ['-' + itemName, itemValue ]
+	
+	        sqlfile = items.get('sqlfile', None)
+	        if sqlfile:
+	            queryString = " ".join(open(sqlfile, 'r').read().splitlines())
+	            command += ["-sql", queryString ]
+	
+		layers = items.get('sourcetablename', '')
+	        if layers:
+	            command += [layers.replace(',', ' ')]
+	
         summary = items.get('summary', True)
         if summary:
             command += ["-summary"]
