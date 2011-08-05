@@ -11,5 +11,5 @@ is just a text file with a list of tasks to run
 (ie. tasks found in the tasksDir)
     
 
-Groundtruth 2011
+Groundtruth 2009-2011
 
