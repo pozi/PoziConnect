@@ -411,6 +411,12 @@ class Task():
                     'outputVars': ['Store', 'TableName'],
                 },
             },
+            'WFS': {
+                'WFS endpoint and type name': {
+                    'regExp': r'(WFS:[^,]+),?({tableName})',
+                    'outputVars': ['Store', 'TableName'],
+                },
+            },
         }
 
         def match(format, items, formatIsForced = False):
