@@ -107,6 +107,7 @@ class OGRBase():
         if geometrytype:
             command += ['-nlt', geometrytype]
         
+        sourceformat = items.get('sourceformat')
         sourcetablename = items.get('sourcetablename')
         select = items.get('select')
         where = items.get('where')
@@ -123,7 +124,7 @@ class OGRBase():
             sql = " ".join(open(sqlfile, 'r').read().splitlines())
         """
 
-        if sourcetablename and not sql:
+        if sourcetablename and not sql and sourceformat not in self.fileFormats:
             if sourcetablename.replace(" ","")==sourcetablename:
 	    	sql = "SELECT %s FROM %s" % (select or '*', sourcetablename) 
 	    	if where:
@@ -250,8 +251,7 @@ class OGRBase():
 	if format == "PostgreSQL":
 		# Normalisation of object (table, columns...) names
         	command += ["-lco", 'LAUNDER=YES']
-        	# Using VARCHAR instead of CHAR will lead to labels being trimmed, hence the labelling of features in GeoServer looking better
-        	command += ["-lco", 'PRECISION=NO']
+        	
         	# This maintains the name of the spatial column in non-spatial object to wkb_geometry 
 		if geometrytype != "NONE":
 	        	command += ["-lco", 'GEOMETRY_NAME=the_geom']
