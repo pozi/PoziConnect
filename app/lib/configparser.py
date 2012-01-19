@@ -13,8 +13,10 @@ import logging
 import os
 import re
 import StringIO
+import getpass
 
 from logger import *
+from datetime import datetime,date,time
 
 class ConfigParser(iniparse.RawConfigParser):
     """
@@ -126,7 +128,10 @@ class ConfigParser(iniparse.RawConfigParser):
         """
         Returns all global variables
         """
-        vars = {}
+        # We define a few environment variables to allow substitution anywhere (global or task-level)
+        d = datetime.now()
+        vars = {'current_date':d.strftime("%Y-%m-%d"),'current_time':d.strftime("%H%M%S"),'current_user':getpass.getuser()}
+        
         for globalSection in self.GetGlobalSections():
 
             # Continue if config does not have this global section

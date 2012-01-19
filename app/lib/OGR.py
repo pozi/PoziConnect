@@ -113,6 +113,17 @@ class OGRBase():
         where = items.get('where')
         sql = items.get('sql')
 
+	# Logging if the destination directory does not exist
+	destinationfilepath = items.get('destinationfilepath',None)
+	destinationdrivename = items.get('destinationdrivename',None)
+	if destinationfilepath:
+		destinationfullpath = destinationdrivename + destinationfilepath
+		if not(os.path.isdir(destinationfullpath)):
+			errorMessage = "The directory '%s' does not exist - please create it before running the task again.\n" % (destinationfullpath)
+			exitCode = 1
+			self.logger.info("#" * 60 + "\n#", errorMessage ,"#" * 60 + "\n#")
+			raise IOError(exitCode, errorMessage)
+			
         """
         sqlfile = items.get('sqlfile')
         if sqlfile:
