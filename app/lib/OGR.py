@@ -262,6 +262,11 @@ class OGRBase():
 	if format == "PostgreSQL":
 		# Normalisation of object (table, columns...) names
         	command += ["-lco", 'LAUNDER=YES']
+		
+		# Not creating spatial indexes if spatialindex set to false
+		spatialindex = items.get('spatialindex', True)
+		if not spatialindex:
+			command += ["-lco", 'SPATIAL_INDEX=NO']
         	
         	# This maintains the name of the spatial column in non-spatial object to wkb_geometry 
 		if geometrytype != "NONE":
