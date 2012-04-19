@@ -255,7 +255,7 @@ class Task():
             'fileName': r'[ a-z0-9_-]+', # water_use-2
             'fileExtension': r'\.[a-z0-9_-]+', # .csv 
             'schemaName': r'[a-z0-9]+',
-            'tableName': r'[a-z0-9_\- .]+',
+            'tableName': r'[a-z0-9_\- .:]+',
             'fileFormat': r'(({driveName})?(.+?){dirSep}?(({fileName})({fileExtension})))',
         }
         #regexp = r'(%s)?(.*?)%s?((%s)(%s))' % (driveName, dirSep, validFileName, fileExt)
@@ -370,7 +370,7 @@ class Task():
                 '1-File Path': {
                     'regExp': globalRegs.get('fileFormat'),
                     'formatRegs': {
-                        'fileExtension' : r'\.xml',
+                        'fileExtension' : r'\.xml^',
                     },
                     'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', 'TableName', 'FileExtension'],
                 },
@@ -412,11 +412,18 @@ class Task():
                 },
             },
             'WFS': {
-                'WFS endpoint and type name': {
+                'WFS URL endpoint with table name': {
                     'regExp': r'(WFS:[^,]+),?({tableName})',
                     'outputVars': ['Store', 'TableName'],
                 },
-            },
+                'WFS XML definition file with table name': {
+                    'regExp': globalRegs.get('fileFormat') + ',({tableName})',
+                    'formatRegs': {
+                        'fileExtension' : r'\.xml',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', None, 'FileExtension', 'TableName'],
+                },
+	     },
         }
 
         def match(format, items, formatIsForced = False):
