@@ -115,9 +115,13 @@ class OGRBase():
 
 	# Logging if the destination directory does not exist
 	destinationfilepath = items.get('destinationfilepath',None)
-	destinationdrivename = items.get('destinationdrivename',None)
+	destinationdrivename = items.get('destinationdrivename','')
 	if destinationfilepath:
-		destinationfullpath = destinationdrivename + destinationfilepath
+		# Catering for URI paths that do not contain a drive letter
+		if destinationdrivename:
+			destinationfullpath = destinationdrivename + destinationfilepath
+		else:
+			destinationfullpath = destinationfilepath
 		if not(os.path.isdir(destinationfullpath)):
 			errorMessage = "The directory '%s' does not exist - please create it before running the task again.\n" % (destinationfullpath)
 			exitCode = 1
@@ -318,9 +322,9 @@ class OGRBase():
 				if viewsupportingspatiallayer:
 					obj_type = "VIEW"
 				if items.get('ogrinfoonly'):
-					datasource = "Placelab"
+					datasource = "PoziConnect"
 				
-				sql = "COMMENT ON %s %s IS 'Updated on %s (source: PlaceLab)'" % (obj_type,name,d_str)
+				sql = "COMMENT ON %s %s IS 'Updated on %s (source: PoziConnect)'" % (obj_type,name,d_str)
 				tmpItems = {
 					'datasource': destination,
 					'sql': sql,
