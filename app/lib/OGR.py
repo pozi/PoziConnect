@@ -139,7 +139,7 @@ class OGRBase():
             sql = " ".join(open(sqlfile, 'r').read().splitlines())
         """
 
-        if sourcetablename and not sql and sourceformat not in self.fileFormats:
+        if sourcetablename and not sql and sourceformat not in self.fileFormats and sourceformat not in ['ODBC']:
             if sourcetablename.replace(" ","")==sourcetablename:
 	    	sql = "SELECT %s FROM %s" % (select or '*', sourcetablename) 
 	    	if where:
