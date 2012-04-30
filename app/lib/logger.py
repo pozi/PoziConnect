@@ -9,7 +9,7 @@ if not os.path.exists(LOG_DIR):
     os.mkdir(LOG_DIR)
   
 
-fileName = os.path.join(LOG_DIR, 'PlaceLab.log')
+fileName = os.path.join(LOG_DIR, 'PoziConnect.log')
 
 formatters = {}
 formatters['console'] = '%(name)-15s: %(levelname)-8s %(message)s'

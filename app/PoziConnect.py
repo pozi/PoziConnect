@@ -20,7 +20,7 @@ from lib.gui.gui import *
 from lib.logger import *
 
 # Create logger
-LOGGER = Logger('main', 'output/PlaceLab.log')
+LOGGER = Logger('main', 'output/PoziConnect.log')
 
 ###############################################
 # Find all INI files in:

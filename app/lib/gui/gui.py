@@ -56,7 +56,7 @@ class GUI(wx.App):
         wx.Log.Suspend()
 
         self.options = {
-            'Title': 'PlaceLab',
+            'Title': 'Pozi Connect',
             'AppWidth' : '700',
             'AppHeight' : 375,
             'EntryWidgetWidth' : 550,
