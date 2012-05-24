@@ -230,8 +230,10 @@ class OGRBase():
 
         if format == "SQLite":
             # Introduce spatialite support, but only when the file does not
-            # exist yet (otherwise it's a useless optio)
-            spatialite = items.get('spatialite', True)
+            # exist yet (otherwise it's a useless option)
+            # As of GDAL 1.9, SpatiaLite output is an invalid DB if GDAL binaries have not been linked to a SpatiaLite library
+            # To maintain backward compatibility with the OGC spatial metadata table style, we set the flag to NO by default
+            spatialite = items.get('spatialite', False)
             if spatialite:
 
                 # Only add this option when the destination does not exist yet
