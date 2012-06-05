@@ -103,15 +103,20 @@ class OGRBase():
         if datasource:
             command += [datasource]
 
-        geometrytype = items.get('geometrytype', "GEOMETRY")
-        if geometrytype:
-            command += ['-nlt', geometrytype]
-        
         sourceformat = items.get('sourceformat')
         sourcetablename = items.get('sourcetablename')
         select = items.get('select')
         where = items.get('where')
         sql = items.get('sql')
+
+	# When SQLite is a source format, we need to add the name of the table to export
+	if sourceformat == "SQLite":
+		sourcetablename = items.get('sourcetablename', None)
+		command += [sourcetablename]
+
+        geometrytype = items.get('geometrytype', "GEOMETRY")
+        if geometrytype:
+            command += ['-nlt', geometrytype]
 
 	# Logging if the destination directory does not exist
 	destinationfilepath = items.get('destinationfilepath',None)
@@ -174,6 +179,8 @@ class OGRBase():
 
 	overwrite = items.get('overwrite', True)        
 
+
+
         if overwrite:
 
             # OGR's SQLite driver does not support DROPping tables,
@@ -231,9 +238,13 @@ class OGRBase():
         if format == "SQLite":
             # Introduce spatialite support, but only when the file does not
             # exist yet (otherwise it's a useless option)
+
             # As of GDAL 1.9, SpatiaLite output is an invalid DB if GDAL binaries have not been linked to a SpatiaLite library
             # To maintain backward compatibility with the OGC spatial metadata table style, we set the flag to NO by default
-            spatialite = items.get('spatialite', False)
+	    # After more testing, it seems that the database was not corrupted, but the viewers used were just not spatially-enabled.
+	    # Re-instating the SpatiaLite creation as default
+	    
+            spatialite = items.get('spatialite', True)
             if spatialite:
 
                 # Only add this option when the destination does not exist yet
