@@ -112,7 +112,9 @@ class OGRBase():
 	# When SQLite is a source format, we need to add the name of the table to export
 	if sourceformat == "SQLite":
 		sourcetablename = items.get('sourcetablename', None)
-		command += [sourcetablename]
+		# In case there is no source table name (ex: use of a SQL query or file), we don't add the tablename to the command
+		if sourcetablename:
+			command += [sourcetablename]
 
         geometrytype = items.get('geometrytype', "GEOMETRY")
         if geometrytype:
