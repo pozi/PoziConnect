@@ -9,11 +9,11 @@ Execution
 ---------
 PoziConnect can be run in multiple modes:
 * Interactive / silent
-** Interactive: just launching the executable (or the Python script)
-** Silent: with a batch wrapper using the --recipe flag (see below)
+    * Interactive: just launching the executable (or the Python script)
+    * Silent: with a batch wrapper using the --recipe flag (see below)
 * Development / production
-** Development: Python script launched from a wrapper
-** Production: Windows executable
+    * Development: Python script launched from a wrapper
+    * Production: Windows executable
 
 
 Files and directory structure
@@ -66,8 +66,11 @@ Changing the logo:
 2.  pluck that string in: app/lib/gui/PlaceLabBanner.py, in the imageBase64 variable (within triple double quotes)
 3.  produce a new version of PoziConnect
 
-Additional logging can be activated by setting the LOG level to DEBUG in logger.py script
+Other notes and thoughts:
 
++ Additional logging can be activated by setting the LOG level to DEBUG in logger.py script
++ Sometimes, changes to the source code (.py) are not reflected in the corresponding compiled code (.pyc). Delete the .pyc files to force the interpreter/compiler recreates them.
++ The work of renaming PlaceLab into PoziConnect in the entire codebase has not been undertaken (only visible bits have been renamed)
 
 Groundtruth &copy; 2009-2013
 
