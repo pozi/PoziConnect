@@ -38,12 +38,15 @@ Both development and production environments require downloading the GDAL binari
 The version of the binaries (32 or 64 bits) has to match the operating system where PoziConnect will be executed.
 
 The binaries are available from:
+
     http://www.gisinternals.com/sdk/
 
 The binaries should be placed in app/include within a directory that reflects the binaries version, e.g:
+
     POZI_CONNECT_ROOT\app\include\release-1600-x64-gdal-1-9-mapserver-6-0
 
 In PoziConnect.ini, the variable GDAL_BASE must point to the bin directory within, e.g.:
+
     GDAL_BASE: app/include/release-1600-x64-gdal-1-9-mapserver-6-0/bin
 
 
