@@ -36,7 +36,7 @@ The binaries are available from:
 http://www.gisinternals.com/sdk/
 
 The binaries are placed in app/include within a directory that reflects the binaries version, e.g:
-<POZI_CONNECT_ROOT>app\include\release-1600-x64-gdal-1-9-mapserver-6-0
+POZI_CONNECT_ROOT\app\include\release-1600-x64-gdal-1-9-mapserver-6-0
 
 In the PoziConnect.ini, the variable GDAL_BASE must point to the bin directory within, e.g.:
 GDAL_BASE: app/include/release-1600-x64-gdal-1-9-mapserver-6-0/bin
@@ -55,17 +55,19 @@ to run (ie. tasks found in the tasks directory).
 For developers
 --------------
 Producing a new version of PoziConnect:
-1) code new features / fix bugs
-2) in a Windows environment, create the PoziConnect executable by running: app/create_exe2.bat
-3) get the resulting PoziConnect.exe file from: app/dist and copy it to the <POZI_CONNECT_ROOT>
+
+1.  code new features / fix bugs
+2.  in a Windows environment, create the PoziConnect executable by running: app/create_exe2.bat
+3.  get the resulting PoziConnect.exe file from: app/dist and copy it to the POZI_CONNECT_ROOT
 
 Changing the logo:
-1) transform the logo image file into a base64 string
-2) pluck that string in: app/lib/gui/PlaceLabBanner.py, in the imageBase64 variable (within triple double quotes)
-3) produce a new version of PoziConnect
+
+1.  transform the logo image file into a base64 string
+2.  pluck that string in: app/lib/gui/PlaceLabBanner.py, in the imageBase64 variable (within triple double quotes)
+3.  produce a new version of PoziConnect
 
 Additional logging can be activated by setting the LOG level to DEBUG in logger.py script
 
 
-Groundtruth 2009-2013
+Groundtruth &copy; 2009-2013
 
