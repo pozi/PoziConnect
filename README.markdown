@@ -4,14 +4,13 @@ Overview
 --------
 PoziConnect provides you with a simple interface for accessing, processing, analysing and exporting your organisation's spatial and aspatial data.
 
-
 Execution
 ---------
 PoziConnect can be run in multiple modes:
 * Interactive / silent
     * Interactive: just launching the executable (or the Python script)
     This is used for running tasks ad hoc.
-    * Silent: with a batch wrapper using the --recipe flag (see below)
+    * Silent: with a batch wrapper using the `--recipe` flag (see below)
     This is used to run multiple tasks in an unsupervised manner (i.e. nightly, scheduled processing).
 * Development / production
     * Development: Python script launched from a wrapper
@@ -22,14 +21,14 @@ PoziConnect can be run in multiple modes:
 
 Files and directory structure
 -----------------------------
-- app: contains coding resources (developer-only area)
-- app/include: contains the GDAL binaries (see below)
-- recipes: contains the recipes (text files listing successive tasks)
-- SQL: contains SQL query files referenced by tasks
-- tasks: contains the tasks INI files
-- PoziConnect.ini: sets some environment variables for the executable/Python script
-- PoziConnect.bat (or PoziConnect.sh): batch wrapper
-- PoziConnect.exe: Windows executable
+- `app`: contains coding resources (developer-only area)
+- `app/include`: contains the GDAL binaries (see below)
+- `recipes`: contains the recipes (text files listing successive tasks)
+- `SQL`: contains SQL query files referenced by tasks
+- `tasks`: contains the tasks INI files
+- `PoziConnect.ini`: sets some environment variables for the executable/Python script
+- `PoziConnect.bat` (or `PoziConnect.sh`): batch wrapper
+- `PoziConnect.exe`: Windows executable
 
 
 GDAL binaries
@@ -41,18 +40,35 @@ The binaries are available from:
 
     http://www.gisinternals.com/sdk/
 
-The binaries should be placed in app/include within a directory that reflects the binaries version, e.g:
+The binaries should be placed in `app/include` within a directory that reflects the binaries version, e.g:
 
     POZI_CONNECT_ROOT\app\include\release-1600-x64-gdal-1-9-mapserver-6-0
 
-In PoziConnect.ini, the variable GDAL_BASE must point to the bin directory within, e.g.:
+In `PoziConnect.ini`, the variable `GDAL\_BASE` must point to the bin directory within, e.g.:
 
     GDAL_BASE: app/include/release-1600-x64-gdal-1-9-mapserver-6-0/bin
 
 
+Mac installation
+----------------
+
+GDAL should be installed with Postgres support, and is best done via
+[homebrew](https://github.com/mxcl/homebrew):
+
+    brew update && brew install gdal --with-postgres
+
+After this, the output of `ogrinfo --formats` should include `-> "PostgreSQL" (read/write)`.
+
+Python libraries will need to be installed, including:
+
+    sudo easy_install pyodbc
+
+Launch PoziConnect via the `PoziConnect.sh` bash script.
+
+
 Recipes
 -------
-Recipes are invoked using the --recipe flag eg:
+Recipes are invoked using the `--recipe` flag eg:
 
     app/PlaceLab.py --recipe=recipes/example_01.txt
 
@@ -65,9 +81,9 @@ For developers
 Producing a new version of the PoziConnect executable:
 
 1.  code new features / fix bugs
-2.  in a Windows environment, create the PoziConnect executable by running: app/create_exe2.bat
-3.  the resulting PoziConnect.exe file is in: app/dist 
-4.  copy it to the POZI_CONNECT_ROOT
+2.  in a Windows environment, create the PoziConnect executable by running: `app/create_exe2.bat`
+3.  the resulting PoziConnect.exe file is in: `app/dist`
+4.  copy it to the `POZI_CONNECT_ROOT`
 
 Changing the logo:
 
