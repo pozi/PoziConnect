@@ -49,7 +49,7 @@ class OGRBase():
         self.options = options
 
         self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF']
-        self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL']
+        self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL','OCI']
 
         scriptName = ''
         try:
@@ -311,8 +311,26 @@ class OGRBase():
 			}
 			ogrinfo = OGRInfo(tmpItems)
 			ogrinfo.Process()
+
+	if format == "OCI":
+		# Normalisation of object (table, columns...) names
+		command += ["-lco", 'LAUNDER=YES']
+
+		if overwrite:
+			command += ["-lco", 'OVERWRITE=YES']
+			# Truncating previous table content
+			command += ["-lco", 'TRUNCATE=YES']
+
+		# Not creating spatial indexes if spatialindex set to false
+		spatialindex = items.get('index', True)
+		if not spatialindex:
+			command += ["-lco", 'INDEX=NO']
+					
+		# This maintains the name of the spatial column in non-spatial object to wkb_geometry 
+		if geometrytype != "NONE":
+			command += ["-lco", 'GEOMETRY_NAME=the_geom']
 		
-        return command
+	return command
 
     def PostProcess(self, items):
 	try:

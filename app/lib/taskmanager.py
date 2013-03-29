@@ -241,7 +241,7 @@ class Task():
 
         # A reference list of file and database formats
         self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF','XLS']
-        self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL']
+        self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL','OCI']
 
     def ParseDataStore(self, store, forcedFormat = None):
         if not store:
@@ -411,6 +411,16 @@ class Task():
                     'outputVars': ['Store', 'TableName'],
                 },
             },
+            'OCI': {
+                #'1-Schema+Table': {
+                    #'regExp': r'(PG:[^,]+),?({schemaName})\.({tableName})',
+                    #'outputVars': ['Store', 'SchemaName', 'TableName'],
+                #},
+                '2-Table Only': {
+                    'regExp': r'(OCI:[^:]+):?({tableName})',
+                    'outputVars': ['Store', 'TableName'],
+                },
+            },            
             'WFS': {
                 'WFS URL endpoint with table name': {
                     'regExp': r'(WFS:[^,]+),?({tableName})',
