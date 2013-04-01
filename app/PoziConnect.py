@@ -146,6 +146,13 @@ def init():
                 else:
                    env[key] = value
                    LOGGER.debug("setting: %s to %s" % (key, value))
+
+        if appConfig.has_section('POSIX') and os.name == 'posix':
+            for key, value in appConfig.items('POSIX'):
+               if key.lower() == 'unsetgdal_data' and value == True: # 'YES' becomes True
+                  del os.environ['GDAL_DATA']
+                  LOGGER.info("Unset environment variable GDAL_DATA")
+
     else:
         LOGGER.warn('Application config file could not be found! (%s)' % appConfigFile)
 
