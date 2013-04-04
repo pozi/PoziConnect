@@ -49,6 +49,14 @@ In `PoziConnect.ini`, the variable `GDAL\_BASE` must point to the bin directory 
     GDAL_BASE: app/include/release-1600-x64-gdal-1-9-mapserver-6-0/bin
 
 
+Compilation dependencies
+------------------------
+
+You need to place [PortablePython](http://www.portablepython.com/wiki/Download) here:
+
+	app\include\PortablePython_1.1_py2.6.1
+
+
 Mac installation
 ----------------
 

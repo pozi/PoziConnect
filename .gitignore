@@ -1,7 +1,11 @@
 input
 output
 SQL
-*.exe
+*.log
+*.pyc
+.svn
 sample
-
-
+app/build
+app/dist
+app/include/PortablePython*
+PoziConnect.exe
