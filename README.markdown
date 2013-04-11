@@ -44,7 +44,7 @@ The binaries should be placed in `app/include` within a directory that reflects 
 
     POZI_CONNECT_ROOT\app\include\release-1600-x64-gdal-1-9-mapserver-6-0
 
-In `PoziConnect.ini`, the variable `GDAL\_BASE` must point to the bin directory within, e.g.:
+In `PoziConnect.ini`, the variable `GDAL\_BASE` must point to the `bin` directory within, e.g.:
 
     GDAL_BASE: app/include/release-1600-x64-gdal-1-9-mapserver-6-0/bin
 
