@@ -219,7 +219,7 @@ class GUI_Main(Main ):
 
         fontface = self.options['FontFace']
         fontsize = int(self.options['FontSize'])
-        font = wx.Font(fontsize, wx.NORMAL, wx.NORMAL, wx.NORMAL, False, fontface)
+        font = wx.Font(fontsize, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, fontface)
         self.SetFont(font)
     # __init__()
         
