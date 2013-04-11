@@ -373,6 +373,7 @@ class GUI_Main(Main ):
         labelText = itemKey.replace('_',' ') 
 
         labelWidget = wx.StaticText( self.scrolledWindow, wx.ID_ANY, labelText, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.widgets += [labelWidget]
         self.flexGridSizer.Add( labelWidget, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, WIDGET_BORDER )
         
         entryWidget = None
@@ -387,11 +388,8 @@ class GUI_Main(Main ):
             entryWidget = self._new_text_field(defaultValue)
             self.text_fields[itemKey] = entryWidget
 
+        self.widgets += [entryWidget]
         self.flexGridSizer.Add( entryWidget , 0, wx.ALL|wx.EXPAND, WIDGET_BORDER )
-
-        # Keep track of widgets. We need to remove them when another task gets selected
-        # We store them in a list
-        self.widgets += [labelWidget, entryWidget]
     # _add_item()
 
 
