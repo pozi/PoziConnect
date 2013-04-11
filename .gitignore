@@ -7,5 +7,7 @@ SQL
 sample
 app/build
 app/dist
-app/include/PortablePython*
+app/include/Portable*Python*
+app/include/*gdal*
 PoziConnect.exe
+
