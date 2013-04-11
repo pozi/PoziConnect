@@ -75,7 +75,7 @@ class Main ( wx.Frame ):
 		
 		self.scrolledWindow = wx.ScrolledWindow( self, ID_SCROLLED_WINDOW, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL )
 		self.scrolledWindow.SetScrollRate( 5, 5 )
-		fieldsSizer = wx.FlexGridSizer( 2, 2, 0, 0 )
+		fieldsSizer = wx.FlexGridSizer( 0, 2, 0, 0 )
 		fieldsSizer.AddGrowableCol( 1 )
 		fieldsSizer.SetFlexibleDirection( wx.BOTH )
 		fieldsSizer.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_ALL )
