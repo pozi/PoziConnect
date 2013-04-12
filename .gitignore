@@ -5,8 +5,8 @@ SQL
 *.pyc
 .svn
 sample
-app/build
-app/dist
+build
+dist
 app/include/Portable*Python*
 app/include/*gdal*
 PoziConnect.exe
