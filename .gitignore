@@ -1,13 +1,13 @@
-input
-output
-SQL
-*.log
+# build artifacts
 *.pyc
-.svn
-sample
 build
 dist
-app/include/Portable*Python*
-app/include/*gdal*
-PoziConnect.exe
+
+# unbundled dependencies
+vendor
+
+# runtime files and directories
+input
+output
+*.log
 
