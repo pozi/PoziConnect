@@ -104,7 +104,7 @@ PoziConnect can be executed in several modes:
   (i.e. nightly, scheduled processing).
 
 
-### Layout
+## Layout
 
 - `app`: source code of the PoziConnect application
 - `vendor`: place external dependencies here for Windows (Python, GDAL)
