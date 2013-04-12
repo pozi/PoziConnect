@@ -17,8 +17,8 @@ formatters['file'] = '%(asctime)s - %(name)-15s - %(levelname)s - %(message)s'
 
 isExe = hasattr(sys, "frozen")
 
-#logLevel = logging.DEBUG
 logLevel = logging.INFO
+#logLevel = logging.DEBUG
 if isExe:
     logLevel = logging.INFO
 
