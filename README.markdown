@@ -23,7 +23,8 @@ Choose the following modules during installation:
 * wxPython
 * PyODBC
 
-Make sure that `PYTHON_DIR` is set correctly in `setenv_python.bat`. For example:
+Make sure that `PYTHON_DIR` in `setenv_python.bat` correctly points to the
+Python `App` directory. For example:
 
     SET PYTHON_DIR=%VENDOR%\Portable Python 2.7.3.2\App
 
