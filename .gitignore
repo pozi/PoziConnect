@@ -7,7 +7,7 @@ dist
 # unbundled dependencies
 vendor
 
-# runtime files and directories
+# runtime directories and files
 input
 output
 *.log

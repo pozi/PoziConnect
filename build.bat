@@ -20,3 +20,5 @@ xcopy /E recipes dist\recipes\
 mkdir dist\input
 mkdir dist\output
 
+set /P cname=[Press ENTER to close window]
+
