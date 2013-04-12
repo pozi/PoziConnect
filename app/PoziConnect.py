@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 """
-PlaceLab provides you with a simple interface for accessing, processing, analysing and exporting your organisation's spatial and aspatial data.
+PoziConnect provides you with a simple interface for accessing, processing, analysing and exporting your organisation's spatial and aspatial data.
 """
 
-import iniparse
 import logging
 import logging.config
 import optparse
@@ -11,13 +10,19 @@ import os
 import string
 import sys
 
+# Make dirs available to the sys path
+sys.path.extend(['app'])
+sys.path.extend(['app/external'])
+
+import iniparse
+
 # Get version from version file
-from version import version
+from PoziConnect.version import version
 
 # Import our own modules
-from lib.configparser import *
-from lib.gui.gui import * 
-from lib.logger import *
+from PoziConnect.configparser import *
+from PoziConnect.gui.gui import * 
+from PoziConnect.logger import *
 
 # Create logger
 LOGGER = Logger('main', 'output/PoziConnect.log')
@@ -81,8 +86,6 @@ def init():
     figure out where in the file system it resides and whether or 
     it is run as a Windows executable or not.
     """
-    # Make app dir available to the sys path
-    sys.path.extend(['app'])
 
     # Test whether we are an executable (py2exe)
     isExe = hasattr(sys, "frozen")

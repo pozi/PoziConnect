@@ -1,14 +1,10 @@
 from distutils.core import setup
-from version import version 
+from PoziConnect.version import version 
 import os
+import sys
 
-"""
-#setup(console=['bb.py'])
-          "optimize": 2,
-                          "includes": INCLUDE_STUFF,
-                          "compressed": 1,
-                          "bundle_files": 2}
-"""
+sys.path.extend(['app'])
+sys.path.extend(['app/external'])
 
 VERSION = version 
 APP_DIR = os.path.dirname(__file__)
@@ -27,7 +23,7 @@ VERSION = raw_input('\nGive new version number (default: %s): ' % VERSION) or VE
 if VERSION is not version:
     print "NEW VERSION! Writing to version.py"
     versionModule = "version = '%s'\n" % VERSION
-    versionFile = open(os.path.join(APP_DIR, 'version.py'), 'w')
+    versionFile = open(os.path.join(APP_DIR, 'PoziConnect\\version.py'), 'w')
 
     versionFile.write(versionModule)
     versionFile.close()
@@ -42,11 +38,14 @@ AUTHOR_URL = "http://groundtruth.com.au/placelab"
 PRODUCT_NAME = "Pozi Connect"
 SCRIPT_MAIN = os.path.join(APP_DIR, 'PoziConnect.py')
 VERSIONSTRING = PRODUCT_NAME + " BETA " + VERSION
-ICON_FILE = os.path.join(APP_DIR, 'lib\gui\PlaceLabIcon.ico')
-#LOGO_FILE = "lib\gui\PlaceLabBanner.png"
+ICON_FILE = os.path.join(APP_DIR, 'PoziConnect\gui\PlaceLabIcon.ico')
 
 MODULE_INCLUDES =[
     #'base64',
+    'wx',
+    'iniparse',
+    'agw',
+    'RealPyOdbc'
 ]
 
 MODULE_EXCLUDES =[

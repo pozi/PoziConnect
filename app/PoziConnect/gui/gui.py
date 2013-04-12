@@ -21,11 +21,11 @@ import wx
 from base64 import b64encode, b64decode
 
 import agw.hyperlink
-from lib.taskmanager import * 
-from lib.logger import *
+from PoziConnect.taskmanager import * 
+from PoziConnect.logger import *
 
 # Get version information
-from version import version
+from PoziConnect.version import version
 
 # Needed for non-blocking threads
 from multiprocessing import Process
@@ -104,7 +104,7 @@ class GUI(wx.App):
             self.icon = wx.Icon('icon',wx.BITMAP_TYPE_ICO )
 
             # Hardcoded file reference. TODO: Fix!
-            iconBitmap = wx.Bitmap("app/lib/gui/PlaceLabIcon.ico", wx.BITMAP_TYPE_ANY)
+            iconBitmap = wx.Bitmap("app/PoziConnect/gui/PlaceLabIcon.ico", wx.BITMAP_TYPE_ANY)
             self.icon.CopyFromBitmap(iconBitmap)
         finally:
             self.frame.SetIcon(self.icon)

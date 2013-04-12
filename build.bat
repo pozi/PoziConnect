@@ -1,7 +1,7 @@
 call setenv_python.bat
 python app\build.py py2exe
 
-xcopy /s /y app\dist\PoziConnect.exe .
+xcopy /s /y dist\PoziConnect.exe .
 
 ECHO Process completed. 
 

@@ -32,7 +32,7 @@ except:
     pass
 
 # Get version information
-from version import version
+from PoziConnect.version import version
 
 # For copying files
 import shutil

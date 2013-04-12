@@ -11,31 +11,6 @@ from logger import *
 from Crypt import *
 from SQLite import *
 
-"""
-# Import our own modules
-from lib.logger import *
-
-scriptName = ''
-try:
-    scriptName = __file___
-except Exception as e:
-    scriptName = sys.argv[0]
-
-appDirName = os.path.dirname(os.path.realpath(scriptName))
-rootDirName = os.path.realpath(appDirName + os.path.sep + '..')
-
-logger = Logger(rootDirName + '/output/output2.txt')
-sys.stdout = logger
-sys.stderr = logger
-
-self.logger.info("OGR =============")
-self.logger.info("scriptName", scriptName)
-self.logger.info("appDirName", appDirName)
-self.logger.info("rootDirName", rootDirName)
-
-
-"""
-
 class OGRBase():
     """
     @requires:

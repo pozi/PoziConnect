@@ -1,7 +1,7 @@
 from logger import *
 from OGR import *
 
-import RealPyOdbc
+from RealPyOdbc import RealPyOdbc
 
 #####################################################
 # Helper functions
