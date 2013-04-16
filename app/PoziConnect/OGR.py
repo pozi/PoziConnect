@@ -291,20 +291,27 @@ class OGRBase():
 		# Normalisation of object (table, columns...) names
 		command += ["-lco", 'LAUNDER=YES']
 
-		if overwrite:
-			command += ["-lco", 'OVERWRITE=YES']
-			# Truncating previous table content
-			command += ["-lco", 'TRUNCATE=YES']
+		# Overwrite by default
+		command += ["-overwrite"]
+
+		# Truncating previous table content
+		command += ["-lco", 'TRUNCATE=YES']
+
+		# Managing the target SRID - extract the numeric part coordinate system
+		if len(assigncoordsys.split(":"))<2:
+			self.logger.info("The coordinate system is required via a parameter 'AssignCoordSys'")
+		else:
+			command += ["-lco", 'srid='+assigncoordsys.split(":")[1]]		
 
 		# Not creating spatial indexes if spatialindex set to false
 		spatialindex = items.get('index', True)
 		if not spatialindex:
 			command += ["-lco", 'INDEX=NO']
-					
+
 		# This maintains the name of the spatial column in non-spatial object to wkb_geometry 
 		if geometrytype != "NONE":
 			command += ["-lco", 'GEOMETRY_NAME=the_geom']
-		
+
 	return command
 
     def PostProcess(self, items):
