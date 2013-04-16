@@ -10,5 +10,6 @@ vendor
 # runtime directories and files
 input
 output
+sample
 *.log
 
