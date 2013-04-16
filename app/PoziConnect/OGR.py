@@ -403,14 +403,15 @@ class OGRBase():
 
         try:
             import subprocess
+            import _subprocess
             kwargs = {}
 
             env = os.environ.copy()
 
             if subprocess.mswindows:
                 su = subprocess.STARTUPINFO()
-                su.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                su.wShowWindow = subprocess.SW_HIDE
+                su.dwFlags |= _subprocess.STARTF_USESHOWWINDOW
+                su.wShowWindow = _subprocess.SW_HIDE
                 kwargs['startupinfo'] = su
 
                 #gdal_data = gdal_path + '/gdal-data'
