@@ -417,7 +417,7 @@ class Task():
                     #'outputVars': ['Store', 'SchemaName', 'TableName'],
                 #},
                 '2-Table Only': {
-                    'regExp': r'(OCI:[^:]+):?({tableName})',
+                    'regExp': r'(OCI:[^,]+),?({tableName})',
                     'outputVars': ['Store', 'TableName'],
                 },
             },            
