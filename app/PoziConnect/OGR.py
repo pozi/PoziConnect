@@ -156,8 +156,6 @@ class OGRBase():
 
 	overwrite = items.get('overwrite', True)        
 
-
-
         if overwrite:
 
             # OGR's SQLite driver does not support DROPping tables,
@@ -294,14 +292,12 @@ class OGRBase():
 		# Overwrite by default
 		command += ["-overwrite"]
 
-		# Truncating previous table content
-		command += ["-lco", 'TRUNCATE=YES']
-
-		# Managing the target SRID - extract the numeric part coordinate system
-		if len(assigncoordsys.split(":"))<2:
-			self.logger.info("The coordinate system is required via a parameter 'AssignCoordSys'")
-		else:
-			command += ["-lco", 'srid='+assigncoordsys.split(":")[1]]		
+		# Managing the target SRID - extract the numeric part coordinate system (only if geometry type is not NONE)
+		if geometrytype != "NONE":
+			if not assigncoordsys:
+				self.logger.error("The coordinate system is required via a parameter 'AssignCoordSys'")
+			else:
+				command += ["-lco", 'srid='+assigncoordsys.split(":")[1]]		
 
 		# Not creating spatial indexes if spatialindex set to false
 		spatialindex = items.get('index', True)
