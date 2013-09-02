@@ -66,6 +66,10 @@ runtime directories and configuration taken from the top level of this repositor
 
 #### Other notes:
 
+* Running with setuptools 0.7.5 installed triggered the error
+  `AttributeError: ResourceManager instance has no attribute '_warn_unsafe_extraction'`.
+  Upgrading to setuptools 1.1 fixed the problem. Check your version of setuptools
+  with `which easy_install | xargs cat`.
 * Additional logging can be activated by setting the log level in `logger.py`
 * Sometimes, changes to the source code (`*.py`) are not correctly reflected in
   the corresponding compiled code (`*.pyc`). Delete the `*.pyc` files to force their
