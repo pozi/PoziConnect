@@ -66,10 +66,6 @@ runtime directories and configuration taken from the top level of this repositor
 
 #### Other notes:
 
-* Running with setuptools 0.7.5 installed triggered the error
-  `AttributeError: ResourceManager instance has no attribute '_warn_unsafe_extraction'`.
-  Upgrading to setuptools 1.1 fixed the problem. Check your version of setuptools
-  with `which easy_install | xargs cat`.
 * Additional logging can be activated by setting the log level in `logger.py`
 * Sometimes, changes to the source code (`*.py`) are not correctly reflected in
   the corresponding compiled code (`*.pyc`). Delete the `*.pyc` files to force their
@@ -78,20 +74,74 @@ runtime directories and configuration taken from the top level of this repositor
   
 ## Running on Mac/UNIX
 
-GDAL should be installed with Postgres support. On Mac, this is best done via
-[homebrew](https://github.com/mxcl/homebrew):
+It is good practice to use `virtualenv` to isolate Python dependencies
+(as described [here](http://docs.python-guide.org/en/latest/dev/virtualenvs/)),
+and `pip` to install those dependencies. However, in the case of PoziConnect
+this is complicated by two issues.
+
+### Special dependencies
+
+**Firstly**, PoziConnect depends on two things that are better installed as
+operating system packages: `GDAL` and `wxPython`.
+
+When `GDAL` is installed with its Python components, it provides Python
+langugage bindings, but also many extra command line tools. PoziConnect
+uses GDAL via the command line (not via Python bindings). Install it
+on Mac using [homebrew](https://github.com/mxcl/homebrew):
 
     brew update && brew install gdal --with-postgres
 
 After this, the output of `ogrinfo --formats` should include
 `-> "PostgreSQL" (read/write)`.
 
-Python libraries will need to be installed:
+The `wxPython` module integrates with operating system GUI components
+and is generally not installed via `pip`. Install it on Mac as described
+[here](http://stackoverflow.com/questions/9205317/how-do-i-install-wxpython-on-mac-os-x),
+with:
 
-* Definitely `pyodbc` (e.g. `sudo easy_install pyodbc`)
-* Maybe [`wxPython`](http://stackoverflow.com/questions/9205317/how-do-i-install-wxpython-on-mac-os-x)
+    brew update && brew install wxmac
 
-Launch PoziConnect using the `PoziConnect.sh` bash script.
+The `requirements.txt` file records module versions known to work together.
+
+The remaining, normal python module dependency is `pyodbc`. At this point you
+can [create a virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/),
+then install the recommended `pyodbc` into it:
+
+    pip install `grep pyodbc requirements.txt`
+
+The output of `pip freeze` should now be very similar to `requirements.txt`.
+
+### Virtualenv ain't framework
+
+**Secondly**, as you will see if you attempt to run PoziConnect from within the
+virtualenv, `wxPython` needs to be run from a framework build of Python in
+order to access the screen. The Python in the virtualenv is not a proper
+framework Python (even when created from your system's famework Python).
+This issue is discussed [in the `wxPython` documentation](http://wiki.wxpython.org/wxPythonVirtualenvOnMac).
+
+The solution is to run PoziConnect from your system Python, but give it access
+to the modules in the virtualenv. This access can be set up after Python is
+started, as described [in the virtualenv documentation](http://www.virtualenv.org/en/latest/#using-virtualenv-without-bin-python).
+
+If the environment variable `POZICONNECT_ACTIVATE_THIS` is set to the full
+path of a `bin/activate_this.py` file in a virtualenv, PoziConnect will perform
+`execfile` on it to gain access to that virtualenv's modules.
+
+You can set the `POZICONNECT_ACTIVATE_THIS` variable using a tool like
+[autoenv](https://github.com/kennethreitz/autoenv).
+
+### Run it
+
+With this done, run `deactivate` to leave your virtualenv and return to
+your system's Python, then launch PoziConnect using the `PoziConnect.sh` bash
+script.
+
+### Other notes
+
+* Running with setuptools 0.7.5 installed triggered the error
+  `AttributeError: ResourceManager instance has no attribute '_warn_unsafe_extraction'`.
+  Upgrading to setuptools 1.1 fixed the problem. Check your version of setuptools
+  with `which easy_install | xargs cat`.
 
 
 ## Modes of execution

@@ -13,3 +13,6 @@ output
 sample
 *.log
 
+# other
+.env
+

@@ -10,6 +10,10 @@ import os
 import string
 import sys
 
+# Make modules from a virtualenv accessible if requested
+if os.environ.get('POZICONNECT_ACTIVATE_THIS', False):
+    execfile(os.environ['POZICONNECT_ACTIVATE_THIS'], dict(__file__=os.environ['POZICONNECT_ACTIVATE_THIS']))
+
 # Make dirs available to the sys path
 sys.path.extend(['app'])
 sys.path.extend(['app/external'])
