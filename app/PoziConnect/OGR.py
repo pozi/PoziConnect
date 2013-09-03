@@ -406,12 +406,12 @@ class OGRBase():
 
         try:
             import subprocess
-            import _subprocess
             kwargs = {}
 
             env = os.environ.copy()
 
             if subprocess.mswindows:
+                import _subprocess
                 su = subprocess.STARTUPINFO()
                 su.dwFlags |= _subprocess.STARTF_USESHOWWINDOW
                 su.wShowWindow = _subprocess.SW_HIDE
