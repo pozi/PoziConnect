@@ -14,6 +14,9 @@ mkdir dist\vendor
 for /f "delims=" %%a in ('dir vendor\*gdal* /B') do @set GDAL_NAME=%%a
 xcopy /E "vendor\%GDAL_NAME%" dist\vendor\%GDAL_NAME%\
 
+@rem the following line is to resolve the "Errno -1073741512" issue
+copy "dist\vendor\%GDAL_NAME%\bin\libeay32.dll" "dist\vendor\%GDAL_NAME%\bin\gdal\apps\libeay32.dll"
+
 copy PoziConnect.ini dist\
 xcopy /E tasks dist\tasks\
 xcopy /E recipes dist\recipes\
