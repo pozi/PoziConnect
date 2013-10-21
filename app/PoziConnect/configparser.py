@@ -21,7 +21,7 @@ from datetime import datetime,date,time
 class ConfigParser(iniparse.RawConfigParser):
     """
     ConfigParser extends iniparse's RawConfigParser and
-    adds custom functionality that is needed for 
+    adds custom functionality that is needed for
     PlaceLab
     """
     def __init__(self, options = {}):
@@ -40,9 +40,9 @@ class ConfigParser(iniparse.RawConfigParser):
         # Then merge provided options with the default ones
         self.options.update(options)
 
-        # Preserve the case for keywords 
-        # (ie: 'InputDir' does not change into 'inputdir') 
-        self.optionxform = str 
+        # Preserve the case for keywords
+        # (ie: 'InputDir' does not change into 'inputdir')
+        self.optionxform = str
 
         #if self.options.get('configFile'):
             #self.read(self.options['configFile'])
@@ -50,14 +50,14 @@ class ConfigParser(iniparse.RawConfigParser):
         loggerName = 'ConfigParser'
         if 'logger' in options:
             logger = options.get('logger')
-            self.logger = logger.clone(loggerName) 
+            self.logger = logger.clone(loggerName)
         else:
             self.logger = Logger(loggerName)
 
     def items(self, section, recurse = False):
         """
         Extends original 'items' method and applies some magic
-        to the output, like replacing template strings {....} 
+        to the output, like replacing template strings {....}
         with their values.
         It can also detect boolean-like values (true/false, on/off)
         and replace them with booleans.
@@ -70,14 +70,14 @@ class ConfigParser(iniparse.RawConfigParser):
         # Loop through all global sections and incrementally
         # build up the vars dictionary by:
         # - First getting the vars from first global section
-        # - Then substituting vars from the next section with 
+        # - Then substituting vars from the next section with
         #   the vars from the previous section until we have
         #   had all sections
         # We add the recurse option to prevent infinite recursion
         vars = self.GetGlobalVars() if not recurse else {}
 
         # Replace add variables from within the section
-        # to the dictionary of vars too. They have 
+        # to the dictionary of vars too. They have
         # precedence over any previously defined vars
         for index, item in enumerate(items):
 
@@ -94,11 +94,11 @@ class ConfigParser(iniparse.RawConfigParser):
                 item = item.Booleanise()
 
             if self.options.get('lowerKeys'):
-                item = item.lowerKey() 
+                item = item.lowerKey()
 
             items[index] = item
 
-        # Booleanise values 
+        # Booleanise values
         """
         if self.options.get('booleaniseValues'):
             for item in items:
@@ -119,7 +119,7 @@ class ConfigParser(iniparse.RawConfigParser):
 
     def GetGlobalSections(self):
         """
-        Shorthand for return the items from the global section 
+        Shorthand for return the items from the global section
         or an empty list
         """
         return self.GetOption('globalSections', [])
@@ -131,7 +131,7 @@ class ConfigParser(iniparse.RawConfigParser):
         # We define a few environment variables to allow substitution anywhere (global or task-level)
         d = datetime.now()
         vars = {'current_date':d.strftime("%Y-%m-%d"),'current_time':d.strftime("%H%M%S"),'current_user':getpass.getuser()}
-        
+
         for globalSection in self.GetGlobalSections():
 
             # Continue if config does not have this global section
@@ -147,7 +147,7 @@ class ConfigParser(iniparse.RawConfigParser):
             items = items.SubstituteVars(vars)
 
             vars.update(items)
-        return vars 
+        return vars
 
     def GetOption(self, option, default = None):
         """
@@ -169,11 +169,11 @@ class ConfigParser(iniparse.RawConfigParser):
         """
         #self.logger.info("SubstituteVars", vars)
 
-        # Create a new config and fill it 
+        # Create a new config and fill it
         # with substituted variables
         config = self.__class__(self.options)
 
-        # Loop through all sections and 
+        # Loop through all sections and
         # fill new config with sections and
         # it's items with subtituted variables
         for section in self.sections():
@@ -189,7 +189,7 @@ class ConfigParser(iniparse.RawConfigParser):
         """
         Provide a nicely formatted config string of itself
         """
-        # Create a file-like object so we can read/write 
+        # Create a file-like object so we can read/write
         # Config2 into/from a string
         strio = StringIO.StringIO()
 
@@ -201,7 +201,7 @@ class ConfigParser(iniparse.RawConfigParser):
 
     # Make nice printable version of object
     def __str__(self):
-        return self.ToString() 
+        return self.ToString()
 
 class Item(tuple):
     """
@@ -222,7 +222,7 @@ class Item(tuple):
         # value in the vars dictionary. Uses a regular expression (re)
         # Returns a list of tuples like ("{OutputFolder}", "OutputFolder")
         # Note: We force value to be string since it could be a boolean
-        for match in re.finditer(r'({(.+?)})',str(value)): 
+        for match in re.finditer(r'({(.+?)})',str(value)):
             varBracket, varPlain = match.groups()
             if varPlain in vars:
                 value = value.replace(varBracket, vars.get(varPlain))
@@ -232,7 +232,7 @@ class Item(tuple):
 
         false = ['false', 'no', 'off', 'disable']
         true = ['true', 'yes', 'on', 'enable']
-            
+
         key, value = self
 
         value2 = str(value).strip().lower()
@@ -246,7 +246,7 @@ class Item(tuple):
     def lowerKey(self):
         key, value = self
         return Item((key.lower(), value))
- 
+
 class Items(list):
     """
     Helper class

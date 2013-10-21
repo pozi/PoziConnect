@@ -27,13 +27,13 @@ if wx.Platform == "__WXMAC__":
                     "\xB8\xE3\xF0\xE1\xE0\xE0\xF0\xE1\xB8\xE3\x19\xF3" \
                     "\x01\xF0\x03\xF8\x0F\xFE\xFF\xFF"
     """ AuiNotebook close button image on wxMAC. """
-    
+
 elif wx.Platform == "__WXGTK__":
     nb_close_bits = "\xff\xff\xff\xff\x07\xf0\xfb\xef\xdb\xed\x8b\xe8" \
                     "\x1b\xec\x3b\xee\x1b\xec\x8b\xe8\xdb\xed\xfb\xef" \
                     "\x07\xf0\xff\xff\xff\xff\xff\xff"
     """ AuiNotebook close button image on wxGTK. """
-    
+
 else:
     nb_close_bits = "\xff\xff\xff\xff\xff\xff\xff\xff\xe7\xf3\xcf\xf9" \
                     "\x9f\xfc\x3f\xfe\x3f\xfe\x9f\xfc\xcf\xf9\xe7\xf3" \
@@ -211,8 +211,8 @@ AUI_NB_CLOSE_ON_TAB_LEFT   = 1 << 18
 (a la Camino browser). """
 AUI_NB_TAB_FLOAT           = 1 << 19
 """ Allows the floating of single tabs.
-Known limitation: when the notebook is more or less full screen, tabs 
-cannot be dragged far enough outside of the notebook to become 
+Known limitation: when the notebook is more or less full screen, tabs
+cannot be dragged far enough outside of the notebook to become
 floating pages. """
 AUI_NB_DRAW_DND_TAB        = 1 << 20
 """ Draws an image representation of a tab while dragging. """

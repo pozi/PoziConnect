@@ -68,13 +68,13 @@ class PyInfoFrame(wx.Frame):
     def __init__(self, parent, message, title, icon):
         """
         Default class constructor.
-        
+
         :param `parent`: the frame parent;
         :param `message`: the message to display in the L{PyBusyInfo};
         :param `title`: the main L{PyBusyInfo} title;
         :param `icon`: an icon to draw as the frame icon, an instance of `wx.Bitmap`.
         """
-        
+
         wx.Frame.__init__(self, parent, wx.ID_ANY, title, wx.DefaultPosition,
                           wx.DefaultSize, wx.NO_BORDER|wx.FRAME_TOOL_WINDOW|wx.FRAME_SHAPED|wx.STAY_ON_TOP)
 
@@ -96,7 +96,7 @@ class PyInfoFrame(wx.Frame):
         # Bind the events to draw ourselves
         panel.Bind(wx.EVT_PAINT, self.OnPaint)
         panel.Bind(wx.EVT_ERASE_BACKGROUND, self.OnErase)
-            
+
         self.Centre(wx.BOTH)
 
         # Create a non-rectangular region to set the frame shape
@@ -106,7 +106,7 @@ class PyInfoFrame(wx.Frame):
         dc.SetBackground(wx.Brush(wx.Colour(0, 0, 0), wx.SOLID))
         dc.Clear()
         dc.SetPen(wx.Pen(wx.Colour(0, 0, 0), 1))
-        dc.DrawRoundedRectangle(0, 0, size.x, size.y, 12)                
+        dc.DrawRoundedRectangle(0, 0, size.x, size.y, 12)
         r = wx.RegionFromBitmapColour(bmp, wx.Colour(0, 0, 0))
         # Store the non-rectangular region
         self.reg = r
@@ -131,7 +131,7 @@ class PyInfoFrame(wx.Frame):
         if event:
             # GTK only
             event.Skip()
-            
+
 
     def OnPaint(self, event):
         """
@@ -141,7 +141,7 @@ class PyInfoFrame(wx.Frame):
         """
 
         panel = event.GetEventObject()
-        
+
         dc = wx.BufferedPaintDC(panel)
         dc.Clear()
 
@@ -174,7 +174,7 @@ class PyInfoFrame(wx.Frame):
             dc.DrawBitmap(self._icon, 5, 5, True)
         else:
             textXPos, textYPos = 5, 0
-        
+
         dc.DrawText(self._title, textXPos, textYPos+5)
         dc.DrawLine(5, 25, rect.width-5, 25)
 
@@ -182,7 +182,7 @@ class PyInfoFrame(wx.Frame):
         dc.SetPen(wx.Pen(startColour, 1))
         dc.SetBrush(wx.TRANSPARENT_BRUSH)
         dc.DrawRoundedRectangle(0, 0, size.x, size.y-1, 12)
-        
+
 
     def OnErase(self, event):
         """
@@ -190,13 +190,13 @@ class PyInfoFrame(wx.Frame):
 
         :param `event`: a `wx.EraseEvent` event to be processed.
 
-        :note: This method is intentionally empty to reduce flicker.        
+        :note: This method is intentionally empty to reduce flicker.
         """
 
         # This is empty on purpose, to avoid flickering
         pass
 
-                
+
 # -------------------------------------------------------------------- #
 # The actual PyBusyInfo implementation
 # -------------------------------------------------------------------- #
@@ -209,7 +209,7 @@ class PyBusyInfo(object):
     def __init__(self, message, parent=None, title=_("Busy"), icon=wx.NullBitmap):
         """
         Default class constructor.
-        
+
         :param `parent`: the L{PyBusyInfo} parent;
         :param `message`: the message to display in the L{PyBusyInfo};
         :param `title`: the main L{PyBusyInfo} title;
@@ -224,11 +224,11 @@ class PyBusyInfo(object):
         if parent and parent.HasFlag(wx.STAY_ON_TOP):
             # we must have this flag to be in front of our parent if it has it
             self._infoFrame.SetWindowStyleFlag(wx.STAY_ON_TOP)
-            
+
         self._infoFrame.Show(True)
         self._infoFrame.Refresh()
         self._infoFrame.Update()
-        
+
 
     def __del__(self):
         """ Overloaded method, for compatibility with wxWidgets. """
@@ -237,4 +237,4 @@ class PyBusyInfo(object):
         self._infoFrame.Destroy()
 
 
-        
+

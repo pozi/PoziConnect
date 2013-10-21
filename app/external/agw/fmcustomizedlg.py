@@ -96,10 +96,10 @@ class FMTitlePanel(wx.Panel):
         dc = wx.MemoryDC()
         dc.SelectObject(wx.EmptyBitmap(1, 1))
         dc.SetFont(wx.SystemSettings_GetFont( wx.SYS_DEFAULT_GUI_FONT ))
-        
+
         ww, hh = dc.GetTextExtent("Tp")
         dc.SelectObject(wx.NullBitmap)
-        
+
         # Set minimum panel size
         if ww < 250:
             ww = 250
@@ -116,10 +116,10 @@ class FMTitlePanel(wx.Panel):
 
         :param `event`: a `wx.EraseEvent` event to be processed.
 
-        :note: This method is intentionally empty to reduce flicker.        
+        :note: This method is intentionally empty to reduce flicker.
         """
 
-        pass        
+        pass
 
 
     def OnPaint(self, event):
@@ -128,7 +128,7 @@ class FMTitlePanel(wx.Panel):
 
         :param `event`: a `wx.PaintEvent` event to be processed.
         """
-        
+
         dc = wx.BufferedPaintDC(self)
 
         # Draw the background
@@ -159,13 +159,13 @@ class FMCustomizeDlg(wx.Dialog):
 
         :param `parent`: the L{FMCustomizeDlg} parent window.
         """
-        
+
         self._book = None
 
         if not parent:
             wx.Dialog.__init__(self)
             return
-    
+
         wx.Dialog.__init__(self, parent, wx.ID_ANY, _("Customize"), wx.DefaultPosition,
                            wx.DefaultSize, wx.DEFAULT_DIALOG_STYLE)
 
@@ -208,41 +208,41 @@ class FMCustomizeDlg(wx.Dialog):
 
     def Initialise(self):
         """ Initialzes the L{LabelBook} pages. """
-    
+
         self._book.DeleteAllPages()
         self._book.AddPage(self.CreateMenusPage(), _("Menus"), True)
         self._book.AddPage(self.CreateOptionsPage(), _("Options"), False)
-    
+
 
     def CloseDialog(self):
         """ Closes the dialog. """
-    
+
         self.EndModal(wx.ID_OK)
-    
+
 
     def ConnectEvents(self):
         """ Does nothing at the moment. """
 
-        pass        
-    
-    
+        pass
+
+
     def CreateMenusPage(self):
         """ Creates the L{LabelBook} pages with L{FlatMenu} information. """
-    
+
         menus = wx.Panel(self._book, wx.ID_ANY, wx.DefaultPosition, wx.Size(300, 300))
         sz = wx.BoxSizer(wx.VERTICAL)
         menus.SetSizer(sz)
 
         choices = []
-        
+
         mb = self.GetParent()
 
         if not self.created:
             self.order = []
-        
+
         # Add all the menu items that are currently visible to the list
         for i in xrange(len(mb._items)):
-        
+
             dummy, lableOnly = ArtManager.Get().GetAccelIndex(mb._items[i].GetTitle())
             choices.append(lableOnly)
 
@@ -250,7 +250,7 @@ class FMCustomizeDlg(wx.Dialog):
             self._visibleMenus.update({lableOnly: mb._items[i].GetMenu()})
             if not self.created:
                 self.order.append(lableOnly)
-        
+
         # Add all hidden menus to the menu bar
 
         for key in self._hiddenMenus.keys():
@@ -284,20 +284,20 @@ class FMCustomizeDlg(wx.Dialog):
         sz.Add(self._checkListMenus, 1, wx.EXPAND | wx.TOP | wx.RIGHT | wx.LEFT, 2)
 
         self.created = True
-        
+
         return menus
-    
+
 
     def CreateShortcutsPage(self):
         """ Creates the L{LabelBook} shorcuts page. """
-    
+
         shorcuts = wx.Panel(self._book, wx.ID_ANY, wx.DefaultPosition, wx.Size(300, 300))
         return shorcuts
-    
+
 
     def CreateOptionsPage(self):
         """ Creates the L{LabelBook} option page which holds the L{FlatMenu} styles. """
-    
+
         options = wx.Panel(self._book, wx.ID_ANY, wx.DefaultPosition, wx.Size(300, 300))
 
         # Create some options here
@@ -305,7 +305,7 @@ class FMCustomizeDlg(wx.Dialog):
         options.SetSizer(vsizer)
 
         #-----------------------------------------------------------
-        # options page layout 
+        # options page layout
         # - Menu Style: Default or 2007 (radio group)
         #
         # - Default Style Settings:     (static box)
@@ -332,7 +332,7 @@ class FMCustomizeDlg(wx.Dialog):
 
         # connect event to the control
         self._menuStyle.Bind(wx.EVT_RADIOBOX, self.OnChangeStyle)
-        
+
         vsizer.Add(self._menuStyle, 0, wx.EXPAND | wx.ALL, 5)
 
         self._sbStyle = wx.StaticBoxSizer(wx.StaticBox(options, -1, _("Default style settings")), wx.VERTICAL)
@@ -347,7 +347,7 @@ class FMCustomizeDlg(wx.Dialog):
         self._drawBorder.Bind(wx.EVT_CHECKBOX, self.OnChangeStyle)
         self._sbStyle.Add(self._drawBorder, 0, wx.EXPAND | wx.ALL, 3)
         self._drawBorder.SetValue(ArtManager.Get().GetMenuBarBorder())
-        
+
         self._shadowUnderTBID = wx.NewId()
         self._shadowUnderTB =  wx.CheckBox(options, self._shadowUnderTBID, _("Toolbar float over menu bar"))
         self._shadowUnderTB.Bind(wx.EVT_CHECKBOX, self.OnChangeStyle)
@@ -356,7 +356,7 @@ class FMCustomizeDlg(wx.Dialog):
 
         vsizer.Add(self._sbStyle, 0, wx.EXPAND | wx.ALL, 5)
 
-        # Misc 
+        # Misc
         sb = wx.StaticBoxSizer(wx.StaticBox(options, -1, _("Colour Scheme")), wx.VERTICAL)
         self._colourID = wx.NewId()
 
@@ -395,7 +395,7 @@ class FMCustomizeDlg(wx.Dialog):
         self._colour.ProcessEvent(event)
 
         return options
-    
+
 
     def OnMenuChecked(self, event):
         """
@@ -405,7 +405,7 @@ class FMCustomizeDlg(wx.Dialog):
 
         :note: This method handles the L{FlatMenu} menus visibility.
         """
-    
+
         id = event.GetInt()
         checked = self._checkListMenus.IsChecked(id)
         menuName = self._checkListMenus.GetString(id)
@@ -413,11 +413,11 @@ class FMCustomizeDlg(wx.Dialog):
         mb = self.GetParent()
 
         if checked:
-        
+
             # remove the item from the hidden map
             if self._hiddenMenus.has_key(menuName):
                 menu = self._hiddenMenus.pop(menuName)
-            
+
             # add it to the visible map
             if menu:
                 self._visibleMenus.update({menuName: menu})
@@ -428,7 +428,7 @@ class FMCustomizeDlg(wx.Dialog):
             mb.Refresh()
 
         else:
-        
+
             # remove the item from the visible items
             if self._visibleMenus.has_key(menuName):
                 menu = self._visibleMenus.pop(menuName)
@@ -436,12 +436,12 @@ class FMCustomizeDlg(wx.Dialog):
             # add it to the hidden map
             if menu:
                 self._hiddenMenus.update({menuName: menu})
-            
+
             # update the menubar
             pos = mb.FindMenu(menuName)
             if pos != wx.NOT_FOUND:
                 mb.Remove(pos)
-            
+
             mb.Refresh()
 
         if self.created:
@@ -455,46 +455,46 @@ class FMCustomizeDlg(wx.Dialog):
 
             self._visibleMenus = visible
             self._hiddenMenus = hidden
-        
-    
+
+
     def OnChangeStyle(self, event):
         """
         Handles the ``wx.EVT_CHECKBOX`` event for L{FMCustomizeDlg}.
 
         :param `event`: a `wx.CommandEvent` event to be processed.
 
-        :note: This method handles the L{FlatMenu} styles.        
+        :note: This method handles the L{FlatMenu} styles.
         """
 
         mb = self.GetParent()
-        
+
         if event.GetId() == self._menuStyleID:
-        
+
             if event.GetSelection() == 0:
-            
+
                 # Default style
                 ArtManager.Get().SetMenuTheme(StyleXP)
                 self._drawBorder.Enable()
                 self._verticalGradient.Enable()
                 mb.Refresh()
-            
+
             else:
-            
+
                 ArtManager.Get().SetMenuTheme(Style2007)
                 self._drawBorder.Enable(False)
-                self._verticalGradient.Enable(False)            
+                self._verticalGradient.Enable(False)
                 mb.Refresh()
-            
+
             return
-        
+
         if event.GetId() == self._drawBorderID:
-        
+
             ArtManager.Get().DrawMenuBarBorder(event.IsChecked())
             mb.Refresh()
             return
-        
+
         if event.GetId() == self._drawVertGradID:
-        
+
             ArtManager.Get().SetMBVerticalGradient(event.IsChecked())
             mb.Refresh()
             return
@@ -514,6 +514,6 @@ class FMCustomizeDlg(wx.Dialog):
         if event.GetId() == self._shadowUnderTBID:
             ArtManager.Get().SetRaiseToolbar(event.IsChecked())
             mb.Refresh()
-            return 
+            return
 
 

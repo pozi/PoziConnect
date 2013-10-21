@@ -1,14 +1,14 @@
 
 """
-This is the Advanced Generic Widgets package (AGW). It provides many 
-custom-drawn wxPython controls: some of them can be used as a replacement 
-of the platform native controls, others are simply an addition to the 
+This is the Advanced Generic Widgets package (AGW). It provides many
+custom-drawn wxPython controls: some of them can be used as a replacement
+of the platform native controls, others are simply an addition to the
 already rich wxPython widgets set.
 
 
 Description:
 
-AGW contains many different modules, listed below. Items labelled with 
+AGW contains many different modules, listed below. Items labelled with
 an asterisk were already present in `wx.lib` before:
 
 - AdvancedSplash: reproduces the behaviour of `wx.SplashScreen`, with more

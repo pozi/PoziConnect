@@ -121,7 +121,7 @@ import wx
 
 # These Are Used To Declare If The AdvancedSplash Should Be Destroyed After The
 # Timeout Or Not
-                        
+
 AS_TIMEOUT = 1
 """ `AdvancedSplash` will be destroyed after `timeout` milliseconds. """
 AS_NOTIMEOUT = 2
@@ -153,7 +153,7 @@ class AdvancedSplash(wx.Frame):
     AdvancedSplash tries to reproduce the behavior of `wx.SplashScreen`, with
     some enhancements.
 
-    This is the main class implementation.    
+    This is the main class implementation.
     """
     def __init__(self, parent, id=-1, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.FRAME_NO_TASKBAR | wx.FRAME_SHAPED | wx.STAY_ON_TOP,
@@ -176,7 +176,7 @@ class AdvancedSplash(wx.Frame):
          L{AdvancedSplash} will be destroyed after `timeout` milliseconds;
 
         :param `extrastyle`: this value specifies the L{AdvancedSplash} styles:
-        
+
          - ``AS_TIMEOUT``: L{AdvancedSplash} will be destroyed after `timeout` milliseconds;
          - ``AS_NO_CENTER``: L{AdvancedSplash} can be destroyed by clicking on it,
            pressing a key or by explicitly call the `Close()` method;
@@ -323,7 +323,7 @@ class AdvancedSplash(wx.Frame):
         Handles the ``wx.EVT_MOUSE_EVENTS`` events for L{AdvancedSplash}.
 
         :param `event`: a `wx.MouseEvent` to be processed.
-        
+
         :note: This reproduces the behavior of `wx.SplashScreen`.
         """
 
@@ -338,7 +338,7 @@ class AdvancedSplash(wx.Frame):
         Handles the ``wx.EVT_CHAR`` event for L{AdvancedSplash}.
 
         :param `event`: a `wx.KeyEvent` to be processed.
-        
+
         :note: This reproduces the behavior of `wx.SplashScreen`.
         """
 
@@ -350,7 +350,7 @@ class AdvancedSplash(wx.Frame):
         Handles the ``wx.EVT_CLOSE`` event for L{AdvancedSplash}.
 
         :param `event`: a `wx.CloseEvent` to be processed.
-        
+
         :note: This reproduces the behavior of `wx.SplashScreen`.
         """
 

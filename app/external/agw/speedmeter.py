@@ -67,7 +67,7 @@ Sample usage::
 
 
 None of the options (a part of parent class) are strictly required, if you
-use the defaults you get a very simple SpeedMeter. 
+use the defaults you get a very simple SpeedMeter.
 
 
 Methods and Settings
@@ -175,7 +175,7 @@ SM_BUFFERED_DC = 1
 # SM_DRAW_FANCY_TICKS: With This Style You Can Use XML Tags To Create
 #                      Some Custom Text And Draw It At The Ticks Position.
 #                      See wx.lib.fancytext For The Tags.
-                                  
+
 SM_ROTATE_TEXT = 1
 """ Draws the ticks rotated: the ticks are rotated accordingly to the tick marks positions. """
 SM_DRAW_SECTORS = 2
@@ -276,7 +276,7 @@ class BufferedWindow(wx.Window):
         """
         This method should be overridden when sub-classed.
 
-        :param `dc`: an instance of `wx.DC`.        
+        :param `dc`: an instance of `wx.DC`.
         """
 
         pass
@@ -302,7 +302,7 @@ class BufferedWindow(wx.Window):
 
         :param `event`: a `wx.SizeEvent` event to be processed.
         """
-        
+
         self.Width, self.Height = self.GetClientSizeTuple()
 
         # Make new off screen bitmap: this bitmap will always have the
@@ -389,7 +389,7 @@ class SpeedMeter(BufferedWindow):
          ``SM_DRAW_GRADIENT``              0x200 A gradient of colours will fill the control.
          ``SM_DRAW_FANCY_TICKS``           0x400 With this style you can use xml tags to create some custom text and draw it at the ticks position. See `wx.lib.fancytext` for the tags.
          =========================== =========== ==================================================
-         
+
         :param `bufferedstyle`: this value allows you to use the normal `wx.PaintDC` or the
          double buffered drawing options:
 
@@ -473,7 +473,7 @@ class SpeedMeter(BufferedWindow):
         Draws everything on the empty bitmap.
         Here all the chosen styles are applied.
 
-        :param `dc`: an instance of `wx.DC`.        
+        :param `dc`: an instance of `wx.DC`.
         """
 
         size  = self.GetClientSize()
@@ -1134,7 +1134,7 @@ class SpeedMeter(BufferedWindow):
         Sets the range of existence for L{SpeedMeter}.
 
         :param `start`: the starting angle, in radians;
-        :param `end`: the ending angle, in radians.        
+        :param `end`: the ending angle, in radians.
         """
 
         self._anglerange = [start, end]
@@ -1156,7 +1156,7 @@ class SpeedMeter(BufferedWindow):
         :param `colours`: a Python list of colours. The length of this list should be
          the same as the number of circle sectors in L{SpeedMeter}. If defaulted to ``None``,
          all the intervals will have a white colour.
-         
+
         :note: Every interval (circle sector) should have a colour.
         """
 
@@ -1513,7 +1513,7 @@ class SpeedMeter(BufferedWindow):
         :param `radius`: the L{SpeedMeter} radius;
         :param `angle`: the angular position of the mouse;
         :param `centerX`: the x position of the L{SpeedMeter} center;
-        :param `centerX`: the y position of the L{SpeedMeter} center.        
+        :param `centerX`: the y position of the L{SpeedMeter} center.
         """
 
         x = radius*cos(angle) + centerX

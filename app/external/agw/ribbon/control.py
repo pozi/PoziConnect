@@ -16,7 +16,7 @@ effect is done by the art provider when painting the background of the control,
 and hence in the paint handler for the new control, you should call a draw background
 method on the art provider (L{RibbonMSWArtProvider.DrawButtonBarBackground} and
 L{RibbonMSWArtProvider.DrawToolBarBackground} typically just redraw what is behind the
-rectangle being painted) if you want transparent regions. 
+rectangle being painted) if you want transparent regions.
 
 """
 
@@ -32,7 +32,7 @@ class RibbonControl(wx.PyControl):
 
         if isinstance(parent, RibbonControl):
             self._art = parent.GetArtProvider()
-    
+
 
     def SetArtProvider(self, art):
         """
@@ -66,13 +66,13 @@ class RibbonControl(wx.PyControl):
         """
         :returns: ``True`` if this window can take any size (greater than its minimum size),
          ``False`` if it can only take certain sizes.
-        
+
         :see: L{GetNextSmallerSize}, L{GetNextLargerSize}
         """
 
         return True
 
-    
+
     def DoGetNextSmallerSize(self, direction, size):
         """
         Implementation of L{GetNextSmallerSize}.
@@ -87,12 +87,12 @@ class RibbonControl(wx.PyControl):
 
         # Dummy implementation for code which doesn't check for IsSizingContinuous() == true
         minimum = self.GetMinSize()
-        
+
         if direction & wx.HORIZONTAL and size.x > minimum.x:
-            size.x -= 1        
+            size.x -= 1
         if direction & wx.VERTICAL and size.y > minimum.y:
             size.y -= 1
-        
+
         return size
 
 
@@ -113,7 +113,7 @@ class RibbonControl(wx.PyControl):
             size.x += 1
         if direction & wx.VERTICAL:
             size.y += 1
-        
+
         return size
 
 
@@ -127,7 +127,7 @@ class RibbonControl(wx.PyControl):
 
         :returns: if there is no smaller size, otherwise a suitable size which is smaller
          in the given direction(s), and the same as in the other direction (if any).
-         
+
         :see: L{IsSizingContinuous}, L{DoGetNextSmallerSize}
         """
 
@@ -147,7 +147,7 @@ class RibbonControl(wx.PyControl):
 
         :returns: if there is no larger size, otherwise a suitable size which is larger
          in the given direction(s), and the same as in the other direction (if any).
-         
+
         :see: L{IsSizingContinuous}, L{DoGetNextLargerSize}
         """
 
@@ -173,5 +173,5 @@ class RibbonControl(wx.PyControl):
 
         pass
 
-    
+
 

@@ -427,7 +427,7 @@ class PieCtrl(wx.Window):
     PieCtrl is somewhat a "static" control, that you may create in order to display
     a simple pie chart on a `wx.Panel` or similar.
     """
-    
+
     def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=0, name="PieCtrl"):
         """
@@ -666,7 +666,7 @@ class PieCtrl(wx.Window):
         """
         Draws all the sectors of L{PieCtrl}.
 
-        :param `dc`: an instance of `wx.DC`.        
+        :param `dc`: an instance of `wx.DC`.
         """
 
         w, h = self.GetSize()
@@ -850,7 +850,7 @@ class ProgressPie(PieCtrl):
     ProgressPie tries to emulate the behavior of `wx.ProgressDialog`, but
     using a pie chart instead of a gauge.
     """
-    
+
     def __init__(self, parent, maxvalue, value, id=wx.ID_ANY,
                  pos=wx.DefaultPosition, size=wx.DefaultSize, style=0):
         """

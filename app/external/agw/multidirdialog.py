@@ -295,20 +295,20 @@ class MultiDirDialog(wx.Dialog):
         self.ddStyle = style
 
         wx.Dialog.__init__(self, parent, pos=pos, size=size, style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER, name=name)
-        
+
         self.dirCtrl = wx.GenericDirCtrl(self, size=(300, 300), style=wx.DIRCTRL_3D_INTERNAL|wx.DIRCTRL_DIR_ONLY)
         self.folderText = wx.TextCtrl(self, -1, defaultPath, style=wx.TE_PROCESS_ENTER)
         self.CreateButtons()
-        
-        self.SetProperties(title)           
-        # Setup the layout and frame properties        
+
+        self.SetProperties(title)
+        # Setup the layout and frame properties
         self.SetupDirCtrl(defaultPath)
         self.LayoutItems()
         self.BindEvents()
-    
+
         if parent and pos == wx.DefaultPosition:
             self.CenterOnParent()
-            
+
 
     def SetupDirCtrl(self, defaultPath):
         """
@@ -353,14 +353,14 @@ class MultiDirDialog(wx.Dialog):
 
         if not defaultPath.strip():
             return
-        
+
         # Set the wx.GenericDirCtrl default path
         self.dirCtrl.ExpandPath(defaultPath)
         self.dirCtrl.SetDefaultPath(defaultPath)
         self.dirCtrl.SetPath(defaultPath)
 
         self.folderText.SetValue(treeCtrl.GetItemText(treeCtrl.GetSelections()[0]))
-        
+
 
     def SetProperties(self, title):
         """
@@ -382,13 +382,13 @@ class MultiDirDialog(wx.Dialog):
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         textSizer = wx.BoxSizer(wx.HORIZONTAL)
         bottomSizer = wx.BoxSizer(wx.HORIZONTAL)
-        
+
         staticText = wx.StaticText(self, -1, _("Choose one or more folders:"))
         f = staticText.GetFont()
         f.SetWeight(wx.BOLD)
         staticText.SetFont(f)
 
-        # Add the main wx.GenericDirCtrl        
+        # Add the main wx.GenericDirCtrl
         mainSizer.Add(staticText, 0, wx.EXPAND|wx.ALL, 10)
         mainSizer.Add(self.dirCtrl, 1, wx.EXPAND|wx.ALL, 10)
 
@@ -440,7 +440,7 @@ class MultiDirDialog(wx.Dialog):
         :param `itemText`: the selected tree control item text.
         """
 
-        # Get the item parent        
+        # Get the item parent
         parent = treeCtrl.GetItemParent(item)
         if parent != treeCtrl.GetRootItem():
             # Not the root item, recurse again on it
@@ -448,7 +448,7 @@ class MultiDirDialog(wx.Dialog):
             itemText = self.RecurseTopDir(treeCtrl, parent, itemText)
 
         return itemText
-    
+
 
     def BindEvents(self):
         """ Binds the events to specific methods. """
@@ -462,7 +462,7 @@ class MultiDirDialog(wx.Dialog):
 
     def CreateButtons(self):
         """ Creates the ``OK``, ``Cancel`` and ``New folder`` bitmap buttons. """
-        
+
         # Build a couple of fancy buttons
         self.newButton = buttons.ThemedGenBitmapTextButton(self, wx.ID_NEW, _new.GetBitmap(),
                                                            _("Make New Folder"), size=(-1, 28))
@@ -478,7 +478,7 @@ class MultiDirDialog(wx.Dialog):
 
         :param `event`: a `wx.CommandEvent` event to be processed.
 
-        :note: This method handles the ``OK`` button press. 
+        :note: This method handles the ``OK`` button press.
         """
 
         self.EndModal(wx.ID_OK)
@@ -490,7 +490,7 @@ class MultiDirDialog(wx.Dialog):
 
         :param `event`: a `wx.CommandEvent` event to be processed.
 
-        :note: This method handles the ``Cancel`` button press. 
+        :note: This method handles the ``Cancel`` button press.
         """
 
         self.OnClose(event)
@@ -512,7 +512,7 @@ class MultiDirDialog(wx.Dialog):
 
         :param `event`: a `wx.KeyEvent` event to be processed.
         """
-        
+
         if event.GetKeyCode() == wx.WXK_ESCAPE:
             # Close the dialog, no action
             self.OnClose(event)
@@ -528,20 +528,20 @@ class MultiDirDialog(wx.Dialog):
         Handles the ``wx.EVT_TREE_SEL_CHANGED`` event for the tree control associated
         with L{MultiDirDialog}.
 
-        :param `event`: a `wx.TreeEvent` event to be processed.        
+        :param `event`: a `wx.TreeEvent` event to be processed.
         """
 
         if self.IsBeingDeleted():
             # We are being destroyed...
             event.Skip()
             return
-        
+
         item = event.GetItem()
         if not item.IsOk():
             # Bad item?
             event.Skip()
             return
-        
+
         treeCtrl = self.dirCtrl.GetTreeCtrl()
         text = treeCtrl.GetItemText(item)
         # Set the item name into the text control
@@ -549,4 +549,4 @@ class MultiDirDialog(wx.Dialog):
         self.folderText.Refresh()
 
         event.Skip()
-        
+

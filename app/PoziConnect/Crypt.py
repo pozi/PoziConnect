@@ -18,13 +18,13 @@ from logger import *
 class Crypt:
     """
     Class to encrypt/decrypt any string provided to it
-    Based on: http://www.daniweb.com/code/snippet216632.html 
+    Based on: http://www.daniweb.com/code/snippet216632.html
     """
     def __init__(self, options = {}):
         loggerName = 'CryptXOR'
         if 'logger' in options:
             logger = options.get('logger')
-            self.logger = logger.clone(loggerName) 
+            self.logger = logger.clone(loggerName)
         else:
             self.logger = Logger(loggerName)
 
@@ -37,7 +37,7 @@ class Crypt:
         }
 
         # Then merge provided options with the default ones
-        self.options.update(options) 
+        self.options.update(options)
 
         self.regexp = self.options.get('prefix', '') + self.options.get('base64test', '') + self.options.get('postfix', '')
 
@@ -56,7 +56,7 @@ class Crypt:
         """
         Receives a string that either is or has got an encrypted
         password. Will decrypt it and either return the decrypted
-        password or the password replaced with asterixes (handy 
+        password or the password replaced with asterixes (handy
         for preventing showing passwords in logs).
         """
         self.logger.debug('Decrypt', string)
@@ -77,15 +77,15 @@ class Crypt:
             self.logger.debug("Contains passwords", string)
 
             for password in re.findall(self.regexp, output):
-                decrypted = "******" if hidePassword else self.Decrypt(password) 
+                decrypted = "******" if hidePassword else self.Decrypt(password)
                 output = output.replace(password, decrypted)
 
         self.logger.debug('Decrypted: ', output)
         return output
 
     def IsPassword(self, string):
-        """ 
-        Returns boolean about whether or not a string is 
+        """
+        Returns boolean about whether or not a string is
         an encrypted password
         """
         self.logger.debug('isEncrypted', string)
@@ -100,7 +100,7 @@ class Crypt:
 
     def ContainsPassword(self, string):
         """
-        Returns boolean about whether or not a string contains 
+        Returns boolean about whether or not a string contains
         an encrypted password
         """
         self.logger.debug('ContainsPassword', string)
@@ -109,7 +109,7 @@ class Crypt:
         else:
             return False
 
-    
+
     def CryptXOR(self, string, pw):
         """
         cryptXOR(filename, pw) takes the string and xor encrypts/decrypts it against the password pw
@@ -130,7 +130,7 @@ class Crypt:
                 n = 0
             p = ord(pw[n])
             n += 1
-            
+
             # read one character from stream sr
             c = sr.read(1)
             b = ord(c)
@@ -151,7 +151,7 @@ class Crypt:
         sw.close()
 
         return output
-    
+
 # allows cryptXOR() to be used as a module
 if __name__ == '__main__':
 
@@ -162,7 +162,7 @@ if __name__ == '__main__':
 
     # let's use a fixed password for testing
     password = "nixon"
-   
+
     #print "String:", str1
     #print "password:", password
 
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     #encrypted =  b64encode(cryptXOR(str1, password))
     encrypted =  crypt.Encrypt(str1)
     encrypted2 =  crypt.Encrypt(str2)
-    
+
     #print "encrypted:", encrypted
 
     print "iscrypted:", crypt.IsPassword(encrypted)

@@ -7,7 +7,7 @@ import sys
 LOG_DIR = 'output'  # get from ini file?
 if not os.path.exists(LOG_DIR):
     os.mkdir(LOG_DIR)
-  
+
 
 fileName = os.path.join(LOG_DIR, 'PoziConnect.log')
 
@@ -45,14 +45,14 @@ if not isExe:
 # a simple class with a write method
 class Logger:
     def __init__(self, name = 'root', fileName = ''):
-       
+
         # set a format which is simpler for console use
         self.fileName = fileName
 
         self.logger = logging.getLogger(name)
 
     def clone(self, name = '' ):
-        clone = Logger(name, self.fileName) 
+        clone = Logger(name, self.fileName)
         #if self.fileName:
             #clone.SetFile(self.fileName)
         return clone
@@ -82,23 +82,23 @@ class Logger:
     def debug(self, *args):
         string = self.ArgsToString(args)
         self.logger.debug(string)
- 
+
     def info(self, *args):
         string = self.ArgsToString(args)
         self.logger.info(string)
- 
+
     def warn(self, *args):
         string = self.ArgsToString(args)
         self.logger.warn(string)
- 
+
     def error(self, *args):
         string = self.ArgsToString(args)
         self.logger.error(string)
- 
+
     def critical(self, *args):
         string = self.ArgsToString(args)
         self.logger.critical(string)
- 
+
 # example with redirection of sys.stdout
 if __name__ == "__main__":
     logger = Logger('log.txt')                  # a writable object

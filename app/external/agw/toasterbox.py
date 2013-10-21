@@ -159,7 +159,7 @@ class ToasterBox(wx.Timer):
          ``TB_DEFAULT_STYLE``   0x2008002  Default window style for `ToasterBox`, with no caption nor close box.
          ``TB_CAPTION``         0x22009806 `ToasterBox` will have a caption, with the possibility to set a title for the `ToasterBox` frame, and a close box.
          ====================== ========== ================================
-       
+
         :param `closingstyle`: the closing style for L{ToasterBox}. Can be one of the
          following bits:
 
@@ -179,7 +179,7 @@ class ToasterBox(wx.Timer):
          ``TB_SCR_TYPE_UD``           0x1 `ToasterBox` will scroll from up to down
          ``TB_SCR_TYPE_DU``           0x2 `ToasterBox` will scroll from down to up
          ==================== =========== ==================================================
-         
+
         """
 
         self._parent = parent
@@ -207,7 +207,7 @@ class ToasterBox(wx.Timer):
 
         if parent is not None:
             parent.Bind(wx.EVT_ICONIZE, lambda evt: [w.Hide() for w in winlist])
- 
+
         self._tb = ToasterBoxWindow(self._parent, self, self._tbstyle, self._windowstyle,
                                     self._closingstyle, scrollType=scrollType)
 
@@ -216,7 +216,7 @@ class ToasterBox(wx.Timer):
         """
         Sets the L{ToasterBox} position on screen.
 
-        :param `pos`: the widget position, an instance of `wx.Point`.        
+        :param `pos`: the widget position, an instance of `wx.Point`.
         """
 
         self._popupposition = pos
@@ -225,7 +225,7 @@ class ToasterBox(wx.Timer):
     def SetPopupPositionByInt(self, pos):
         """
         Sets the L{ToasterBox} position on screen, at one of the screen corners.
- 
+
         :param `pos`: an integer specifying the screen corner, namely:
 
          ============= ========================================
@@ -236,7 +236,7 @@ class ToasterBox(wx.Timer):
                2       Bottom left screen corner
                3       Bottom right screen corner
          ============= ========================================
-         
+
         """
 
         w, h = wx.GetDisplaySize()
@@ -268,7 +268,7 @@ class ToasterBox(wx.Timer):
 
         :param `colour`: a valid `wx.Colour` object. If defaulted to ``None``, then
          the background colour will be white.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -284,7 +284,7 @@ class ToasterBox(wx.Timer):
 
         :param `colour`: a valid `wx.Colour` object. If defaulted to ``None``, then
          the background colour will be black.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -300,7 +300,7 @@ class ToasterBox(wx.Timer):
 
         :param `colour`: a valid `wx.Colour` object. If defaulted to ``None``, then
          a simple generic font will be generated.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -314,7 +314,7 @@ class ToasterBox(wx.Timer):
         """
         Sets the L{ToasterBox} size.
 
-        :param `size`: the new control size, an instance of `wx.Size`.        
+        :param `size`: the new control size, an instance of `wx.Size`.
         """
 
         self._popupsize = size
@@ -336,7 +336,7 @@ class ToasterBox(wx.Timer):
 
         :param `bitmap`: a valid `wx.Bitmap` object. If defaulted to ``None``, then
          no background bitmap is used.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -362,7 +362,7 @@ class ToasterBox(wx.Timer):
         Sets the L{ToasterBox} text label.
 
         :param `text`: the widget label.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -374,7 +374,7 @@ class ToasterBox(wx.Timer):
         Adds a panel to the L{ToasterBox}.
 
         :param `panel`: an instance of `wx.Window`.
-        
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_COMPLEX`` style.
         """
 
@@ -436,7 +436,7 @@ class ToasterBox(wx.Timer):
         """
 
         # recalc where to place this popup
- 
+
         self._tb.SetPopupPosition((self._popupposition[0], self._popupposition[1] -
                                    self._popupsize[1]*len(winlist)))
 
@@ -451,7 +451,7 @@ class ToasterBox(wx.Timer):
         """
         Sets the L{ToasterBox} title if it was created with ``TB_CAPTION`` window style.
 
-        :param `title`: the L{ToasterBox} caption title.        
+        :param `title`: the L{ToasterBox} caption title.
         """
 
         self._tb.SetTitle(title)
@@ -528,7 +528,7 @@ class ToasterBoxWindow(wx.Frame):
     and panel adding. Depending on the style you choose, L{ToasterBoxWindow} will
     behave differently in order to handle widgets inside it.
     """
-    
+
     def __init__(self, parent, parent2, tbstyle, windowstyle, closingstyle,
                  scrollType=TB_SCR_TYPE_DU):
         """
@@ -556,7 +556,7 @@ class ToasterBoxWindow(wx.Frame):
          ``TB_DEFAULT_STYLE``   0x2008002  Default window style for `ToasterBox`, with no caption nor close box.
          ``TB_CAPTION``         0x22009806 `ToasterBox` will have a caption, with the possibility to set a title for the `ToasterBox` frame, and a close box.
          ====================== ========== ================================
-       
+
         :param `closingstyle`: the closing style for L{ToasterBoxWindow}. Can be one of the
          following bits:
 
@@ -645,7 +645,7 @@ class ToasterBoxWindow(wx.Frame):
 
         :param `bitmap`: a valid `wx.Bitmap` object. If defaulted to ``None``, then
          no background bitmap is used.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -663,7 +663,7 @@ class ToasterBoxWindow(wx.Frame):
         """
         Sets the L{ToasterBox} size.
 
-        :param `size`: the new control size, an instance of `wx.Size`.        
+        :param `size`: the new control size, an instance of `wx.Size`.
         """
 
         self.SetDimensions(self._bottomright.x, self._bottomright.y, size[0], size[1])
@@ -673,7 +673,7 @@ class ToasterBoxWindow(wx.Frame):
         """
         Sets the L{ToasterBox} position on screen.
 
-        :param `pos`: the widget position, an instance of `wx.Point`.        
+        :param `pos`: the widget position, an instance of `wx.Point`.
         """
 
         self._bottomright = wx.Point(pos[0] + self.GetSize().GetWidth(),
@@ -684,7 +684,7 @@ class ToasterBoxWindow(wx.Frame):
     def SetPopupPositionByInt(self, pos):
         """
         Sets the L{ToasterBox} position on screen, at one of the screen corners.
- 
+
         :param `pos`: an integer specifying the screen corner, namely:
 
          ============= ========================================
@@ -695,7 +695,7 @@ class ToasterBoxWindow(wx.Frame):
                2       Bottom left screen corner
                3       Bottom right screen corner
          ============= ========================================
-         
+
         """
 
         w, h = wx.GetDisplaySize()
@@ -747,7 +747,7 @@ class ToasterBoxWindow(wx.Frame):
         Adds a panel to the L{ToasterBox}.
 
         :param `panel`: an instance of `wx.Window`.
-        
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_COMPLEX`` style.
         """
 
@@ -767,7 +767,7 @@ class ToasterBoxWindow(wx.Frame):
         Sets the L{ToasterBox} text label.
 
         :param `text`: the widget label.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -780,7 +780,7 @@ class ToasterBoxWindow(wx.Frame):
 
         :param `colour`: a valid `wx.Colour` object. If defaulted to ``None``, then
          a simple generic font will be generated.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -791,7 +791,7 @@ class ToasterBoxWindow(wx.Frame):
         """
         Returns the L{ToasterBox} text.
 
-        :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.       
+        :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
         return self._popuptext
@@ -832,7 +832,7 @@ class ToasterBoxWindow(wx.Frame):
 
         :param `colour`: a valid `wx.Colour` object. If defaulted to ``None``, then
          the background colour will be white.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -845,7 +845,7 @@ class ToasterBoxWindow(wx.Frame):
 
         :param `colour`: a valid `wx.Colour` object. If defaulted to ``None``, then
          the background colour will be black.
-         
+
         :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
@@ -938,7 +938,7 @@ class ToasterBoxWindow(wx.Frame):
 
             if windowsize <= 0:
                break
-            
+
             # checking the type of the scroll (from up to down or from down to up)
             if self._scrollType == TB_SCR_TYPE_UD:
                 dimY = self._dialogtop[1]
@@ -962,12 +962,12 @@ class ToasterBoxWindow(wx.Frame):
 
     def DrawText(self):
         """ Draws the text label for a L{ToasterBox} with ``TB_SIMPLE`` style set. """
-      
+
         if self._staticbitmap is not None:
             dc = wx.ClientDC(self._staticbitmap)
         else:
             dc = wx.ClientDC(self)
-           
+
         dc.SetFont(self._textfont)
 
         if not hasattr(self, "text_coords"):
@@ -985,7 +985,7 @@ class ToasterBoxWindow(wx.Frame):
 
         :param `dc`: an instance of `wx.DC`.
 
-        :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.        
+        :note: Use this method only for a L{ToasterBox} created with the ``TB_SIMPLE`` style.
         """
 
         # border from sides and top to text (in pixels)

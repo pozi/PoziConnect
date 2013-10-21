@@ -92,7 +92,7 @@ def XLSread(options,self):
 			# Go back at the beginning of the file
 			csv_file.seek(0)
 
-			# Increment the column index	
+			# Increment the column index
 			col_index=col_index+1
 
 		# Close the Excel file cursor and connexion handler

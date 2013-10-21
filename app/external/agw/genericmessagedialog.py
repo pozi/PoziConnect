@@ -375,7 +375,7 @@ class StdDialogButtonSizer(wx.BoxSizer):
         """ Default class constructor. """
 
         wx.BoxSizer.__init__(self, wx.HORIZONTAL)
-        
+
         self._buttonAffirmative = None
         self._buttonApply = None
         self._buttonNegative = None
@@ -391,8 +391,8 @@ class StdDialogButtonSizer(wx.BoxSizer):
         """
 
         buttonId = mybutton.GetId()
-        
-        if buttonId in [wx.ID_OK, wx.ID_YES, wx.ID_SAVE]:    
+
+        if buttonId in [wx.ID_OK, wx.ID_YES, wx.ID_SAVE]:
             self._buttonAffirmative = mybutton
 
         elif buttonId == wx.ID_APPLY:
@@ -403,7 +403,7 @@ class StdDialogButtonSizer(wx.BoxSizer):
             self._buttonCancel = mybutton
         elif buttonId in [wx.ID_HELP, wx.ID_CONTEXT_HELP]:
             self._buttonHelp = mybutton
-            
+
 
     def SetAffirmativeButton(self, button):
         """
@@ -439,7 +439,7 @@ class StdDialogButtonSizer(wx.BoxSizer):
         """ Realizes the sizer depending on the platform. """
 
         if wx.Platform == "__WXMAC__":
-            
+
             self.Add((0, 0), 0, wx.LEFT, 6)
             if self._buttonHelp:
                 self.Add(self._buttonHelp, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 6)
@@ -448,7 +448,7 @@ class StdDialogButtonSizer(wx.BoxSizer):
                 # HIG POLICE BULLETIN - destructive buttons need extra padding
                 # 24 pixels on either side
                 self.Add(self._buttonNegative, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 12)
-            
+
             # extra whitespace between help/negative and cancel/ok buttons
             self.Add((0, 0), 1, wx.EXPAND, 0)
 
@@ -456,7 +456,7 @@ class StdDialogButtonSizer(wx.BoxSizer):
                 self.Add(self._buttonCancel, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 6)
                 # Cancel or help should be default
                 # self._buttonCancel.SetDefaultButton()
-            
+
             # Ugh, Mac doesn't really have apply dialogs, so I'll just
             # figure the best place is between Cancel and OK
             if self._buttonApply:
@@ -469,10 +469,10 @@ class StdDialogButtonSizer(wx.BoxSizer):
                     self._buttonAffirmative.SetLabel(_("Save"))
                     if self._buttonNegative:
                         self._buttonNegative.SetLabel(_("Don't Save"))
-                
+
             # Extra space around and at the right
             self.Add((12, 24))
-            
+
         elif wx.Platform == "__WXGTK__":
 
             self.Add((0, 0), 0, wx.LEFT, 9)
@@ -484,7 +484,7 @@ class StdDialogButtonSizer(wx.BoxSizer):
 
             if self._buttonNegative:
                 self.Add(self._buttonNegative, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 3)
-            
+
             # according to HIG, in explicit apply windows the order is:
             # [ Help                     Apply   Cancel   OK ]
             if self._buttonApply:
@@ -494,10 +494,10 @@ class StdDialogButtonSizer(wx.BoxSizer):
                 self.Add(self._buttonCancel, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, 3)
                 # Cancel or help should be default
                 # self._buttonCancel.SetDefaultButton()
-            
+
             if self._buttonAffirmative:
                 self.Add(self._buttonAffirmative, 0, wx.ALIGN_CENTRE | wx.LEFT, 6)
-                
+
         elif wx.Platform == "__WXMSW__":
             # Windows
             # center-justify buttons
@@ -508,10 +508,10 @@ class StdDialogButtonSizer(wx.BoxSizer):
 
             if self._buttonNegative:
                 self.Add(self._buttonNegative, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, self._buttonNegative.ConvertDialogSizeToPixels(wx.Size(2, 0)).x)
-            
+
             if self._buttonCancel:
                 self.Add(self._buttonCancel, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, self._buttonCancel.ConvertDialogSizeToPixels(wx.Size(2, 0)).x)
-            
+
             if self._buttonApply:
                 self.Add(self._buttonApply, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, self._buttonApply.ConvertDialogSizeToPixels(wx.Size(2, 0)).x)
 
@@ -534,15 +534,15 @@ class StdDialogButtonSizer(wx.BoxSizer):
 
             if self._buttonAffirmative:
                 self.Add(self._buttonAffirmative, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, self._buttonAffirmative.ConvertDialogSizeToPixels(wx.Size(4, 0)).x)
-            
+
             if self._buttonNegative:
                 self.Add(self._buttonNegative, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, self._buttonNegative.ConvertDialogSizeToPixels(wx.Size(4, 0)).x)
-            
+
             if self._buttonCancel:
                 self.Add(self._buttonCancel, 0, wx.ALIGN_CENTRE | wx.LEFT | wx.RIGHT, self._buttonCancel.ConvertDialogSizeToPixels(wx.Size(4, 0)).x)
                 # Cancel or help should be default
                 # self._buttonCancel.SetDefaultButton()
-            
+
 
 class GenericMessageDialog(wx.Dialog):
     """
@@ -575,13 +575,13 @@ class GenericMessageDialog(wx.Dialog):
         wx.Dialog.__init__(self, parent, wx.ID_ANY, caption, pos,
                            size, wx.DEFAULT_DIALOG_STYLE|wx.WANTS_CHARS)
 
-        self._dialogStyle = style        
+        self._dialogStyle = style
 
         topsizer = wx.BoxSizer(wx.VERTICAL)
         icon_text = wx.BoxSizer(wx.HORIZONTAL)
 
         case = self._dialogStyle & wx.ICON_MASK
-        
+
         if case == wx.ICON_ERROR:
             bitmap = _error
 
@@ -615,7 +615,7 @@ class GenericMessageDialog(wx.Dialog):
         topsizer.SetSizeHints(self)
         topsizer.Fit(self)
         size = self.GetSize()
-        
+
         if size.x < size.y*3/2:
             size.x = size.y*3/2
             self.SetSize(size)
@@ -638,8 +638,8 @@ class GenericMessageDialog(wx.Dialog):
 
         self.Bind(wx.EVT_NAVIGATION_KEY, self.OnNavigation)
         self.SwitchFocus()
-        
-        
+
+
     def OnYes(self, event):
         """ L{GenericMessageDialog} had received a ``wx.ID_YES`` answer. """
 
@@ -663,7 +663,7 @@ class GenericMessageDialog(wx.Dialog):
 
         # Allow cancellation via ESC/Close button except if
         # only YES and NO are specified.
-        
+
         if self._dialogStyle & wx.YES_NO != wx.YES_NO or self._dialogStyle & wx.CANCEL:
             self.EndModal(wx.ID_CANCEL)
 
@@ -693,7 +693,7 @@ class GenericMessageDialog(wx.Dialog):
             self.OnCancel(None)
         elif key in [ord("o"), ord("O")] and wx.ID_OK in ids:
             self.OnOk(None)
-            
+
         event.Skip()
 
 
@@ -717,7 +717,7 @@ class GenericMessageDialog(wx.Dialog):
         button = wx.Window.FindFocus()
         buttonId = button.GetId()
         self.EndModal(buttonId)
-            
+
 
     def SwitchFocus(self):
         """ Switch focus between buttons. """
@@ -726,7 +726,7 @@ class GenericMessageDialog(wx.Dialog):
         font = self.GetFont()
         boldFont = wx.Font(font.GetPointSize(), font.GetFamily(), font.GetStyle(), wx.BOLD,
                            font.GetUnderlined(), font.GetFaceName())
-        
+
         for child in self.GetChildren():
             if isinstance(child, wx.lib.buttons.ThemedGenBitmapTextButton) or \
                isinstance(child, AB.AquaButton) or isinstance(child, GB.GradientButton):
@@ -736,9 +736,9 @@ class GenericMessageDialog(wx.Dialog):
                 else:
                     # Restore the other buttons...
                     child.SetFont(font)
-                child.Refresh()                
+                child.Refresh()
 
-        
+
     def CreateButtonSizer(self, flags):
         """
         Creates a sizer with standard buttons.
@@ -755,7 +755,7 @@ class GenericMessageDialog(wx.Dialog):
          ``wx.NO_DEFAULT``      0x80 Used with ``wx.YES`` and ``wx.NO``, makes No button the default
          ``wx.HELP``          0x8000 Show a Help button
          ================= ========= ==========================
-        
+
         :note: The sizer lays out the buttons in a manner appropriate to the platform.
         """
 
@@ -783,7 +783,7 @@ class GenericMessageDialog(wx.Dialog):
             topsizer.AddF(wx.StaticLine(self), wx.SizerFlags().Expand().DoubleBorder(wx.BOTTOM))
             topsizer.AddF(sizer, wx.SizerFlags().Expand())
             sizer = topsizer
-            
+
         return sizer
 
 
@@ -797,7 +797,7 @@ class GenericMessageDialog(wx.Dialog):
 
         :note: The sizer lays out the buttons in a manner appropriate to the platform.
         """
-        
+
         sizer = StdDialogButtonSizer()
         no = yes = ok = None
         if flags & wx.OK:
@@ -812,7 +812,7 @@ class GenericMessageDialog(wx.Dialog):
             klass = GB.GradientButton
         else:
             klass = buttons.ThemedGenBitmapTextButton
-            
+
         if flags & wx.OK:
             ok = klass(self, wx.ID_OK, _ok.GetBitmap(), _("OK"), size=size)
             sizer.AddButton(ok)
@@ -820,19 +820,19 @@ class GenericMessageDialog(wx.Dialog):
         if flags & wx.CANCEL:
             cancel = klass(self, wx.ID_CANCEL, _cancel.GetBitmap(), _("Cancel"), size=size)
             sizer.AddButton(cancel)
-        
+
         if flags & wx.YES:
             yes = klass(self, wx.ID_YES, _yes.GetBitmap(), _("Yes"), size=size)
             sizer.AddButton(yes)
-        
+
         if flags & wx.NO:
             no = klass(self, wx.ID_NO, _no.GetBitmap(), _("No"), size=size)
             sizer.AddButton(no)
-                
+
         if flags & wx.HELP:
             help = klass(self, wx.ID_HELP, _help.GetBitmap(), _("Help"), size=size)
             sizer.AddButton(help)
-        
+
         if flags & wx.NO_DEFAULT:
             if no:
                 no.SetDefault()
@@ -844,7 +844,7 @@ class GenericMessageDialog(wx.Dialog):
             elif yes:
                 yes.SetDefault()
                 yes.SetFocus()
-            
+
         if flags & wx.OK:
             self.SetAffirmativeId(wx.ID_OK)
         elif flags & wx.YES:

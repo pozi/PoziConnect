@@ -11,7 +11,7 @@ class SQLite():
         loggerName = 'SQLite'
         if 'logger' in options:
             logger = options.get('logger')
-            self.logger = logger.clone(loggerName) 
+            self.logger = logger.clone(loggerName)
         else:
             self.logger = Logger(loggerName)
 
@@ -34,15 +34,15 @@ class SQLite():
         ###############################################
         # Add some useful functions to our SQL
         ###############################################
-        
+
         def regexp(expr, item):
-          return re.search(expr, item or '') is not None  
+          return re.search(expr, item or '') is not None
 
         def regexp_replace(text, pattern, replacement):
 
             if text is None:
             	text = ''
-            	
+
             """
             print "-" * 60
             print "pattern", pattern
@@ -53,7 +53,7 @@ class SQLite():
             print "FINDALL  ", re.findall(pattern, text)
             """
 
-            	
+
             output = None
 
 
@@ -67,7 +67,7 @@ class SQLite():
                 try:
                     output = re.sub(pattern, replacement, text)
                 except Exception as e:
-                    error = [] 
+                    error = []
                     error.append("regexp_replace failed:")
                     error.append("  errror:      %s" % str(e))
                     error.append("  text:        %s" % text)
@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
     DROP TABLE IF EXISTS tblcopy; CREATE TABLE tblcopy AS
 
-        SELECT name n1, 
+        SELECT name n1,
           regexp_replace(Description, '%s', '\1') as Desc1,
           regexp_replace(Description, '%s', '\2') as Desc2,
           regexp_replace(Description, '%s', '\3') as Desc3
@@ -112,6 +112,6 @@ if __name__ == "__main__":
       DROP TABLE IF EXISTS ?; CREATE TABLE ? AS
       ?
       ;
-    """ 
+    """
     cursor.executescript(table, table, sql)
 

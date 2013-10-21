@@ -104,7 +104,7 @@ def InRange(val, valMin, valMax):
 
     :param `val`: the value to test;
     :param `valMin`: the minimum range value;
-    :param `valMax`: the maximum range value.    
+    :param `valMax`: the maximum range value.
     """
 
     return val >= valMin and val <= valMax
@@ -167,7 +167,7 @@ class PeakMeterData(object):
         self._falloff = falloff
         self._peak = peak
 
-        
+
     def IsEqual(self, pm):
         """
         Returns whether 2 instances of L{PeakMeterData} are the same.
@@ -220,7 +220,7 @@ class PeakMeterCtrl(wx.PyControl):
          ``PM_HORIZONTAL``         0x0 Shows horizontal bands in `PeakMeterCtrl`.
          ``PM_VERTICAL``           0x1 Shows vertical bands in `PeakMeterCtrl`.
          ================= =========== ==================================================
-        
+
         """
 
         wx.PyControl.__init__(self, parent, id, pos, size, style)
@@ -256,7 +256,7 @@ class PeakMeterCtrl(wx.PyControl):
         self._clrHigh = colRed
         self._speed = DEFAULT_SPEED
         self._timer = wx.Timer(self)
-        
+
         # clear vector data
         self._meterData = []
 
@@ -268,10 +268,10 @@ class PeakMeterCtrl(wx.PyControl):
         for i in xrange(self._numBands):
             pm = PeakMeterData(self._maxValue, self._maxValue, self._speed)
             self._meterData.append(pm)
-        
+
         self.Refresh()
 
-        
+
     def SetBackgroundColour(self, colourBgnd):
         """
         Changes the background colour of L{PeakMeterCtrl}.
@@ -310,7 +310,7 @@ class PeakMeterCtrl(wx.PyControl):
         self._clrMedium = colourMedium
         self._clrHigh   = colourHigh
 
-        self.Refresh()        
+        self.Refresh()
 
 
     def SetMeterBands(self, numBands, ledBands):
@@ -319,13 +319,13 @@ class PeakMeterCtrl(wx.PyControl):
 
         :param `numBands`: number of bands to display (either vertical or horizontal);
         :param `ledBands`: the number of leds per band.
-        
+
         :note: You can obtain a smooth effect by setting `nHorz` or `nVert` to "1", these
          cannot be 0.
         """
 
         assert (numBands > 0 and ledBands > 0)
-        
+
         self._numBands = numBands
         self._ledBands = ledBands
 
@@ -340,11 +340,11 @@ class PeakMeterCtrl(wx.PyControl):
         :param `minVal`: the value for low bands;
         :param `medVal`: the value for medium bands;
         :param `maxVal`: the value for high bands.
-        
+
         :note: The conditions to be satisfied are:
 
          Min: [0 - nMin[,  Med: [nMin - nMed[,  Max: [nMed - nMax]
-         
+
         """
 
         assert (maxVal > medVal and medVal > minVal and minVal > 0)
@@ -375,7 +375,7 @@ class PeakMeterCtrl(wx.PyControl):
         """
 
         if self._showFalloff != falloffEffect:
-        
+
             self._showFalloff = falloffEffect
             self.Refresh()
 
@@ -394,7 +394,7 @@ class PeakMeterCtrl(wx.PyControl):
         """
 
         if self._showGrid != showGrid:
-        
+
             self._showGrid = showGrid
             self.Refresh()
 
@@ -417,7 +417,7 @@ class PeakMeterCtrl(wx.PyControl):
         """
 
         assert (offset >= 0 and arrayValue != [])
-        
+
         isRunning = self.IsStarted()
 
         # Stop timer if Animation is active
@@ -425,27 +425,27 @@ class PeakMeterCtrl(wx.PyControl):
             self.Stop()
 
         maxSize = offset + size
-        
+
         for i in xrange(offset, maxSize):
-        
+
             if i < len(self._meterData):
-            
+
                 pm = self._meterData[i]
                 pm._value = arrayValue[i]
-                
+
                 if pm._falloff < pm._value:
-                
+
                     pm._falloff = pm._value
                     pm._peak = self._speed
-                
+
                 self._meterData[i] = pm
-            
+
         # Auto-restart
         if isRunning:
             return self.Start(self._delay)
 
         self.Refresh()
-        
+
         return True
 
 
@@ -462,12 +462,12 @@ class PeakMeterCtrl(wx.PyControl):
         :param `delay`: the animation effect delay, in milliseconds.
         """
 
-        if not self.IsStarted():        
+        if not self.IsStarted():
             self._delay = delay
             self._timer.Start(self._delay)
         else:
             return False
-        
+
         return True
 
 
@@ -477,7 +477,7 @@ class PeakMeterCtrl(wx.PyControl):
         if self.IsStarted():
             self._timer.Stop()
             return True
-        
+
         return False
 
 
@@ -490,31 +490,31 @@ class PeakMeterCtrl(wx.PyControl):
         noChange = True
 
         for pm in self._meterData:
-        
+
             if pm._value > 0:
-            
+
                 pm._value -= (self._ledBands > 1 and [decValue] or [self._maxValue*BAND_PERCENT/100])[0]
                 if pm._value < 0:
                     pm._value = 0
-                    
+
                 noChange = False
-            
+
             if pm._peak > 0:
-            
+
                 pm._peak -= 1
                 noChange = False
-            
+
 
             if pm._peak == 0 and pm._falloff > 0:
-            
+
                 pm._falloff -= (self._ledBands > 1 and [decValue >> 1] or [5])[0]
                 if pm._falloff < 0:
                     pm._falloff = 0
-                    
-                noChange = False        
+
+                noChange = False
 
         if noChange: # Stop timer if no more data
-            
+
             self.Stop()
 
 
@@ -527,7 +527,7 @@ class PeakMeterCtrl(wx.PyControl):
 
         # something is better than nothing...
         return wx.Size(200, 150)
-        
+
 
     def OnPaint(self, event):
         """
@@ -544,7 +544,7 @@ class PeakMeterCtrl(wx.PyControl):
 
         pen = wx.Pen(self._clrBackground)
         dc.SetPen(pen)
-        
+
         if self.GetWindowStyleFlag() & PM_VERTICAL:
             self.DrawVertBand(dc, rc)
         else:
@@ -557,7 +557,7 @@ class PeakMeterCtrl(wx.PyControl):
 
         :param `event`: a `wx.EraseEvent` event to be processed.
 
-        :note: This method is intentionally empty to reduce flicker.        
+        :note: This method is intentionally empty to reduce flicker.
         """
 
         # This is intentionally empty, to reduce flicker
@@ -592,7 +592,7 @@ class PeakMeterCtrl(wx.PyControl):
         :param `dc`: an instance of `wx.DC`;
         :param `rect`: the horizontal bands client rectangle.
 
-        :todo: Implement falloff effect for horizontal bands.        
+        :todo: Implement falloff effect for horizontal bands.
         """
 
         horzBands = (self._ledBands > 1 and [self._ledBands] or [self._maxValue*BAND_PERCENT/100])[0]
@@ -609,12 +609,12 @@ class PeakMeterCtrl(wx.PyControl):
         yDecal = (self._numBands > 1 and [1] or [0])[0]
 
         for vert in xrange(self._numBands):
-        
+
             self._value = self._meterData[vert]._value
             horzLimit = self._value*horzBands/self._maxValue
 
             for horz in xrange(horzBands):
-            
+
                 rectBand.Deflate(0, yDecal)
 
                 # Find colour based on range value
@@ -623,16 +623,16 @@ class PeakMeterCtrl(wx.PyControl):
                     colourRect = DarkenColour(self._clrBackground, GRID_INCREASEBY)
 
                 if self._showGrid and (horz == minHorzLimit or horz == (horzBands-1)):
-                
+
                     points = [wx.Point() for i in xrange(2)]
                     points[0].x = rectBand.GetTopLeft().x + (rectBand.width >> 1)
                     points[0].y = rectBand.GetTopLeft().y - yDecal
                     points[1].x = points[0].x
                     points[1].y = rectBand.GetBottomRight().y + yDecal
                     dc.DrawLinePoint(points[0], points[1])
-                
+
                 if horz < horzLimit:
-                
+
                     if InRange(horz, 0, minHorzLimit-1):
                         colourRect = self._clrNormal
                     elif InRange(horz, minHorzLimit, medHorzLimit-1):
@@ -640,12 +640,12 @@ class PeakMeterCtrl(wx.PyControl):
                     elif InRange(horz, medHorzLimit, maxHorzLimit):
                         colourRect = self._clrHigh
 
-                dc.SetBrush(wx.Brush(colourRect))                
+                dc.SetBrush(wx.Brush(colourRect))
                 dc.DrawRectangleRect(rectBand)
 
                 rectBand.Inflate(0, yDecal)
                 rectBand.OffsetXY(size.x, 0)
-            
+
             # Move to Next Vertical band
             rectBand.OffsetXY(-size.x*horzBands, size.y)
 
@@ -672,13 +672,13 @@ class PeakMeterCtrl(wx.PyControl):
         yDecal = (self._ledBands > 1 and [1] or [0])[0]
 
         for horz in xrange(self._numBands):
-        
+
             self._value = self._meterData[horz]._value
             vertLimit = self._value*vertBands/self._maxValue
             rectPrev = wx.Rect(*rectBand)
 
             for vert in xrange(vertBands):
-            
+
                 rectBand.Deflate(xDecal, 0)
 
                 # Find colour based on range value
@@ -688,33 +688,33 @@ class PeakMeterCtrl(wx.PyControl):
 
                 # Draw grid line (level) bar
                 if self._showGrid and (vert == minVertLimit or vert == (vertBands-1)):
-                
+
                     points = [wx.Point() for i in xrange(2)]
                     points[0].x = rectBand.GetTopLeft().x - xDecal
                     points[0].y = rectBand.GetTopLeft().y + (rectBand.height >> 1)
                     points[1].x = rectBand.GetBottomRight().x + xDecal
                     points[1].y = points[0].y
                     dc.DrawLinePoint(points[0], points[1])
-                
+
                 if vert < vertLimit:
-                
+
                     if InRange(vert, 0, minVertLimit-1):
                         colourRect = self._clrNormal
                     elif InRange(vert, minVertLimit, medVertLimit-1):
                         colourRect = self._clrMedium
                     elif InRange(vert, medVertLimit, maxVertLimit):
                         colourRect = self._clrHigh
-                
+
                 dc.SetBrush(wx.Brush(colourRect))
                 dc.DrawRectangleRect(rectBand)
 
                 rectBand.Inflate(xDecal, 0)
                 rectBand.OffsetXY(0, -size.y)
-            
+
             # Draw falloff effect
             if self._showFalloff:
 
-                oldPen = dc.GetPen()            
+                oldPen = dc.GetPen()
                 pen = wx.Pen(DarkenColour(self._clrBackground, FALL_INCREASEBY))
                 maxHeight = size.y*vertBands
                 points = [wx.Point() for i in xrange(2)]
@@ -725,7 +725,7 @@ class PeakMeterCtrl(wx.PyControl):
                 dc.SetPen(pen)
                 dc.DrawLinePoint(points[0], points[1])
                 dc.SetPen(oldPen)
-            
+
             # Move to Next Horizontal band
             rectBand.OffsetXY(size.x, size.y*vertBands)
-        
+

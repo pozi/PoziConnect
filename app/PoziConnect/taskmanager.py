@@ -10,10 +10,10 @@ import StringIO
 
 # Modules to allow tasks to be threaded
 # (needed for GUI)
-import threading 
+import threading
 from threading import Thread
 
-# Modules for creating ZIP files 
+# Modules for creating ZIP files
 import zipfile
 from zipfile import *
 import zlib
@@ -52,7 +52,7 @@ class TaskManager(Thread):
         loggerName = 'TaskManager'
         if 'logger' in options:
             logger = options.get('logger')
-            self.logger = logger.clone(loggerName) 
+            self.logger = logger.clone(loggerName)
         else:
             self.logger = Logger(loggerName)
 
@@ -68,13 +68,13 @@ class TaskManager(Thread):
         }
 
         # Then merge provided options with the default ones
-        self.options.update(options) 
+        self.options.update(options)
 
         self.InitConfig()
 
 
     ###############################################################
-    # Process INI file 
+    # Process INI file
     ###############################################################
     def InitConfig(self):
         self.config = ConfigParser(self.options)
@@ -116,11 +116,11 @@ class TaskManager(Thread):
                 taskSections.append(section)
 
         self.logger.debug("sections", globalSections, sections, taskSections)
-        return taskSections 
+        return taskSections
 
     def run(self):
         self.logger.debug("Task run")
-        try: 
+        try:
             self.Execute()
         except Exception as e:
             if self.errorCallback:
@@ -129,7 +129,7 @@ class TaskManager(Thread):
                 sys.exit(1)
 
     def logHeader(self, text):
-        string = "#" * 60 + "\n#" + ' ' + text + "\n" + "#" * 60 
+        string = "#" * 60 + "\n#" + ' ' + text + "\n" + "#" * 60
         self.logger.info(string)
 
     def Execute(self):
@@ -144,9 +144,9 @@ class TaskManager(Thread):
         errorCallback = self.errorCallback if hasattr(self, 'errorCallback') else None
 
         ###############################################################
-        # Loop through sections and process them 
+        # Loop through sections and process them
 
-        
+
         taskSettings = dict(self.GetSectionItems('General Settings'))
         #self.logger.debug("task settings", taskSettings)
 
@@ -155,19 +155,19 @@ class TaskManager(Thread):
         sections = self.GetTaskSections()
 
         counter = 1
-        
+
         for section in sections:
-            
+
             # Stop if directed
             if self.stopped():
-                break 
-            
+                break
+
             # Execute progress Callback if supplied
             if progressCallback:
                 # We start of with counter = 1 and end with the number
                 # of sections +1. This makes our gauge show up something
                 # immediately from the start, which is more intuitive.
-                percentage = (100 * counter) / (len(sections) + 1) 
+                percentage = (100 * counter) / (len(sections) + 1)
                 #self.logger.debug("Calling progress callback", percentage)
 
                 status = "Processing %s..." % section
@@ -183,7 +183,7 @@ class TaskManager(Thread):
 
             self.logger.info("#" * 60 + "\n#" + ' Section: ' + section + "\n" + "#" * 60 )
 
-            # Run task 
+            # Run task
             task = Task(section, dict(items))
             task.run()
 
@@ -208,7 +208,7 @@ class Task():
         loggerName = 'Task'
         if 'logger' in options:
             logger = options.get('logger')
-            self.logger = logger.clone(loggerName) 
+            self.logger = logger.clone(loggerName)
         else:
             self.logger = Logger(loggerName)
 
@@ -253,7 +253,7 @@ class Task():
             'dirSep': r'[\/\\]', # either / or \ are accepted
             'driveName': r'[a-z]:\\', # C:\
             'fileName': r'[ a-z0-9_-]+', # water_use-2
-            'fileExtension': r'\.[a-z0-9_-]+', # .csv 
+            'fileExtension': r'\.[a-z0-9_-]+', # .csv
             'schemaName': r'[a-z0-9]+',
             'tableName': r'[a-z0-9_\- .:]+',
             'fileFormat': r'(({driveName})?(.+?){dirSep}?(({fileName})({fileExtension})))',
@@ -420,7 +420,7 @@ class Task():
                     'regExp': r'(OCI:[^,]+),?({tableName})',
                     'outputVars': ['Store', 'TableName'],
                 },
-            },            
+            },
             'WFS': {
                 'WFS URL endpoint with table name': {
                     'regExp': r'(WFS:[^,]+),?({tableName})',
@@ -480,13 +480,13 @@ class Task():
         # Otherwise we use heuristics by looping through
         # all of them until we find a match. First match wins.
 
-        formats = formatRegs.keys() 
+        formats = formatRegs.keys()
 
         if forcedFormat:
             self.logger.debug("  Forced Format: ", forcedFormat)
             if forcedFormat in formatRegs:
                 formats = [forcedFormat]
-            else: 
+            else:
                 self.logger.debug("  Forced format '%s' is unknown. Known formats are: %s" % (forcedFormat, str(formatRegs.keys())))
                 self.logger.debug("  Exiting...")
                 return {}
@@ -496,7 +496,7 @@ class Task():
         for format in formats:
             self.logger.debug("  Testing format: %s" % (format))
             items = formatRegs.get(format)
-            o = match(format, items, forcedFormat) 
+            o = match(format, items, forcedFormat)
             if o:
                 return o
 
@@ -506,14 +506,14 @@ class Task():
     def doInfo(self, items):
         self.logger.debug('ITEMS', items)
 
-        # Execute an ogrinfo on the datasource. Whether or not 
+        # Execute an ogrinfo on the datasource. Whether or not
         # to this defaults to application settting for 'debug'
         # in INI file
         debug = items.get('debug', taskDebug)
-        
+
         if items.get('sourceformat')=="XLS":
         	debug = False
-        
+
         if debug:
             ogrInfoItems = {
                 'sourceformat': items.get('sourceformat'),
@@ -554,7 +554,7 @@ class Task():
         if sqlFile:
             if not os.path.exists(sqlFile):
                 exitCode = 1
-                errorMessage = "SQLFile file could not be found" 
+                errorMessage = "SQLFile file could not be found"
                 raise IOError(exitCode, errorMessage, str(sqlFile))
 
             sqlFileHandle = open(sqlFile, 'r')
@@ -563,10 +563,10 @@ class Task():
 
             sql = " ".join(sqlString.splitlines())
 
-            # Trick to do variable substitution on the sql 
+            # Trick to do variable substitution on the sql
             sql = Item(('sql', sql)).SubstituteVars(self.items)[1]
 
-            # Store the SQL in the items so it can be used 
+            # Store the SQL in the items so it can be used
             self.items['SQL'] = sql
 
         # Convert items into how OGR understands them (lower case
@@ -578,13 +578,13 @@ class Task():
             'destinationtablename': 'name',
         }
 
-        ogrItems = {} 
+        ogrItems = {}
         for key, value in self.items.items():
             ogrItems[key.lower()] = value
 
         for key, translated in translate.items():
             if key in ogrItems:
-               ogrItems[translated] = ogrItems[key] 
+               ogrItems[translated] = ogrItems[key]
 
         self.logger.info('Task items', self.items)
         self.logger.info('OGR items', ogrItems)
@@ -611,18 +611,18 @@ class Task():
                 exitCode = 1
                 errorMessage = "Section '%s'\nSource file could not be found" % (self.section)
                 raise IOError(exitCode, errorMessage, str(sourceStore))
-            
+
             # Perform an ogrinfo
             self.doInfo(ogrItems)
-            
+
 	    if sourceFormat == 'XLS':
 	    	# We need to process the Excel file into a CSV file - CSV files can then be processed natively by OGR2OGR
 	    	# with the help of:
 	    	# - the CSVT file for the types
 	    	# - the VRT file for layer naming / conversion of XY into a geometry
-	    	# Then, we need to provide the correct items values for the source to OGR2OGR 
+	    	# Then, we need to provide the correct items values for the source to OGR2OGR
 	    	# so that the source is now the resulting CSV (not the Excel file anymore)
-	    	
+
 	    	# Excel to CSV
 	    	itemsForScript = ogrItems
 	    	try:
@@ -642,21 +642,21 @@ class Task():
 
             # If destination format is any of the following, then manually
             # remove the destination files (work around buggy behaviour
-            # in OGR). 
-            # Some formats then need to have their destination being the 
+            # in OGR).
+            # Some formats then need to have their destination being the
             # destination directory instead of the full path
             # (ie: 'output' instead of 'output/file.shp')
             #if destinationFormat in ['GML','KML','DGN','ESRI Shapefile','MapInfo File']:
             if destinationFormat in ['GML','KML','DGN']:
                 destination = ogrItems['destination']
-                if os.path.isfile(destination): 
+                if os.path.isfile(destination):
                     self.logger.info("Removing existing destination: %s" % destination)
                     os.remove(destination)
 
             if destinationFormat in ['ESRI Shapefile', 'MapInfo File']:
                 destDriveName = ogrItems.get('destinationdrivename') or ''
                 destFilePath = ogrItems.get('destinationfilepath') or ''
-                ogrItems['destination'] = destDriveName + destFilePath 
+                ogrItems['destination'] = destDriveName + destFilePath
 
             # Now we call ogr2ogr for this task (does the majority of the work)
             # Since it can raise exceptions, be put it in a try clause
@@ -706,7 +706,7 @@ class Task():
                 sys.stderr = sys.__stderr__
         else:
             self.logger.warn("Execute %s: no command given. What am I supposed to do with that? ;-)" % commandName)
-            
+
 
     def test(self):
 
@@ -749,7 +749,7 @@ if __name__ == "__main__":
         'configFile': f,
         'globalSections': ['User Settings', 'Connection Settings', 'General Settings']
         }
-    
+
     tm = TaskManager(options)
     #tm.Execute()
     section = 'ODBC 2 CSV'
@@ -757,6 +757,6 @@ if __name__ == "__main__":
     section = 'CSV Dir'
     #items = tm.GetSectionItems(section)
     task1 = Task()
-    task1.test() 
+    task1.test()
 
 

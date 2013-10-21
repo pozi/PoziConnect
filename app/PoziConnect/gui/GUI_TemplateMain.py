@@ -7,22 +7,22 @@ import GUI_Template
 class GUI_TemplateMain( GUI_Template.Main ):
 	def __init__( self, parent ):
 		GUI_Template.Main.__init__( self, parent )
-	
+
 	# Handlers for Main events.
 	def OnTaskSelect( self, event ):
 		# TODO: Implement OnTaskSelect
 		pass
-	
+
 	def OnStart( self, event ):
 		# TODO: Implement OnStart
 		pass
-	
+
 	def OnClose( self, event ):
 		# TODO: Implement OnClose
 		pass
-	
+
 	def OnCancel( self, event ):
 		# TODO: Implement OnCancel
 		pass
-	
-	
+
+

@@ -54,7 +54,7 @@ Some features:
 - Web-like mouse pointing on tabs style (LabelBook only);
 - Many customizable colours (tab area, active tab text, tab borders, active
   tab, highlight) - LabelBook only.
-  
+
 And much more. See the demo for a quasi-complete review of all the functionalities
 of LabelBook and FlatImageBook.
 
@@ -110,7 +110,7 @@ Event Name                          Description
 License And Version
 ===================
 
-LabelBook and FlatImageBook are distributed under the wxPython license. 
+LabelBook and FlatImageBook are distributed under the wxPython license.
 
 Latest Revision: Andrea Gavana @ 30 Nov 2009, 15.00 GMT
 
@@ -284,7 +284,7 @@ class ImageInfo(object):
     This class holds all the information (caption, image, etc...) belonging to a
     single tab in L{LabelBook}.
     """
-    def __init__(self, strCaption="", imageIndex=-1):    
+    def __init__(self, strCaption="", imageIndex=-1):
         """
         Default Class Constructor.
 
@@ -292,7 +292,7 @@ class ImageInfo(object):
         :param `imageIndex`: the tab image index based on the assigned (set)
          `wx.ImageList` (if any).
         """
-        
+
         self._pos = wx.Point()
         self._size = wx.Size()
         self._strCaption = strCaption
@@ -420,9 +420,9 @@ class ImageContainerBase(wx.Panel):
          ``INB_FIT_LABELTEXT``            0x2000 Will fit the tab area to the longest text (or text+image if you have images) in all the tabs.
          =========================== =========== ==================================================
 
-        :param `name`: the window name.         
+        :param `name`: the window name.
         """
-        
+
         self._nIndex = -1
         self._nImgSize = 16
         self._ImageList = None
@@ -461,7 +461,7 @@ class ImageContainerBase(wx.Panel):
          ``INB_FIT_LABELTEXT``            0x2000 Will fit the tab area to the longest text (or text+image if you have images) in all the tabs.
          =========================== =========== ==================================================
         """
-        
+
         style = self.GetParent().GetWindowStyleFlag()
         res = (style & flag and [True] or [False])[0]
         return res
@@ -473,9 +473,9 @@ class ImageContainerBase(wx.Panel):
 
         :param `flag`: a window style flag.
 
-        :see: L{HasFlag} for a list of possible window style flags.        
+        :see: L{HasFlag} for a list of possible window style flags.
         """
-        
+
         style = self.GetParent().GetWindowStyleFlag()
         style &= ~(flag)
         wx.Panel.SetWindowStyleFlag(self, style)
@@ -487,7 +487,7 @@ class ImageContainerBase(wx.Panel):
 
         :param `imglist`: an instance of `wx.ImageList`.
         """
-  
+
         if imglist and imglist.GetImageCount() != 0:
             self._nImgSize = imglist.GetBitmap(0).GetHeight()
 
@@ -505,7 +505,7 @@ class ImageContainerBase(wx.Panel):
 
         return self._nImgSize
 
-    
+
     def FixTextSize(self, dc, text, maxWidth):
         """
         Fixes the text, to fit `maxWidth` value. If the text length exceeds
@@ -525,10 +525,10 @@ class ImageContainerBase(wx.Panel):
         Allows the parent to examine the children type. Some implementation
         (such as L{LabelBook}), does not support top/bottom images, only left/right.
         """
-        
+
         return False
-    
-        
+
+
     def AddPage(self, caption, selected=False, imgIdx=-1):
         """
         Adds a page to the container.
@@ -537,7 +537,7 @@ class ImageContainerBase(wx.Panel):
         :param `selected`: specifies whether the page should be selected;
         :param `imgIdx`: specifies the optional image index for the new tab.
         """
-        
+
         self._pagesInfoVec.append(ImageInfo(caption, imgIdx))
         if selected or len(self._pagesInfoVec) == 1:
             self._nIndex = len(self._pagesInfoVec)-1
@@ -572,7 +572,7 @@ class ImageContainerBase(wx.Panel):
     def GetPageImage(self, page):
         """
         Returns the image index for the given page.
-        
+
         :param `page`: the index of the tab.
         """
 
@@ -583,14 +583,14 @@ class ImageContainerBase(wx.Panel):
     def GetPageText(self, page):
         """
         Returns the tab caption for the given page.
-        
+
         :param `page`: the index of the tab.
         """
 
         imgInfo = self._pagesInfoVec[page]
         return imgInfo.GetCaption()
 
-        
+
     def ClearAll(self):
         """ Deletes all the pages in the container. """
 
@@ -620,17 +620,17 @@ class ImageContainerBase(wx.Panel):
 
         # Refresh the tabs
         if self._nIndex >= 0:
-        
+
             book._bForceSelection = True
             book.SetSelection(self._nIndex)
             book._bForceSelection = False
-        
-        if not self._pagesInfoVec:        
+
+        if not self._pagesInfoVec:
             # Erase the page container drawings
             dc = wx.ClientDC(self)
             dc.Clear()
 
-            
+
     def OnSize(self, event):
         """
         Handles the ``wx.EVT_SIZE`` event for L{ImageContainerBase}.
@@ -648,12 +648,12 @@ class ImageContainerBase(wx.Panel):
 
         :param `event`: a `wx.EraseEvent` event to be processed.
 
-        :note: This method is intentionally empty to reduce flicker.        
+        :note: This method is intentionally empty to reduce flicker.
         """
 
         pass
 
-    
+
     def HitTest(self, pt):
         """
         Returns the index of the tab at the specified position or ``wx.NOT_FOUND``
@@ -672,29 +672,29 @@ class ImageContainerBase(wx.Panel):
          ``IMG_OVER_EW_BORDER``       2 The mouse is over the east-west book border
          ``IMG_NONE``                 3 Nowhere
          ====================== ======= ================================
-         
+
         """
-        
+
         style = self.GetParent().GetWindowStyleFlag()
-        
+
         if style & INB_USE_PIN_BUTTON:
             if self._pinBtnRect.Contains(pt):
-                return -1, IMG_OVER_PIN        
+                return -1, IMG_OVER_PIN
 
         for i in xrange(len(self._pagesInfoVec)):
-        
+
             if self._pagesInfoVec[i].GetPosition() == wx.Point(-1, -1):
                 break
-            
+
             # For Web Hover style, we test the TextRect
             if not self.HasFlag(INB_WEB_HILITE):
                 buttonRect = wx.RectPS(self._pagesInfoVec[i].GetPosition(), self._pagesInfoVec[i].GetSize())
             else:
                 buttonRect = self._pagesInfoVec[i].GetTextRect()
-                
+
             if buttonRect.Contains(pt):
                 return i, IMG_OVER_IMG
-            
+
         if self.PointOnSash(pt):
             return -1, IMG_OVER_EW_BORDER
         else:
@@ -710,15 +710,15 @@ class ImageContainerBase(wx.Panel):
 
         # Check if we are on a the sash border
         cltRect = self.GetClientRect()
-        
+
         if self.HasFlag(INB_LEFT) or self.HasFlag(INB_TOP):
             if pt.x > cltRect.x + cltRect.width - 4:
                 return True
-        
+
         else:
             if pt.x < 4:
                 return True
-        
+
         return False
 
 
@@ -737,25 +737,25 @@ class ImageContainerBase(wx.Panel):
         if style & INB_USE_PIN_BUTTON:
 
             if self._pinBtnRect.Contains(event.GetPosition()):
-            
+
                 self._nPinButtonStatus = INB_PIN_PRESSED
                 dc = wx.ClientDC(self)
                 self.DrawPin(dc, self._pinBtnRect, not self._bCollapsed)
                 return
-            
-        # Incase panel is collapsed, there is nothing 
-        # to check 
+
+        # Incase panel is collapsed, there is nothing
+        # to check
         if self._bCollapsed:
             return
 
         tabIdx, where = self.HitTest(event.GetPosition())
 
         if where == IMG_OVER_IMG:
-            self._nHoeveredImgIdx = -1        
+            self._nHoeveredImgIdx = -1
 
         if tabIdx == -1:
             return
-        
+
         self.GetParent().SetSelection(tabIdx)
 
 
@@ -772,16 +772,16 @@ class ImageContainerBase(wx.Panel):
         # Make sure the pin button status is NONE
         # incase we were in pin button style
         style = self.GetParent().GetWindowStyleFlag()
-        
+
         if style & INB_USE_PIN_BUTTON:
-        
+
             self._nPinButtonStatus = INB_PIN_NONE
             dc = wx.ClientDC(self)
             self.DrawPin(dc, self._pinBtnRect, not self._bCollapsed)
-        
+
         # Restore cursor
         wx.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
-        
+
         if bRepaint:
             self.Refresh()
 
@@ -794,50 +794,50 @@ class ImageContainerBase(wx.Panel):
         """
 
         style = self.GetParent().GetWindowStyleFlag()
-        
+
         if style & INB_USE_PIN_BUTTON:
-        
+
             bIsLabelContainer = not self.CanDoBottomStyle()
-            
+
             if self._pinBtnRect.Contains(event.GetPosition()):
-            
+
                 self._nPinButtonStatus = INB_PIN_NONE
                 self._bCollapsed = not self._bCollapsed
 
                 if self._bCollapsed:
-                
+
                     # Save the current tab area width
                     self._tabAreaSize = self.GetSize()
-                    
+
                     if bIsLabelContainer:
-                    
+
                         self.SetSizeHints(20, self._tabAreaSize.y)
-                    
+
                     else:
-                    
+
                         if style & INB_BOTTOM or style & INB_TOP:
                             self.SetSizeHints(self._tabAreaSize.x, 20)
                         else:
                             self.SetSizeHints(20, self._tabAreaSize.y)
-                    
+
                 else:
-                
+
                     if bIsLabelContainer:
-                    
+
                         self.SetSizeHints(self._tabAreaSize.x, -1)
-                    
+
                     else:
-                    
+
                         # Restore the tab area size
                         if style & INB_BOTTOM or style & INB_TOP:
                             self.SetSizeHints(-1, self._tabAreaSize.y)
                         else:
                             self.SetSizeHints(self._tabAreaSize.x, -1)
-                    
+
                 self.GetParent().GetSizer().Layout()
                 self.Refresh()
                 return
-            
+
 
     def OnMouseMove(self, event):
         """
@@ -848,38 +848,38 @@ class ImageContainerBase(wx.Panel):
 
         style = self.GetParent().GetWindowStyleFlag()
         if style & INB_USE_PIN_BUTTON:
-        
+
             # Check to see if we are in the pin button rect
             if not self._pinBtnRect.Contains(event.GetPosition()) and self._nPinButtonStatus == INB_PIN_PRESSED:
-            
+
                 self._nPinButtonStatus = INB_PIN_NONE
                 dc = wx.ClientDC(self)
                 self.DrawPin(dc, self._pinBtnRect, not self._bCollapsed)
-            
+
         imgIdx, where = self.HitTest(event.GetPosition())
         self._nHoeveredImgIdx = imgIdx
-        
+
         if not self._bCollapsed:
-        
+
             if self._nHoeveredImgIdx >= 0 and self._nHoeveredImgIdx < len(self._pagesInfoVec):
-            
+
                 # Change the cursor to be Hand
                 if self.HasFlag(INB_WEB_HILITE) and self._nHoeveredImgIdx != self._nIndex:
                     wx.SetCursor(wx.StockCursor(wx.CURSOR_HAND))
-            
+
             else:
-            
+
                 # Restore the cursor only if we have the Web hover style set,
                 # and we are not currently hovering the sash
                 if self.HasFlag(INB_WEB_HILITE) and not self.PointOnSash(event.GetPosition()):
                     wx.SetCursor(wx.StockCursor(wx.CURSOR_ARROW))
-            
-        # Dont display hover effect when hoevering the 
+
+        # Dont display hover effect when hoevering the
         # selected label
-        
+
         if self._nHoeveredImgIdx == self._nIndex:
             self._nHoeveredImgIdx = -1
-        
+
         self.Refresh()
 
 
@@ -901,9 +901,9 @@ class ImageContainerBase(wx.Panel):
             pinBmp = wx.BitmapFromXPMData(pin_left_xpm)
 
         xx = rect.x + 2
-        
+
         if self._nPinButtonStatus in [INB_PIN_HOVER, INB_PIN_NONE]:
-            
+
             dc.SetBrush(wx.TRANSPARENT_BRUSH)
             dc.SetPen(wx.BLACK_PEN)
             dc.DrawRectangle(xx, rect.y, 16, 16)
@@ -912,9 +912,9 @@ class ImageContainerBase(wx.Panel):
             dc.SetPen(wx.WHITE_PEN)
             dc.DrawLine(xx, rect.y, xx + 16, rect.y)
             dc.DrawLine(xx, rect.y, xx, rect.y + 16)
-            
+
         elif self._nPinButtonStatus == INB_PIN_PRESSED:
-            
+
             dc.SetBrush(wx.TRANSPARENT_BRUSH)
             dc.SetPen(wx.Pen(wx.NamedColour("LIGHT GREY")))
             dc.DrawRectangle(xx, rect.y, 16, 16)
@@ -923,7 +923,7 @@ class ImageContainerBase(wx.Panel):
             dc.SetPen(wx.BLACK_PEN)
             dc.DrawLine(xx, rect.y, xx + 16, rect.y)
             dc.DrawLine(xx, rect.y, xx, rect.y + 16)
-            
+
         # Set the masking
         pinBmp.SetMask(wx.Mask(pinBmp, wx.WHITE))
 
@@ -942,7 +942,7 @@ class ImageContainer(ImageContainerBase):
     """
     Base class for L{FlatImageBook} image container.
     """
-    
+
     def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=0, name="ImageContainer"):
         """
@@ -975,11 +975,11 @@ class ImageContainer(ImageContainerBase):
          ``INB_FIT_LABELTEXT``            0x2000 Will fit the tab area to the longest text (or text+image if you have images) in all the tabs.
          =========================== =========== ==================================================
 
-        :param `name`: the window name.         
+        :param `name`: the window name.
         """
 
         ImageContainerBase.__init__(self, parent, id, pos, size, style, name)
-        
+
         self.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_SIZE, self.OnSize)
         self.Bind(wx.EVT_LEFT_DOWN, self.OnMouseLeftDown)
@@ -998,7 +998,7 @@ class ImageContainer(ImageContainerBase):
 
         ImageContainerBase.OnSize(self, event)
         event.Skip()
-        
+
 
     def OnMouseLeftDown(self, event):
         """
@@ -1006,10 +1006,10 @@ class ImageContainer(ImageContainerBase):
 
         :param `event`: a `wx.MouseEvent` event to be processed.
         """
-        
+
         ImageContainerBase.OnMouseLeftDown(self, event)
         event.Skip()
-            
+
 
     def OnMouseLeftUp(self, event):
         """
@@ -1053,7 +1053,7 @@ class ImageContainer(ImageContainerBase):
         ImageContainerBase.OnMouseLeaveWindow(self, event)
         event.Skip()
 
-        
+
     def CanDoBottomStyle(self):
         """
         Allows the parent to examine the children type. Some implementation
@@ -1114,8 +1114,8 @@ class ImageContainer(ImageContainerBase):
             clientSize = size.GetWidth()
 
         # We reserver 20 pixels for the 'pin' button
-        
-        # The drawing of the images start position. This is 
+
+        # The drawing of the images start position. This is
         # depenedent of the style, especially when Pin button
         # style is requested
 
@@ -1131,11 +1131,11 @@ class ImageContainer(ImageContainerBase):
         nTextPaddingLeft = 2
 
         count = 0
-        
+
         for i in xrange(len(self._pagesInfoVec)):
 
-            count = count + 1            
-        
+            count = count + 1
+
             # incase the 'fit button' style is applied, we set the rectangle width to the
             # text width plus padding
             # Incase the style IS applied, but the style is either LEFT or RIGHT
@@ -1149,7 +1149,7 @@ class ImageContainer(ImageContainerBase):
             normalFont.SetWeight(wx.FONTWEIGHT_NORMAL)
             dc.SetFont(normalFont)
 
-            # Default values for the surronounding rectangle 
+            # Default values for the surronounding rectangle
             # around a button
             rectWidth = self._nImgSize * 2  # To avoid the recangle to 'touch' the borders
             rectHeight = self._nImgSize * 2
@@ -1160,7 +1160,7 @@ class ImageContainer(ImageContainerBase):
                not ((style & INB_LEFT) or (style & INB_RIGHT)) and \
                not self._pagesInfoVec[i].GetCaption() == "" and \
                not (style & INB_SHOW_ONLY_IMAGES):
-            
+
                 rectWidth = ((textWidth + nPadding * 2) > rectWidth and [nPadding * 2 + textWidth] or [rectWidth])[0]
 
                 # Make the width an even number
@@ -1171,7 +1171,7 @@ class ImageContainer(ImageContainerBase):
             # If Pin button is used, consider its space as well (applicable for top/botton style)
             # since in the left/right, its size is already considered in 'pos'
             pinBtnSize = (bUsePin and [20] or [0])[0]
-            
+
             if pos + rectWidth + pinBtnSize > clientSize:
                 break
 
@@ -1186,7 +1186,7 @@ class ImageContainer(ImageContainerBase):
 
             # Check if we need to draw a rectangle around the button
             if self._nIndex == i:
-            
+
                 # Set the colours
                 penColour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_ACTIVECAPTION)
                 brushColour = ArtManager.Get().LightColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_ACTIVECAPTION), 75)
@@ -1196,16 +1196,16 @@ class ImageContainer(ImageContainerBase):
 
                 # Fix the surrounding of the rect if border is set
                 if style & INB_BORDER:
-                
+
                     if style & INB_TOP or style & INB_BOTTOM:
                         buttonRect = wx.Rect(buttonRect.x + 1, buttonRect.y, buttonRect.width - 1, buttonRect.height)
                     else:
                         buttonRect = wx.Rect(buttonRect.x, buttonRect.y + 1, buttonRect.width, buttonRect.height - 1)
-                
+
                 dc.DrawRectangleRect(buttonRect)
-            
+
             if self._nHoeveredImgIdx == i:
-            
+
                 # Set the colours
                 penColour = wx.SystemSettings_GetColour(wx.SYS_COLOUR_ACTIVECAPTION)
                 brushColour = ArtManager.Get().LightColour(wx.SystemSettings_GetColour(wx.SYS_COLOUR_ACTIVECAPTION), 90)
@@ -1215,14 +1215,14 @@ class ImageContainer(ImageContainerBase):
 
                 # Fix the surrounding of the rect if border is set
                 if style & INB_BORDER:
-                
+
                     if style & INB_TOP or style & INB_BOTTOM:
                         buttonRect = wx.Rect(buttonRect.x + 1, buttonRect.y, buttonRect.width - 1, buttonRect.height)
                     else:
                         buttonRect = wx.Rect(buttonRect.x, buttonRect.y + 1, buttonRect.width, buttonRect.height - 1)
-                
+
                 dc.DrawRectangleRect(buttonRect)
-            
+
             if bUseYcoord:
                 rect = wx.Rect(0, pos, rectWidth, rectWidth)
             else:
@@ -1233,76 +1233,76 @@ class ImageContainer(ImageContainerBase):
             # We override them to display both
 
             if style & INB_SHOW_ONLY_TEXT and style & INB_SHOW_ONLY_IMAGES:
-            
+
                 style ^= INB_SHOW_ONLY_TEXT
                 style ^= INB_SHOW_ONLY_IMAGES
                 wx.Panel.SetWindowStyleFlag(self, style)
-            
+
             # Draw the caption and text
             imgTopPadding = 10
             if not style & INB_SHOW_ONLY_TEXT and self._pagesInfoVec[i].GetImageIndex() != -1:
-            
+
                 if bUseYcoord:
-                
+
                     imgXcoord = self._nImgSize / 2
                     imgYcoord = (style & INB_SHOW_ONLY_IMAGES and [pos + self._nImgSize / 2] or [pos + imgTopPadding])[0]
-                
+
                 else:
-                
+
                     imgXcoord = pos + (rectWidth / 2) - (self._nImgSize / 2)
                     imgYcoord = (style & INB_SHOW_ONLY_IMAGES and [self._nImgSize / 2] or [imgTopPadding])[0]
 
                 self._ImageList.Draw(self._pagesInfoVec[i].GetImageIndex(), dc,
                                      imgXcoord, imgYcoord,
                                      wx.IMAGELIST_DRAW_TRANSPARENT, True)
-                            
+
             # Draw the text
             if not style & INB_SHOW_ONLY_IMAGES and not self._pagesInfoVec[i].GetCaption() == "":
-            
+
                 dc.SetFont(normalFont)
-                            
+
                 # Check if the text can fit the size of the rectangle,
-                # if not truncate it 
+                # if not truncate it
                 fixedText = self._pagesInfoVec[i].GetCaption()
                 if not style & INB_FIT_BUTTON or (style & INB_LEFT or (style & INB_RIGHT)):
-                
+
                     fixedText = self.FixTextSize(dc, self._pagesInfoVec[i].GetCaption(), self._nImgSize *2 - 4)
 
                     # Update the length of the text
                     textWidth, textHeight = dc.GetTextExtent(fixedText)
-                
+
                 if bUseYcoord:
-                
+
                     textOffsetX = ((rectWidth - textWidth) / 2 )
                     textOffsetY = (not style & INB_SHOW_ONLY_TEXT  and [pos + self._nImgSize  + imgTopPadding + 3] or \
                                        [pos + ((self._nImgSize * 2 - textHeight) / 2 )])[0]
-                
+
                 else:
-                
+
                     textOffsetX = (rectWidth - textWidth) / 2  + pos + nTextPaddingLeft
                     textOffsetY = (not style & INB_SHOW_ONLY_TEXT and [self._nImgSize + imgTopPadding + 3] or \
                                        [((self._nImgSize * 2 - textHeight) / 2 )])[0]
-                
+
                 dc.SetTextForeground(wx.SystemSettings_GetColour(wx.SYS_COLOUR_WINDOWTEXT))
                 dc.DrawText(fixedText, textOffsetX, textOffsetY)
-            
+
             # Update the page info
             self._pagesInfoVec[i].SetPosition(buttonRect.GetPosition())
             self._pagesInfoVec[i].SetSize(buttonRect.GetSize())
 
             pos += rectWidth
-        
+
         # Update all buttons that can not fit into the screen as non-visible
         for ii in xrange(count, len(self._pagesInfoVec)):
             self._pagesInfoVec[ii].SetPosition(wx.Point(-1, -1))
 
         # Draw the pin button
         if bUsePin:
-        
+
             clientRect = self.GetClientRect()
             pinRect = wx.Rect(clientRect.GetX() + clientRect.GetWidth() - 20, 2, 20, 20)
             self.DrawPin(dc, pinRect, not self._bCollapsed)
-        
+
 
 # ---------------------------------------------------------------------------- #
 # Class LabelContainer
@@ -1310,7 +1310,7 @@ class ImageContainer(ImageContainerBase):
 
 class LabelContainer(ImageContainerBase):
     """ Base class for L{LabelBook}. """
-    
+
     def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=0, name="LabelContainer"):
         """
@@ -1343,7 +1343,7 @@ class LabelContainer(ImageContainerBase):
          ``INB_FIT_LABELTEXT``            0x2000 Will fit the tab area to the longest text (or text+image if you have images) in all the tabs.
          =========================== =========== ==================================================
 
-        :param `name`: the window name.         
+        :param `name`: the window name.
         """
 
         ImageContainerBase.__init__(self, parent, id, pos, size, style, name)
@@ -1380,9 +1380,9 @@ class LabelContainer(ImageContainerBase):
         :param `event`: a `wx.EraseEvent` event to be processed.
         """
 
-        ImageContainerBase.OnEraseBackground(self, event)        
+        ImageContainerBase.OnEraseBackground(self, event)
 
-        
+
     def GetTabAreaWidth(self):
         """ Returns the width of the tab area. """
 
@@ -1405,7 +1405,7 @@ class LabelContainer(ImageContainerBase):
         (such as L{LabelBook}), does not support top/bottom images, only left/right.
         """
 
-        return False        
+        return False
 
 
     def SetBackgroundBitmap(self, bmp):
@@ -1431,34 +1431,34 @@ class LabelContainer(ImageContainerBase):
             borderPen = wx.Pen(self._coloursMap[INB_TABS_BORDER_COLOUR])
         else:
             borderPen = wx.TRANSPARENT_PEN
-            
+
         size = self.GetSize()
-        
+
         # Set the pen & brush
         dc.SetBrush(backBrush)
         dc.SetPen(borderPen)
 
         if self.HasFlag(INB_GRADIENT_BACKGROUND) and not self._skin.Ok():
-        
+
             # Draw graident in the background area
             startColour = self._coloursMap[INB_TAB_AREA_BACKGROUND_COLOUR]
             endColour   = ArtManager.Get().LightColour(self._coloursMap[INB_TAB_AREA_BACKGROUND_COLOUR], 50)
             ArtManager.Get().PaintStraightGradientBox(dc, wx.Rect(0, 0, size.x / 2, size.y), startColour, endColour, False)
             ArtManager.Get().PaintStraightGradientBox(dc, wx.Rect(size.x / 2, 0, size.x / 2, size.y), endColour, startColour, False)
-        
+
         else:
-        
+
             # Draw the border and background
             if self._skin.Ok():
-            
+
                 dc.SetBrush(wx.TRANSPARENT_BRUSH)
                 self.DrawBackgroundBitmap(dc)
-            
+
             dc.DrawRectangleRect(wx.Rect(0, 0, size.x, size.y))
-        
+
         # Draw border
         if self.HasFlag(INB_BORDER) and self.HasFlag(INB_GRADIENT_BACKGROUND):
-        
+
             # Just draw the border with transparent brush
             dc.SetBrush(wx.TRANSPARENT_BRUSH)
             dc.DrawRectangleRect(wx.Rect(0, 0, size.x, size.y))
@@ -1466,7 +1466,7 @@ class LabelContainer(ImageContainerBase):
         bUsePin = (self.HasFlag(INB_USE_PIN_BUTTON) and [True] or [False])[0]
 
         if bUsePin:
-        
+
             # Draw the pin button
             clientRect = self.GetClientRect()
             pinRect = wx.Rect(clientRect.GetX() + clientRect.GetWidth() - 20, 2, 20, 20)
@@ -1474,19 +1474,19 @@ class LabelContainer(ImageContainerBase):
 
             if self._bCollapsed:
                 return
-        
+
         dc.SetPen(wx.BLACK_PEN)
         self.SetSizeHints(self._nTabAreaWidth, -1)
 
         # We reserve 20 pixels for the pin button
-        posy = 20 
+        posy = 20
         count = 0
-        
+
         for i in xrange(len(self._pagesInfoVec)):
-            count = count+1        
-            # Default values for the surronounding rectangle 
+            count = count+1
+            # Default values for the surronounding rectangle
             # around a button
-            rectWidth = self._nTabAreaWidth  
+            rectWidth = self._nTabAreaWidth
             rectHeight = self._nImgSize * 2
 
             # Check that we have enough space to draw the button
@@ -1509,17 +1509,17 @@ class LabelContainer(ImageContainerBase):
                            i, self._nIndex == i, self._nHoeveredImgIdx == i)
 
             posy += rectHeight
-        
+
         # Update all buttons that can not fit into the screen as non-visible
         for ii in xrange(count, len(self._pagesInfoVec)):
             self._pagesInfoVec[i].SetPosition(wx.Point(-1, -1))
 
         if bUsePin:
-        
+
             clientRect = self.GetClientRect()
             pinRect = wx.Rect(clientRect.GetX() + clientRect.GetWidth() - 20, 2, 20, 20)
             self.DrawPin(dc, pinRect, not self._bCollapsed)
-        
+
 
     def DrawBackgroundBitmap(self, dc):
         """
@@ -1536,29 +1536,29 @@ class LabelContainer(ImageContainerBase):
         ystep = self._skin.GetHeight()
         bmpRect = wx.Rect(0, 0, xstep, ystep)
         if bmpRect != clientRect:
-        
+
             mem_dc = wx.MemoryDC()
             bmp = wx.EmptyBitmap(width, height)
             mem_dc.SelectObject(bmp)
 
             while coveredY < height:
-            
+
                 while coveredX < width:
-                
+
                     mem_dc.DrawBitmap(self._skin, coveredX, coveredY, True)
                     coveredX += xstep
-                
+
                 coveredX = 0
                 coveredY += ystep
-            
+
             mem_dc.SelectObject(wx.NullBitmap)
             #self._skin = bmp
             dc.DrawBitmap(bmp, 0, 0)
-        
+
         else:
-        
+
             dc.DrawBitmap(self._skin, 0, 0)
-        
+
 
     def OnMouseLeftUp(self, event):
         """
@@ -1568,31 +1568,31 @@ class LabelContainer(ImageContainerBase):
         """
 
         if self.HasFlag(INB_NO_RESIZE):
-        
+
             ImageContainerBase.OnMouseLeftUp(self, event)
             return
-        
+
         if self.HasCapture():
             self.ReleaseMouse()
 
         # Sash was being dragged?
         if not self._sashRect.IsEmpty():
-        
+
             # Remove sash
             ArtManager.Get().DrawDragSash(self._sashRect)
             self.Resize(event)
 
             self._sashRect = wx.Rect()
             return
-        
+
         self._sashRect = wx.Rect()
 
         # Restore cursor
         if self._oldCursor.Ok():
-        
+
             wx.SetCursor(self._oldCursor)
             self._oldCursor = wx.NullCursor
-        
+
         ImageContainerBase.OnMouseLeftUp(self, event)
 
 
@@ -1609,14 +1609,14 @@ class LabelContainer(ImageContainerBase):
         x = event.GetX()
 
         if self.HasFlag(INB_BOTTOM) or self.HasFlag(INB_RIGHT):
-        
+
             newWidth -= event.GetX()
-        
+
         else:
-        
+
             newWidth = x
-        
-        if newWidth < 100: # Dont allow width to be lower than that 
+
+        if newWidth < 100: # Dont allow width to be lower than that
             newWidth = 100
 
         self.SetSizeHints(newWidth, self._tabAreaSize.y)
@@ -1636,7 +1636,7 @@ class LabelContainer(ImageContainerBase):
         """
 
         if self.HasFlag(INB_NO_RESIZE):
-        
+
             ImageContainerBase.OnMouseMove(self, event)
             return
 
@@ -1645,41 +1645,41 @@ class LabelContainer(ImageContainerBase):
             ArtManager.Get().DrawDragSash(self._sashRect)
 
         if event.LeftIsDown():
-        
+
             if not self._sashRect.IsEmpty():
-            
+
                 # Progress sash, and redraw it
                 clientRect = self.GetClientRect()
                 pt = self.ClientToScreen(wx.Point(event.GetX(), 0))
                 self._sashRect = wx.RectPS(pt, wx.Size(4, clientRect.height))
                 ArtManager.Get().DrawDragSash(self._sashRect)
-            
+
             else:
-            
+
                 # Sash is not being dragged
                 if self._oldCursor.Ok():
                     wx.SetCursor(self._oldCursor)
                     self._oldCursor = wx.NullCursor
-                
+
         else:
-        
+
             if self.HasCapture():
                 self.ReleaseMouse()
 
             if self.PointOnSash(event.GetPosition()):
-            
+
                 # Change cursor to EW cursor
                 self._oldCursor = self.GetCursor()
                 wx.SetCursor(wx.StockCursor(wx.CURSOR_SIZEWE))
-            
+
             elif self._oldCursor.Ok():
-            
+
                 wx.SetCursor(self._oldCursor)
                 self._oldCursor = wx.NullCursor
-            
+
             self._sashRect = wx.Rect()
             ImageContainerBase.OnMouseMove(self, event)
-        
+
 
     def OnMouseLeftDown(self, event):
         """
@@ -1689,14 +1689,14 @@ class LabelContainer(ImageContainerBase):
         """
 
         if self.HasFlag(INB_NO_RESIZE):
-        
+
             ImageContainerBase.OnMouseLeftDown(self, event)
             return
 
         imgIdx, where = self.HitTest(event.GetPosition())
 
         if IMG_OVER_EW_BORDER == where and not self._bCollapsed:
-            
+
             # We are over the sash
             if not self._sashRect.IsEmpty():
                 ArtManager.Get().DrawDragSash(self._sashRect)
@@ -1707,13 +1707,13 @@ class LabelContainer(ImageContainerBase):
                 # Change mouse cursor
                 self._oldCursor = self.GetCursor()
                 wx.SetCursor(wx.StockCursor(wx.CURSOR_SIZEWE))
-            
+
             clientRect = self.GetClientRect()
             pt = self.ClientToScreen(wx.Point(event.GetX(), 0))
             self._sashRect = wx.RectPS(pt, wx.Size(4, clientRect.height))
 
             ArtManager.Get().DrawDragSash(self._sashRect)
-        
+
         else:
             ImageContainerBase.OnMouseLeftDown(self, event)
 
@@ -1726,15 +1726,15 @@ class LabelContainer(ImageContainerBase):
         """
 
         if self.HasFlag(INB_NO_RESIZE):
-        
+
             ImageContainerBase.OnMouseLeaveWindow(self, event)
             return
-        
-        # If Sash is being dragged, ignore this event
-        if not self.HasCapture():        
-            ImageContainerBase.OnMouseLeaveWindow(self, event)      
 
-        
+        # If Sash is being dragged, ignore this event
+        if not self.HasCapture():
+            ImageContainerBase.OnMouseLeaveWindow(self, event)
+
+
     def DrawRegularHover(self, dc, rect):
         """
         Draws a rounded rectangle around the current tab.
@@ -1742,14 +1742,14 @@ class LabelContainer(ImageContainerBase):
         :param `dc`: an instance of `wx.DC`;
         :param `rect`: the current tab client rectangle.
         """
-        
+
         # The hovered tab with default border
         dc.SetBrush(wx.TRANSPARENT_BRUSH)
         dc.SetPen(wx.Pen(wx.WHITE))
 
         # We draw CCW
         if self.HasFlag(INB_RIGHT) or self.HasFlag(INB_TOP):
-        
+
             # Right images
             # Upper line
             dc.DrawLine(rect.x + 1, rect.y, rect.x + rect.width, rect.y)
@@ -1762,9 +1762,9 @@ class LabelContainer(ImageContainerBase):
 
             # Bottom line
             dc.DrawLine(rect.x + rect.width, rect.y + rect.height, rect.x, rect.y + rect.height)
-        
+
         else:
-        
+
             # Left images
             # Upper line white
             dc.DrawLine(rect.x, rect.y, rect.x + rect.width - 1, rect.y)
@@ -1777,7 +1777,7 @@ class LabelContainer(ImageContainerBase):
 
             # Bottom line
             dc.DrawLine(rect.x, rect.y + rect.height, rect.x + rect.width, rect.y + rect.height)
-        
+
 
     def DrawWebHover(self, dc, caption, xCoord, yCoord):
         """
@@ -1804,16 +1804,16 @@ class LabelContainer(ImageContainerBase):
 
          ================================== ======= ==================================
          Colour Key                          Value  Description
-         ================================== ======= ==================================         
+         ================================== ======= ==================================
          ``INB_TAB_AREA_BACKGROUND_COLOUR``     100 The tab area background colour
          ``INB_ACTIVE_TAB_COLOUR``              101 The active tab background colour
          ``INB_TABS_BORDER_COLOUR``             102 The tabs border colour
          ``INB_TEXT_COLOUR``                    103 The tab caption text colour
          ``INB_ACTIVE_TEXT_COLOUR``             104 The active tab caption text colour
          ``INB_HILITE_TAB_COLOUR``              105 The tab caption highlight text colour
-         ================================== ======= ==================================         
+         ================================== ======= ==================================
 
-        :param `colour`: a valid `wx.Colour` object.        
+        :param `colour`: a valid `wx.Colour` object.
         """
 
         self._coloursMap[which] = colour
@@ -1831,7 +1831,7 @@ class LabelContainer(ImageContainerBase):
         if not self._coloursMap.has_key(which):
             return wx.Colour()
 
-        return self._coloursMap[which]        
+        return self._coloursMap[which]
 
 
     def InitializeColours(self):
@@ -1848,9 +1848,9 @@ class LabelContainer(ImageContainerBase):
         # dont allow bright colour one on the other
         if not ArtManager.Get().IsDark(self._coloursMap[INB_TAB_AREA_BACKGROUND_COLOUR]) and \
            not ArtManager.Get().IsDark(self._coloursMap[INB_TEXT_COLOUR]):
-        
+
             self._coloursMap[INB_TEXT_COLOUR] = ArtManager.Get().DarkColour(self._coloursMap[INB_TEXT_COLOUR], 100)
-        
+
 
     def DrawLabel(self, dc, rect, text, bmp, imgInfo, orientationLeft, imgIdx, selected, hover):
         """
@@ -1870,24 +1870,24 @@ class LabelContainer(ImageContainerBase):
 
         dcsaver = DCSaver(dc)
         nPadding = 6
-        
+
         if orientationLeft:
-        
+
             rect.x += nPadding
             rect.width -= nPadding
-        
+
         else:
-        
+
             rect.width -= nPadding
-        
+
         textRect = wx.Rect(*rect)
         imgRect = wx.Rect(*rect)
-        
+
         dc.SetFont(wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT))
 
         # First we define the rectangle for the text
         w, h = dc.GetTextExtent(text)
-        
+
         #-------------------------------------------------------------------------
         # Label layout:
         # [ nPadding | Image | nPadding | Text | nPadding ]
@@ -1901,7 +1901,7 @@ class LabelContainer(ImageContainerBase):
         if bmp.Ok():
             textRect.x += (bmp.GetWidth() + nPadding)
             textRect.width -= (bmp.GetWidth() + nPadding)
-        
+
         textRect.height = h
 
         # Truncate text if needed
@@ -1909,83 +1909,83 @@ class LabelContainer(ImageContainerBase):
 
         # Image bounding rectangle
         if bmp.Ok():
-        
+
             imgRect.x += nPadding
             imgRect.width = bmp.GetWidth()
             imgRect.y = rect.y + (rect.height - bmp.GetHeight())/2
             imgRect.height = bmp.GetHeight()
-        
+
         # Draw bounding rectangle
         if selected:
-        
+
             # First we colour the tab
             dc.SetBrush(wx.Brush(self._coloursMap[INB_ACTIVE_TAB_COLOUR]))
 
             if self.HasFlag(INB_BORDER):
                 dc.SetPen(wx.Pen(self._coloursMap[INB_TABS_BORDER_COLOUR]))
-            else: 
+            else:
                 dc.SetPen(wx.Pen(self._coloursMap[INB_ACTIVE_TAB_COLOUR]))
-            
+
             labelRect = wx.Rect(*rect)
 
-            if orientationLeft: 
+            if orientationLeft:
                 labelRect.width += 3
-            else: 
+            else:
                 labelRect.width += 3
                 labelRect.x -= 3
-            
+
             dc.DrawRoundedRectangleRect(labelRect, 3)
 
             if not orientationLeft and self.HasFlag(INB_DRAW_SHADOW):
                 dc.SetPen(wx.BLACK_PEN)
                 dc.DrawPoint(labelRect.x + labelRect.width - 1, labelRect.y + labelRect.height - 1)
-            
+
         # Draw the text & bitmap
         if caption != "":
-        
+
             if selected:
                 dc.SetTextForeground(self._coloursMap[INB_ACTIVE_TEXT_COLOUR])
             else:
                 dc.SetTextForeground(self._coloursMap[INB_TEXT_COLOUR])
-                
+
             dc.DrawText(caption, textRect.x, textRect.y)
             imgInfo.SetTextRect(textRect)
-        
+
         else:
-        
+
             imgInfo.SetTextRect(wx.Rect())
-        
+
         if bmp.Ok():
             dc.DrawBitmap(bmp, imgRect.x, imgRect.y, True)
 
         # Drop shadow
         if self.HasFlag(INB_DRAW_SHADOW) and selected:
-        
+
             sstyle = 0
             if orientationLeft:
                 sstyle = BottomShadow
             else:
                 sstyle = BottomShadowFull | RightShadow
-            
+
             if self.HasFlag(INB_WEB_HILITE):
-            
+
                 # Always drop shadow for this style
                 ArtManager.Get().DrawBitmapShadow(dc, rect, sstyle)
-            
+
             else:
-            
+
                 if imgIdx+1 != self._nHoeveredImgIdx:
-                
+
                     ArtManager.Get().DrawBitmapShadow(dc, rect, sstyle)
-                
-        # Draw hover effect 
+
+        # Draw hover effect
         if hover:
-        
-            if self.HasFlag(INB_WEB_HILITE) and caption != "":   
+
+            if self.HasFlag(INB_WEB_HILITE) and caption != "":
                 self.DrawWebHover(dc, caption, textRect.x, textRect.y)
             else:
                 self.DrawRegularHover(dc, rect)
-        
+
         # Update the page information bout position and size
         imgInfo.SetPosition(rect.GetPosition())
         imgInfo.SetSize(rect.GetSize())
@@ -2030,9 +2030,9 @@ class FlatBookBase(wx.Panel):
          ``INB_FIT_LABELTEXT``            0x2000 Will fit the tab area to the longest text (or text+image if you have images) in all the tabs.
          =========================== =========== ==================================================
 
-        :param `name`: the window name.         
+        :param `name`: the window name.
         """
-        
+
         self._pages = None
         self._bInitializing = True
         self._pages = None
@@ -2068,11 +2068,11 @@ class FlatBookBase(wx.Panel):
          ``INB_NO_RESIZE``                0x1000 Don't allow resizing of the tab area.
          ``INB_FIT_LABELTEXT``            0x2000 Will fit the tab area to the longest text (or text+image if you have images) in all the tabs.
          =========================== =========== ==================================================
-        
+
         """
 
         wx.Panel.SetWindowStyleFlag(self, style)
-        
+
         # Check that we are not in initialization process
         if self._bInitializing:
             return
@@ -2085,7 +2085,7 @@ class FlatBookBase(wx.Panel):
             self._mainSizer.Detach(self._windows[self.GetSelection()])
 
         self._mainSizer.Detach(self._pages)
-        
+
         # Create new sizer with the requested orientaion
         className = self.GetName()
 
@@ -2096,26 +2096,26 @@ class FlatBookBase(wx.Panel):
                 self._mainSizer = wx.BoxSizer(wx.HORIZONTAL)
             else:
                 self._mainSizer = wx.BoxSizer(wx.VERTICAL)
-        
+
         self.SetSizer(self._mainSizer)
-        
+
         # Add the tab container and the separator
         self._mainSizer.Add(self._pages, 0, wx.EXPAND)
-        
+
         if className == "FlatImageBook":
-        
+
             if style & INB_LEFT or style & INB_RIGHT:
                 self._pages.SetSizeHints(self._pages._nImgSize * 2, -1)
             else:
                 self._pages.SetSizeHints(-1, self._pages._nImgSize * 2)
-        
+
         # Attach the windows back to the sizer to the sizer
         if self.GetSelection() >= 0:
             self.DoSetSelection(self._windows[self.GetSelection()])
 
         if style & INB_FIT_LABELTEXT:
             self.ResizeTabArea()
-            
+
         self._mainSizer.Layout()
         dummy = wx.SizeEvent()
         wx.PostEvent(self, dummy)
@@ -2130,7 +2130,7 @@ class FlatBookBase(wx.Panel):
         :param `text`: specifies the text for the new page;
         :param `select`: specifies whether the page should be selected;
         :param `imageId`: specifies the optional image index for the new page.
-        
+
         :note: The call to this function generates the page changing events.
         """
 
@@ -2140,7 +2140,7 @@ class FlatBookBase(wx.Panel):
         page.Reparent(self)
 
         self._windows.append(page)
-        
+
         if select or len(self._windows) == 1:
             self.DoSetSelection(page)
         else:
@@ -2156,7 +2156,7 @@ class FlatBookBase(wx.Panel):
         Deletes the specified page, and the associated window.
 
         :param `page`: an integer specifying the page to be deleted.
-        
+
         :note: The call to this function generates the page changing events.
         """
 
@@ -2182,14 +2182,14 @@ class FlatBookBase(wx.Panel):
         # as well
         if page == self.GetSelection():
             self._mainSizer.Detach(pageRemoved)
-        
+
         # Remove it from the array as well
         self._windows.pop(page)
 
         # Now we can destroy it in wxWidgets use Destroy instead of delete
         pageRemoved.Destroy()
         self._mainSizer.Layout()
-        
+
         self._pages.DoDeletePage(page)
         self.ResizeTabArea()
         self.Thaw()
@@ -2206,7 +2206,7 @@ class FlatBookBase(wx.Panel):
         Deletes the specified page, without deleting the associated window.
 
         :param `page`: an integer specifying the page to be removed.
-        
+
         :note: The call to this function generates the page changing events.
         """
 
@@ -2232,7 +2232,7 @@ class FlatBookBase(wx.Panel):
         # as well
         if page == self.GetSelection():
             self._mainSizer.Detach(pageRemoved)
-        
+
         # Remove it from the array as well
         self._windows.pop(page)
         self._mainSizer.Layout()
@@ -2246,15 +2246,15 @@ class FlatBookBase(wx.Panel):
         closedEvent.SetSelection(page)
         closedEvent.SetEventObject(self)
         self.GetEventHandler().ProcessEvent(closedEvent)
-        
+
         return True
 
-    
+
     def ResizeTabArea(self):
         """ Resizes the tab area if the control has the ``INB_FIT_LABELTEXT`` style set. """
 
         style = self.GetWindowStyleFlag()
-        
+
         if style & INB_FIT_LABELTEXT == 0:
             return
 
@@ -2263,7 +2263,7 @@ class FlatBookBase(wx.Panel):
             dc.SelectObject(wx.EmptyBitmap(1, 1))
             dc.SetFont(self.GetFont())
             maxW = 0
-            
+
             for page in xrange(self.GetPageCount()):
                 caption = self._pages.GetPageText(page)
                 w, h = dc.GetTextExtent(caption)
@@ -2274,7 +2274,7 @@ class FlatBookBase(wx.Panel):
             self._pages.SetSizeHints(maxW, -1)
             self._pages._nTabAreaWidth = maxW
 
-        
+
     def DeleteAllPages(self):
         """ Deletes all the pages in the book. """
 
@@ -2282,10 +2282,10 @@ class FlatBookBase(wx.Panel):
             return
 
         self.Freeze()
-        
+
         for win in self._windows:
             win.Destroy()
-        
+
         self._windows = []
         self.Thaw()
 
@@ -2301,7 +2301,7 @@ class FlatBookBase(wx.Panel):
 
         :param `page`: an integer specifying the page to be selected.
 
-        :note: The call to this function generates the page changing events.        
+        :note: The call to this function generates the page changing events.
         """
 
         if page >= len(self._windows):
@@ -2376,11 +2376,11 @@ class FlatBookBase(wx.Panel):
         bInsertFirst = (style & INB_BOTTOM or style & INB_RIGHT)
 
         if curSel >= 0:
-        
+
             # Remove the window from the main sizer
             self._mainSizer.Detach(self._windows[curSel])
             self._windows[curSel].Hide()
-        
+
         if bInsertFirst:
             self._mainSizer.Insert(0, window, 1, wx.EXPAND)
         else:
@@ -2401,7 +2401,7 @@ class FlatBookBase(wx.Panel):
         """ Returns the number of pages in the book. """
 
         return len(self._windows)
-    
+
 
     def SetPageImage(self, page, imageId):
         """
@@ -2430,13 +2430,13 @@ class FlatBookBase(wx.Panel):
 # ---------------------------------------------------------------------------- #
 # Class FlatImageBook
 # ---------------------------------------------------------------------------- #
-        
+
 class FlatImageBook(FlatBookBase):
     """
     Default implementation of the image book, it is like a `wx.Notebook`, except that
     images are used to control the different pages. This container is usually used
     for configuration dialogs etc.
-    
+
     :note: Currently, this control works properly for images of size 32x32 and bigger.
     """
 
@@ -2472,11 +2472,11 @@ class FlatImageBook(FlatBookBase):
          ``INB_FIT_LABELTEXT``            0x2000 Will fit the tab area to the longest text (or text+image if you have images) in all the tabs.
          =========================== =========== ==================================================
 
-        :param `name`: the window name.         
+        :param `name`: the window name.
         """
-        
+
         FlatBookBase.__init__(self, parent, id, pos, size, style, name)
-        
+
         self._pages = self.CreateImageContainer()
 
         if style & INB_LEFT or style & INB_RIGHT:
@@ -2495,8 +2495,8 @@ class FlatImageBook(FlatBookBase):
             self._pages.SetSizeHints(-1, self._pages.GetImageSize() * 2)
 
         self._mainSizer.Layout()
-        
-        
+
+
     def CreateImageContainer(self):
         """ Creates the image container class for L{FlatImageBook}. """
 
@@ -2512,7 +2512,7 @@ class LabelBook(FlatBookBase):
     An implementation of a notebook control - except that instead of having
     tabs to show labels, it labels to the right or left (arranged horizontally).
     """
-    
+
     def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=0, name="LabelBook"):
         """
@@ -2545,11 +2545,11 @@ class LabelBook(FlatBookBase):
          ``INB_FIT_LABELTEXT``            0x2000 Will fit the tab area to the longest text (or text+image if you have images) in all the tabs.
          =========================== =========== ==================================================
 
-        :param `name`: the window name.         
+        :param `name`: the window name.
         """
-        
+
         FlatBookBase.__init__(self, parent, id, pos, size, style, name)
-        
+
         self._pages = self.CreateImageContainer()
 
         # Label book specific initialization
@@ -2564,7 +2564,7 @@ class LabelBook(FlatBookBase):
         self._pages.InitializeColours()
 
         self.Bind(wx.EVT_SIZE, self.OnSize)
-        
+
 
     def CreateImageContainer(self):
         """ Creates the image container (LabelContainer) class for L{FlatImageBook}. """

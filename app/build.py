@@ -1,12 +1,12 @@
 from distutils.core import setup
-from PoziConnect.version import version 
+from PoziConnect.version import version
 import os
 import sys
 
 sys.path.extend(['app'])
 sys.path.extend(['app/external'])
 
-VERSION = version 
+VERSION = version
 APP_DIR = os.path.dirname(__file__)
 
 # Increase version minor number automatically
@@ -100,7 +100,7 @@ setup(
                         "ignores": ['tcl','AppKit','Numeric','Foundation'],
                         "excludes": MODULE_EXCLUDES,
                         "includes":'decimal',
-                        } 
+                        }
                },
     name = PRODUCT_NAME,
     version = VERSION,
@@ -109,5 +109,5 @@ setup(
     author = AUTHOR_NAME,
     author_email = AUTHOR_EMAIL,
     url = AUTHOR_URL,
-    zipfile = None, 
+    zipfile = None,
 )

@@ -34,4 +34,4 @@ else:
 
             RibbonAUIArtProvider.__init__(self)
 
-    
+

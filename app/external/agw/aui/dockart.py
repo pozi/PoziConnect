@@ -46,7 +46,7 @@ class AuiDefaultDockArt(object):
     which provides bitmap art and a colour scheme that is adapted to the major
     platforms' look. You can either derive from that class to alter its behaviour or
     write a completely new dock art class.
-    
+
     Call L{AuiManager.SetArtProvider} to make use this new dock art.
 
 
@@ -84,7 +84,7 @@ class AuiDefaultDockArt(object):
     These are the possible gradient dock art settings for L{AuiManager}:
 
     ============================================  ======================================
-    Gradient Constant                             Description 
+    Gradient Constant                             Description
     ============================================  ======================================
     ``AUI_GRADIENT_NONE``                         No gradient on the captions
     ``AUI_GRADIENT_VERTICAL``                     Vertical gradient on the captions
@@ -97,7 +97,7 @@ class AuiDefaultDockArt(object):
     These are the possible pane button / L{AuiNotebook} button / L{AuiToolBar} button states:
 
     ============================================  ======================================
-    Button State Constant                         Description     
+    Button State Constant                         Description
     ============================================  ======================================
     ``AUI_BUTTON_STATE_NORMAL``                   Normal button state
     ``AUI_BUTTON_STATE_HOVER``                    Hovered button state
@@ -113,7 +113,7 @@ class AuiDefaultDockArt(object):
     These are the possible pane button / L{AuiNotebook} button / L{AuiToolBar} button identifiers:
 
     ============================================  ======================================
-    Button Identifier                             Description     
+    Button Identifier                             Description
     ============================================  ======================================
     ``AUI_BUTTON_CLOSE``                          Shows a close button on the pane
     ``AUI_BUTTON_MAXIMIZE_RESTORE``               Shows a maximize/restore button on the pane
@@ -129,7 +129,7 @@ class AuiDefaultDockArt(object):
     ``AUI_BUTTON_CUSTOM2``                        Shows a custom button on the pane (not implemented)
     ``AUI_BUTTON_CUSTOM3``                        Shows a custom button on the pane (not implemented)
     ============================================  ======================================
-    
+
     """
 
     def __init__(self):
@@ -138,7 +138,7 @@ class AuiDefaultDockArt(object):
         self.Init()
 
         isMac = wx.Platform == "__WXMAC__"
-        
+
         if isMac:
             self._caption_font = wx.SMALL_FONT
         else:
@@ -146,7 +146,7 @@ class AuiDefaultDockArt(object):
 
         self.SetDefaultPaneBitmaps(isMac)
         self._restore_bitmap = wx.BitmapFromXPMData(restore_xpm)
-        
+
         # default metric values
         self._sash_size = 4
 
@@ -161,21 +161,21 @@ class AuiDefaultDockArt(object):
             # GetThemeMetric( kThemeMetricSmallPaneSplitterHeight , &height );
             # self._sash_size = height;
 
-            self._sash_size = 8 # Carbon.Appearance.kThemeMetricPaneSplitterHeight            
-            
+            self._sash_size = 8 # Carbon.Appearance.kThemeMetricPaneSplitterHeight
+
         elif wx.Platform == "__WXGTK__":
             self._sash_size = wx.RendererNative.Get().GetSplitterParams(wx.GetTopLevelWindows()[0]).widthSash
 
         else:
             self._sash_size = 4
-        
+
         self._caption_size = 19
         self._border_size = 1
         self._button_size = 14
         self._gripper_size = 9
         self._gradient_type = AUI_GRADIENT_VERTICAL
         self._draw_sash = False
-        
+
 
     def Init(self):
         """ Initializes the dock art. """
@@ -201,7 +201,7 @@ class AuiDefaultDockArt(object):
         self._inactive_caption_colour = darker1_colour
         self._inactive_caption_gradient_colour = StepColour(base_colour, 97)
         self._inactive_caption_text_colour = wx.BLACK
-    
+
         self._sash_brush = wx.Brush(base_colour)
         self._background_brush = wx.Brush(base_colour)
         self._border_pen = wx.Pen(darker2_colour)
@@ -210,7 +210,7 @@ class AuiDefaultDockArt(object):
         self._gripper_pen2 = wx.Pen(darker3_colour)
         self._gripper_pen3 = wx.WHITE_PEN
 
-        
+
     def GetMetric(self, id):
         """
         Gets the value of a certain setting.
@@ -287,7 +287,7 @@ class AuiDefaultDockArt(object):
         elif id == AUI_DOCKART_ACTIVE_CAPTION_GRADIENT_COLOUR:
             return self._active_caption_gradient_colour
         elif id == AUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR:
-            return self._active_caption_text_colour        
+            return self._active_caption_text_colour
         elif id == AUI_DOCKART_BORDER_COLOUR:
             return self._border_pen.GetColour()
         elif id == AUI_DOCKART_GRIPPER_COLOUR:
@@ -310,7 +310,7 @@ class AuiDefaultDockArt(object):
             colour = wx.Colour(*colour)
         elif isinstance(colour, types.IntType):
             colour = wx.ColourRGB(colour)
-        
+
         if id == AUI_DOCKART_BACKGROUND_COLOUR:
             self._background_brush.SetColour(colour)
         elif id == AUI_DOCKART_BACKGROUND_GRADIENT_COLOUR:
@@ -334,7 +334,7 @@ class AuiDefaultDockArt(object):
                 # No custom bitmaps for the pane close button
                 # Change the MAC close bitmap colour
                 self._active_close_bitmap = DrawMACCloseButton(wx.WHITE, colour)
-                
+
         elif id == AUI_DOCKART_ACTIVE_CAPTION_GRADIENT_COLOUR:
             self._active_caption_gradient_colour = colour
         elif id == AUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR:
@@ -347,7 +347,7 @@ class AuiDefaultDockArt(object):
             self._gripper_pen2.SetColour(StepColour(colour, 60))
         else:
             raise Exception("Invalid Colour Ordinal.")
-        
+
 
     GetColour = GetColor
     SetColour = SetColor
@@ -355,11 +355,11 @@ class AuiDefaultDockArt(object):
     def SetFont(self, id, font):
         """
         Sets a font setting.
-        
+
         :param `id`: must be ``AUI_DOCKART_CAPTION_FONT``;
         :param `font`: an instance of `wx.Font`.
         """
-        
+
         if id == AUI_DOCKART_CAPTION_FONT:
             self._caption_font = font
 
@@ -367,13 +367,13 @@ class AuiDefaultDockArt(object):
     def GetFont(self, id):
         """
         Gets a font setting.
-        
+
         :param `id`: must be ``AUI_DOCKART_CAPTION_FONT``, otherwise `wx.NullFont` is returned.
         """
-        
+
         if id == AUI_DOCKART_CAPTION_FONT:
             return self._caption_font
-        
+
         return wx.NullFont
 
 
@@ -385,7 +385,7 @@ class AuiDefaultDockArt(object):
         :param `window`: an instance of `wx.Window`;
         :param `orient`: the sash orientation;
         :param `rect`: the sash rectangle.
-        """                
+        """
 
         # AG: How do we make this work?!?
         # RendererNative does not use the sash_brush chosen by the user
@@ -395,7 +395,7 @@ class AuiDefaultDockArt(object):
 
         dc.SetPen(wx.TRANSPARENT_PEN)
         dc.SetBrush(self._sash_brush)
-        dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)        
+        dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
 
         draw_sash = self.GetMetric(AUI_DOCKART_DRAW_SASH_GRIP)
         if draw_sash:
@@ -432,36 +432,36 @@ class AuiDefaultDockArt(object):
         :param `window`: an instance of `wx.Window`;
         :param `rect`: the border rectangle;
         :param `pane`: the pane for which the border is drawn.
-        """        
+        """
 
         drect = wx.Rect(*rect)
-        
+
         dc.SetPen(self._border_pen)
         dc.SetBrush(wx.TRANSPARENT_BRUSH)
 
         border_width = self.GetMetric(AUI_DOCKART_PANE_BORDER_SIZE)
 
         if pane.IsToolbar():
-        
+
             for ii in xrange(0, border_width):
-            
+
                 dc.SetPen(wx.WHITE_PEN)
                 dc.DrawLine(drect.x, drect.y, drect.x+drect.width, drect.y)
                 dc.DrawLine(drect.x, drect.y, drect.x, drect.y+drect.height)
-                dc.SetPen(self._border_pen)       
+                dc.SetPen(self._border_pen)
                 dc.DrawLine(drect.x, drect.y+drect.height-1,
                             drect.x+drect.width, drect.y+drect.height-1)
                 dc.DrawLine(drect.x+drect.width-1, drect.y,
                             drect.x+drect.width-1, drect.y+drect.height)
                 drect.Deflate(1, 1)
-        
+
         else:
-        
+
             for ii in xrange(0, border_width):
-            
+
                 dc.DrawRectangle(drect.x, drect.y, drect.width, drect.height)
                 drect.Deflate(1, 1)
-            
+
 
     def DrawCaptionBackground(self, dc, rect, pane):
         """
@@ -470,17 +470,17 @@ class AuiDefaultDockArt(object):
         :param `dc`: a `wx.DC` device context;
         :param `rect`: the text caption rectangle;
         :param `pane`: the pane for which the text background is drawn.
-        """        
+        """
 
         active = pane.state & optionActive
- 
+
         if self._gradient_type == AUI_GRADIENT_NONE:
             if active:
                 dc.SetBrush(wx.Brush(self._active_caption_colour))
             else:
                 dc.SetBrush(wx.Brush(self._inactive_caption_colour))
 
-            dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)        
+            dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
 
         else:
 
@@ -489,12 +489,12 @@ class AuiDefaultDockArt(object):
             if switch_gradient:
                 gradient_type = (self._gradient_type == AUI_GRADIENT_HORIZONTAL and [AUI_GRADIENT_VERTICAL] or \
                                  [AUI_GRADIENT_HORIZONTAL])[0]
-            
+
             if active:
                 if wx.Platform == "__WXMAC__":
                     DrawGradientRectangle(dc, rect, self._active_caption_colour,
                                           self._active_caption_gradient_colour,
-                                          gradient_type)                    
+                                          gradient_type)
                 else:
                     DrawGradientRectangle(dc, rect, self._active_caption_gradient_colour,
                                           self._active_caption_colour,
@@ -517,9 +517,9 @@ class AuiDefaultDockArt(object):
         :param `dc`: a `wx.DC` device context;
         :param `rect`: the pane caption rectangle;
         :param `pane`: the pane for which the icon is drawn.
-        """        
-        
-        # Draw the icon centered vertically 
+        """
+
+        # Draw the icon centered vertically
         if pane.icon.Ok():
             if pane.HasCaptionLeft():
                 bmp = wx.ImageFromBitmap(pane.icon).Rotate90(clockwise=False)
@@ -537,11 +537,11 @@ class AuiDefaultDockArt(object):
         :param `text`: the text to be displayed;
         :param `rect`: the pane caption rectangle;
         :param `pane`: the pane for which the text is drawn.
-        """        
+        """
 
         dc.SetPen(wx.TRANSPARENT_PEN)
         dc.SetFont(self._caption_font)
-        
+
         self.DrawCaptionBackground(dc, rect, pane)
 
         if pane.state & optionActive:
@@ -566,7 +566,7 @@ class AuiDefaultDockArt(object):
                 caption_offset += pane.icon.GetHeight() + 3
             else:
                 caption_offset += pane.icon.GetWidth() + 3
-                
+
             self.DrawIcon(dc, rect, pane)
 
         variable -= caption_offset
@@ -588,25 +588,25 @@ class AuiDefaultDockArt(object):
         :param `text`: the text to be displayed;
         :param `rect`: the pane caption rectangle;
         :param `pane`: the pane for which the text is drawn.
-        """        
+        """
 
         state = pane.state
         pane.state &= ~optionActive
-        
+
         for indx in xrange(6):
             active = (indx%2 == 0 and [True] or [False])[0]
             if active:
                 pane.state |= optionActive
             else:
                 pane.state &= ~optionActive
-                
+
             self.DrawCaptionBackground(dc, rect, pane)
             self.DrawCaption(dc, window, text, rect, pane)
             wx.SafeYield()
             wx.MilliSleep(350)
 
         pane.state = state
-        
+
 
     def DrawGripper(self, dc, window, rect, pane):
         """
@@ -616,7 +616,7 @@ class AuiDefaultDockArt(object):
         :param `window`: an instance of `wx.Window`;
         :param `rect`: the pane caption rectangle;
         :param `pane`: the pane for which the gripper is drawn.
-        """        
+        """
 
         dc.SetPen(wx.TRANSPARENT_PEN)
         dc.SetBrush(self._gripper_brush)
@@ -627,33 +627,33 @@ class AuiDefaultDockArt(object):
             y = 4
             while 1:
                 dc.SetPen(self._gripper_pen1)
-                dc.DrawPoint(rect.x+3, rect.y+y) 
-                dc.SetPen(self._gripper_pen2) 
-                dc.DrawPoint(rect.x+3, rect.y+y+1) 
-                dc.DrawPoint(rect.x+4, rect.y+y) 
-                dc.SetPen(self._gripper_pen3) 
-                dc.DrawPoint(rect.x+5, rect.y+y+1) 
-                dc.DrawPoint(rect.x+5, rect.y+y+2) 
-                dc.DrawPoint(rect.x+4, rect.y+y+2) 
-                y = y + 4 
+                dc.DrawPoint(rect.x+3, rect.y+y)
+                dc.SetPen(self._gripper_pen2)
+                dc.DrawPoint(rect.x+3, rect.y+y+1)
+                dc.DrawPoint(rect.x+4, rect.y+y)
+                dc.SetPen(self._gripper_pen3)
+                dc.DrawPoint(rect.x+5, rect.y+y+1)
+                dc.DrawPoint(rect.x+5, rect.y+y+2)
+                dc.DrawPoint(rect.x+4, rect.y+y+2)
+                y = y + 4
                 if y > rect.GetHeight() - 4:
                     break
         else:
             x = 4
             while 1:
-                dc.SetPen(self._gripper_pen1) 
-                dc.DrawPoint(rect.x+x, rect.y+3) 
-                dc.SetPen(self._gripper_pen2) 
-                dc.DrawPoint(rect.x+x+1, rect.y+3) 
-                dc.DrawPoint(rect.x+x, rect.y+4) 
-                dc.SetPen(self._gripper_pen3) 
-                dc.DrawPoint(rect.x+x+1, rect.y+5) 
-                dc.DrawPoint(rect.x+x+2, rect.y+5) 
-                dc.DrawPoint(rect.x+x+2, rect.y+4) 
-                x = x + 4 
+                dc.SetPen(self._gripper_pen1)
+                dc.DrawPoint(rect.x+x, rect.y+3)
+                dc.SetPen(self._gripper_pen2)
+                dc.DrawPoint(rect.x+x+1, rect.y+3)
+                dc.DrawPoint(rect.x+x, rect.y+4)
+                dc.SetPen(self._gripper_pen3)
+                dc.DrawPoint(rect.x+x+1, rect.y+5)
+                dc.DrawPoint(rect.x+x+2, rect.y+5)
+                dc.DrawPoint(rect.x+x+2, rect.y+4)
+                x = x + 4
                 if x > rect.GetWidth() - 4:
-                    break 
-        
+                    break
+
 
     def DrawPaneButton(self, dc, window, button, button_state, _rect, pane):
         """
@@ -665,11 +665,11 @@ class AuiDefaultDockArt(object):
         :param `button_state`: the pane button state;
         :param `_rect`: the pane caption rectangle;
         :param `pane`: the pane for which the button is drawn.
-        """        
-        
+        """
+
         if not pane:
             return
-        
+
         if button == AUI_BUTTON_CLOSE:
             if pane.state & optionActive:
                 bmp = self._active_close_bitmap
@@ -701,7 +701,7 @@ class AuiDefaultDockArt(object):
                 bmp = self._inactive_minimize_bitmap
 
         isVertical = pane.HasCaptionLeft()
-        
+
         rect = wx.Rect(*_rect)
 
         if isVertical:
@@ -738,7 +738,7 @@ class AuiDefaultDockArt(object):
 
         if isVertical:
             bmp = wx.ImageFromBitmap(bmp).Rotate90(clockwise=False).ConvertToBitmap()
-            
+
         # draw the button itself
         dc.DrawBitmap(bmp, rect.x, rect.y, True)
 
@@ -751,11 +751,11 @@ class AuiDefaultDockArt(object):
         :param `orient`: the sash orientation;
         :param `rect`: the sash rectangle.
         """
-        
+
         dc.SetBrush(self._gripper_brush)
 
         if orient == wx.HORIZONTAL:  # horizontal sash
-            
+
             x = rect.x + int((1.0/4.0)*rect.width)
             xend = rect.x + int((3.0/4.0)*rect.width)
             y = rect.y + (rect.height/2) - 1
@@ -763,7 +763,7 @@ class AuiDefaultDockArt(object):
             while 1:
                 dc.SetPen(self._gripper_pen3)
                 dc.DrawRectangle(x, y, 2, 2)
-                dc.SetPen(self._gripper_pen2) 
+                dc.SetPen(self._gripper_pen2)
                 dc.DrawPoint(x+1, y+1)
                 x = x + 5
 
@@ -779,7 +779,7 @@ class AuiDefaultDockArt(object):
             while 1:
                 dc.SetPen(self._gripper_pen3)
                 dc.DrawRectangle(x, y, 2, 2)
-                dc.SetPen(self._gripper_pen2) 
+                dc.SetPen(self._gripper_pen2)
                 dc.DrawPoint(x+1, y+1)
                 y = y + 5
 
@@ -800,7 +800,7 @@ class AuiDefaultDockArt(object):
         else:
             self._inactive_close_bitmap = BitmapFromBits(close_bits, 16, 16, self._inactive_caption_text_colour)
             self._active_close_bitmap = BitmapFromBits(close_bits, 16, 16, self._active_caption_text_colour)
-            
+
         if isMac:
             self._inactive_maximize_bitmap = BitmapFromBits(max_bits, 16, 16, wx.WHITE)
             self._active_maximize_bitmap = BitmapFromBits(max_bits, 16, 16, wx.WHITE)
@@ -826,8 +826,8 @@ class AuiDefaultDockArt(object):
         self._active_pin_bitmap = BitmapFromBits(pin_bits, 16, 16, self._active_caption_text_colour)
 
         self._custom_pane_bitmaps = False
-        
-        
+
+
     def SetCustomPaneBitmap(self, bmp, button, active, maximize=False):
         """
         Sets a custom button bitmap for the pane button.
@@ -848,7 +848,7 @@ class AuiDefaultDockArt(object):
                 self._inactive_close_bitmap = bmp
 
             if wx.Platform == "__WXMAC__":
-                self._custom_pane_bitmaps = True                
+                self._custom_pane_bitmaps = True
 
         elif button == AUI_BUTTON_PIN:
             if active:
@@ -893,7 +893,7 @@ if _ctypes:
 class ModernDockArt(AuiDefaultDockArt):
     """
     ModernDockArt is a custom `AuiDockArt` class, that implements a look similar to
-    Firefox and other recents applications. 
+    Firefox and other recents applications.
 
     Is uses the `winxptheme` module and XP themes whenever possible, so it should
     look good even if the user has a custom theme.
@@ -901,22 +901,22 @@ class ModernDockArt(AuiDefaultDockArt):
 
     def __init__(self, win):
         """
-        Default class constructor. 
+        Default class constructor.
 
-        :param `win`: the window managed by L{AuiManager}. 
+        :param `win`: the window managed by L{AuiManager}.
         """
-        
+
         AuiDefaultDockArt.__init__(self)
-        
+
         self.win = win
 
         # Get the size of a small close button (themed)
         hwnd = self.win.GetHandle()
-        
+
         self.hTheme1 = winxptheme.OpenThemeData(hwnd, "Window")
-        
+
         self.usingTheme = True
-        
+
         if not self.hTheme1:
             self.usingTheme = False
 
@@ -925,19 +925,19 @@ class ModernDockArt(AuiDefaultDockArt):
         self._button_border_size = 3
         self._caption_text_indent = 6
         self._caption_size = 22
-        
+
         # We only highlight the active pane with the caption text being in bold.
-        # So we do not want a special colour for active elements.        
+        # So we do not want a special colour for active elements.
         self._active_close_bitmap = self._inactive_close_bitmap
 
         self.Init()
-        
+
 
     def Init(self):
         """ Initializes the dock art. """
 
         AuiDefaultDockArt.Init(self)
-        
+
         self._active_caption_colour = self._inactive_caption_colour
         self._active_caption_text_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_CAPTIONTEXT)
         self._inactive_caption_text_colour = self._active_caption_text_colour
@@ -952,7 +952,7 @@ class ModernDockArt(AuiDefaultDockArt):
         :param `text`: the text to be displayed;
         :param `rect`: the pane caption rectangle;
         :param `pane`: the pane for which the text is drawn.
-        """        
+        """
 
         dc.SetPen(wx.TRANSPARENT_PEN)
         self.DrawCaptionBackground(dc, rect, pane)
@@ -961,7 +961,7 @@ class ModernDockArt(AuiDefaultDockArt):
 
         self._caption_font.SetWeight(wx.FONTWEIGHT_BOLD)
         dc.SetFont(self._caption_font)
-        
+
         if active:
             dc.SetTextForeground(self._active_caption_text_colour)
         else:
@@ -984,7 +984,7 @@ class ModernDockArt(AuiDefaultDockArt):
                 caption_offset += pane.icon.GetHeight() + 3
             else:
                 caption_offset += pane.icon.GetWidth() + 3
-                
+
             self.DrawIcon(dc, rect, pane)
 
         diff = -2
@@ -1008,7 +1008,7 @@ class ModernDockArt(AuiDefaultDockArt):
         :param `dc`: a `wx.DC` device context;
         :param `rect`: the text caption rectangle;
         :param `pane`: the pane for which we are drawing the caption background.
-        """        
+        """
 
         dc.SetBrush(self._background_brush)
         dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
@@ -1016,7 +1016,7 @@ class ModernDockArt(AuiDefaultDockArt):
         active = ((pane.state & optionActive) and [True] or [False])[0]
 
         if self.usingTheme:
-            
+
             rectangle = wx.Rect()
 
             rc = RECT(rectangle.x, rectangle.y, rectangle.width, rectangle.height)
@@ -1030,7 +1030,7 @@ class ModernDockArt(AuiDefaultDockArt):
                 winxptheme.DrawThemeBackground(self.hTheme1, dc.GetHDC(), 5, 1, (rc.top, rc.left, rc.right, rc.bottom), None)
             else:
                 winxptheme.DrawThemeBackground(self.hTheme1, dc.GetHDC(), 5, 2, (rc.top, rc.left, rc.right, rc.bottom), None)
-            
+
         else:
 
             AuiDefaultDockArt.DrawCaptionBackground(self, dc, rect, pane)
@@ -1045,18 +1045,18 @@ class ModernDockArt(AuiDefaultDockArt):
         :param `text`: the text to be displayed;
         :param `rect`: the pane caption rectangle;
         :param `pane`: the pane for which the text is drawn.
-        """        
-    
+        """
+
         state = pane.state
         pane.state &= ~optionActive
-        
+
         for indx in xrange(6):
             active = (indx%2 == 0 and [True] or [False])[0]
             if active:
                 pane.state |= optionActive
             else:
                 pane.state &= ~optionActive
-                
+
             self.DrawCaptionBackground(dc, rect, pane)
             self.DrawCaption(dc, window, text, rect, pane)
             wx.SafeYield()
@@ -1075,15 +1075,15 @@ class ModernDockArt(AuiDefaultDockArt):
         :param `button_state`: the pane button state;
         :param `rect`: the pane caption rectangle;
         :param `pane`: the pane for which the button is drawn.
-        """        
+        """
 
         if self.usingTheme:
 
-            hTheme = self.hTheme1            
-                    
+            hTheme = self.hTheme1
+
             # Get the real button position (compensating for borders)
             drect = wx.Rect(rect.x, rect.y, self._button_size, self._button_size)
-            
+
             # Draw the themed close button
             rc = RECT(0, 0, 0, 0)
             if pane.HasCaptionLeft():
@@ -1099,7 +1099,7 @@ class ModernDockArt(AuiDefaultDockArt):
 
             if button == AUI_BUTTON_CLOSE:
                 btntype = 19
-                
+
             elif button == AUI_BUTTON_PIN:
                 btntype = 23
 
@@ -1112,7 +1112,7 @@ class ModernDockArt(AuiDefaultDockArt):
                 btntype = 15
 
             state = 4 # CBS_DISABLED
-            
+
             if pane.state & optionActive:
 
                 if button_state == AUI_BUTTON_STATE_NORMAL:

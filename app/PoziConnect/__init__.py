@@ -8,12 +8,12 @@ PlaceLab is a very flexible tool for converting and merging spatial and
 non-spatial data
 
 Copyright: Groundtruth Mapping Systems
-License: All rights reserved. 
+License: All rights reserved.
 Web page: http://groundtruth.com/placelab
 
 PlaceLab Version: 1.0 ($Rev$)
 
-Last updated: $Date$ 
+Last updated: $Date$
 
 $Id$
 

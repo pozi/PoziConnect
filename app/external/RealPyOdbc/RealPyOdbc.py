@@ -43,7 +43,7 @@ import sys, os
 import ctypes
 
 library = "/usr/lib/libodbc.so"
-VERBOSE = 0    
+VERBOSE = 0
 
 #Costants
 SQL_FETCH_NEXT = 0x01
@@ -110,7 +110,7 @@ class odbc:
                 self.odbc = ctypes.cdll.LoadLibrary(library)
             except:
                 raise OdbcLibraryError, 'Error while loading %s' % library
-        
+
         self.env_h = ctypes.c_int()
         self.dbc_h = ctypes.c_int()
         self.stmt_h = ctypes.c_int()
@@ -137,7 +137,7 @@ class odbc:
         self.passwd = passwd
 
         sn = ctypes.create_string_buffer(dsn)
-        un = ctypes.create_string_buffer(user)        
+        un = ctypes.create_string_buffer(user)
         pw = ctypes.create_string_buffer(passwd)
         self.odbc.SQLConnect.restype = ctypes.c_short
         ret = self.odbc.SQLConnect(self.dbc_h, sn, len(sn), un, len(un), pw, len(pw))
@@ -171,7 +171,7 @@ class odbc:
 
     def FetchOne(self):
         return self._fetch(1)
-        
+
     def FetchMany(self, rows):
         return self._fetch(rows)
 
@@ -194,7 +194,7 @@ class odbc:
         ret = self.odbc.SQLRowCount(self.stmt_h, ctypes.byref(NOR))
         if not ret in (SQL_SUCCESS, SQL_SUCCESS_WITH_INFO):
             self.ctrl_err(SQL_HANDLE_STMT, self.stmt_h, ret)
-        return NOR.value        
+        return NOR.value
 
     def ColDescr(self, table):
         """We return a list with a tuple for every col:

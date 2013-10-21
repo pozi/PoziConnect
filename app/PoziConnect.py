@@ -25,7 +25,7 @@ from PoziConnect.version import version
 
 # Import our own modules
 from PoziConnect.configparser import *
-from PoziConnect.gui.gui import * 
+from PoziConnect.gui.gui import *
 from PoziConnect.logger import *
 
 # Create logger
@@ -36,12 +36,12 @@ LOGGER = Logger('main', 'output/PoziConnect.log')
 # - root dir
 # - config dir
 def findIniFiles(tasksDir):
-    """ 
-    Will find all .INI files in a provided directory and will return them as 
+    """
+    Will find all .INI files in a provided directory and will return them as
     a list
     """
     fileList = []
-    rootdir = '.' 
+    rootdir = '.'
     ext = '.ini'
 
     # Recurse through config directory to find INI files
@@ -56,7 +56,7 @@ def showHeader(text):
     """
     Will provide a clearly distinguishable header as logging output
     """
-    string = "#" * 60 + "\n#" + ' ' + text + "\n" + "#" * 60 
+    string = "#" * 60 + "\n#" + ' ' + text + "\n" + "#" * 60
     LOGGER.info(string)
 
 
@@ -71,7 +71,7 @@ def showGUI(taskList, options = {}):
 
 def processTasks(taskList):
     """
-    Loops through a list of tasks and executes them. 
+    Loops through a list of tasks and executes them.
     This function will be called when the application
     runs in batch mode (no GUI).
     """
@@ -86,15 +86,15 @@ def processTasks(taskList):
 
 def init():
     """
-    Initialises the application. It does all sorts of magic to 
-    figure out where in the file system it resides and whether or 
+    Initialises the application. It does all sorts of magic to
+    figure out where in the file system it resides and whether or
     it is run as a Windows executable or not.
     """
 
     # Test whether we are an executable (py2exe)
     isExe = hasattr(sys, "frozen")
 
-    # Now determine the name of 'ourselves'. Based on that 
+    # Now determine the name of 'ourselves'. Based on that
     # we determine the root path of the application
     scriptPath = ''
     if isExe:
@@ -111,15 +111,15 @@ def init():
     scriptBaseName = scriptName.rstrip('.py').rstrip('.exe')
     rootDir = appDir = ''
 
-    # We assume that the EXE is always in the root of 
+    # We assume that the EXE is always in the root of
     # the project. The python script is always in the 'app'
-    # dir. Based on whether it is an exe or not we set 
+    # dir. Based on whether it is an exe or not we set
     # the appDir and rootDir variables
     if isExe:
         appDir = scriptDir + os.path.sep + 'app'
         rootDir = scriptDir
     else:
-        appDir = scriptDir 
+        appDir = scriptDir
         rootDir = os.path.realpath(scriptDir + os.path.sep + '..')
 
     tasksDir = rootDir + os.path.sep + 'tasks'
@@ -131,7 +131,7 @@ def init():
         'logger': LOGGER,
         'globalSections': ['Settings', 'Application Settings']
     }
-    appConfig = ConfigParser(appConfigOptions) 
+    appConfig = ConfigParser(appConfigOptions)
     #LOGGER.info("CONFIG FILE", appConfigFile)
     if os.path.isfile(appConfigFile):
         appConfig.read(appConfigFile)
@@ -166,7 +166,7 @@ def init():
     appSettings = {}
     try:
         appSettings = dict(appConfig.items('Application Settings'))
-    except Exception as e: 
+    except Exception as e:
         LOGGER.warn('Error:', e)
 
     # Log some information
@@ -225,7 +225,7 @@ def init():
 
     #if len(args) < 1:
         #parser.error("please provide an ini file as argument")
-        #useGui = True 
+        #useGui = True
 
     #iniFile = args[0]
 

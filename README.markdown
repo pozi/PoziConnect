@@ -71,7 +71,7 @@ runtime directories and configuration taken from the top level of this repositor
   the corresponding compiled code (`*.pyc`). Delete the `*.pyc` files to force their
   regeneration.
 
-  
+
 ## Running on Mac/UNIX
 
 It is good practice to use `virtualenv` to isolate Python dependencies
@@ -151,7 +151,7 @@ PoziConnect can be executed in several modes:
 * __Interactive mode__:
   is entered when PoziConnect is launched without command-line parameters.
   It is used for running tasks ad hoc.
-    
+
 * __Silent mode__:
   is entered when PoziConnect launched with the `--recipe` command-line
   paramater (see below). This is used to run multiple tasks unattended

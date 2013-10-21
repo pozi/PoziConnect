@@ -123,7 +123,7 @@ class HyperLinkEvent(wx.PyCommandEvent):
         :param `eventType`: the event type;
         :param `eventId`: the event identifier.
         """
-        
+
         wx.PyCommandEvent.__init__(self, eventType, eventId)
         self._eventType = eventType
 
@@ -132,15 +132,15 @@ class HyperLinkEvent(wx.PyCommandEvent):
         """
         Sets the event position.
 
-        :param `pos`: an instance of `wx.Point`.        
+        :param `pos`: an instance of `wx.Point`.
         """
-        
+
         self._pos = pos
 
 
     def GetPosition(self):
         """ Returns the event position. """
-        
+
         return self._pos
 
 
@@ -158,7 +158,7 @@ class HyperLinkCtrl(StaticText):
     your own custom event handling and ability to open link in a new
     or current browser window.
     """
-    
+
     def __init__(self, parent, id=-1, label="", pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=0, name="staticText", URL=""):
         """
@@ -177,7 +177,7 @@ class HyperLinkCtrl(StaticText):
 
         :note: Pass URL="" to use the label as the url link to navigate to.
         """
-        
+
         StaticText.__init__(self, parent, id, label, pos, size,
                             style, name)
 
@@ -196,26 +196,26 @@ class HyperLinkCtrl(StaticText):
         # default: True, True, True
         self.SetUnderlines()
 
-        # default: blue, violet, blue        
+        # default: blue, violet, blue
         self.SetColours()
 
         # default: False
         self.SetVisited()
 
-        # default: False 
+        # default: False
         self.EnableRollover()
 
-        # default: False        
+        # default: False
         self.SetBold()
 
-        # default: wx.CURSOR_HAND        
-        self.SetLinkCursor() 
+        # default: wx.CURSOR_HAND
+        self.SetLinkCursor()
 
         # default True
         self.AutoBrowse()
 
-        # default True        
-        self.DoPopup() 
+        # default True
+        self.DoPopup()
 
         # default False
         self.OpenInSameWindow()
@@ -224,9 +224,9 @@ class HyperLinkCtrl(StaticText):
         self.UpdateLink(True)
 
         self.Bind(wx.EVT_MOUSE_EVENTS, self.OnMouseEvent)
-        self.Bind(wx.EVT_MOTION, self.OnMouseEvent)        
-    
-    
+        self.Bind(wx.EVT_MOTION, self.OnMouseEvent)
+
+
     def GotoURL(self, URL, ReportErrors=True, NotSameWinIfPossible=False):
         """
         Goto the specified URL.
@@ -237,17 +237,17 @@ class HyperLinkCtrl(StaticText):
         :param `NotSameWinIfPossible`: Use ``True`` to attempt to open the URL
          in new browser window.
         """
-    
+
         logOff = wx.LogNull()
 
-        try:            
+        try:
             webbrowser.open(URL, new=NotSameWinIfPossible)
             self.SetVisited(True)
             self.UpdateLink(True)
 
             return True
-        
-        except:            
+
+        except:
             self.DisplayError("Unable To Launch Browser.", ReportErrors)
             return False
 
@@ -256,7 +256,7 @@ class HyperLinkCtrl(StaticText):
         """
         Handles the ``wx.EVT_MOUSE_EVENTS`` events for L{HyperLinkCtrl}.
 
-        :param `event`: a `wx.MouseEvent` event to be processed.        
+        :param `event`: a `wx.MouseEvent` event to be processed.
         """
 
         if event.Moving():
@@ -269,7 +269,7 @@ class HyperLinkCtrl(StaticText):
                 fontTemp.SetUnderlined(self._RolloverUnderline)
                 if self._Bold:
                     fontTemp.SetWeight(wx.BOLD)
-                    
+
                 needRefresh = False
 
                 if self.GetFont() != fontTemp:
@@ -282,16 +282,16 @@ class HyperLinkCtrl(StaticText):
 
                 if needRefresh:
                     self.Refresh()
-            
-        else:            
-            # Restore The Original Cursor            
+
+        else:
+            # Restore The Original Cursor
             self.SetCursor(wx.NullCursor)
             if self._EnableRollover:
                 self.UpdateLink(True)
-            
+
             if event.LeftUp():
                 # Left Button Was Pressed
-                if self._AutoBrowse:                    
+                if self._AutoBrowse:
                     self.GotoURL(self._URL, self._ReportErrors,
                                  self._NotSameWinIfPossible)
 
@@ -313,8 +313,8 @@ class HyperLinkCtrl(StaticText):
                     self.PopupMenu(menuPopUp, wx.Point(event.X, event.Y))
                     menuPopUp.Destroy()
                     self.Unbind(wx.EVT_MENU, id=wxHYPERLINKS_POPUP_COPY)
-                    
-                else:                    
+
+                else:
                     eventOut = HyperLinkEvent(wxEVT_HYPERLINK_RIGHT, self.GetId())
                     eventOut.SetEventObject(self)
                     eventOut.SetPosition(event.GetPosition())
@@ -335,7 +335,7 @@ class HyperLinkCtrl(StaticText):
         Handles the ``wx.EVT_MENU`` event for L{HyperLinkCtrl}.
 
         :param `event`: a `wx.MenuEvent` event to be processed.
-        
+
         :note: This method copies the data from the L{HyperLinkCtrl} to the clipboard.
         """
 
@@ -355,8 +355,8 @@ class HyperLinkCtrl(StaticText):
         - Link visited;
         - New link;
 
-        :param `OnRefresh`: ``True`` to refresh the control, ``False`` otherwise.        
-        
+        :param `OnRefresh`: ``True`` to refresh the control, ``False`` otherwise.
+
         """
 
         fontTemp = self.GetFont()
@@ -364,7 +364,7 @@ class HyperLinkCtrl(StaticText):
         if self._Visited:
             self.SetForegroundColour(self._VisitedColour)
             fontTemp.SetUnderlined(self._VisitedUnderline)
-        
+
         else:
 
             self.SetForegroundColour(self._LinkColour)
@@ -376,7 +376,7 @@ class HyperLinkCtrl(StaticText):
         if self.GetFont() != fontTemp:
             self.SetFont(fontTemp)
 
-        self.Refresh(OnRefresh)            
+        self.Refresh(OnRefresh)
 
 
     def DisplayError(self, ErrorMessage, ReportErrors=True):
@@ -388,7 +388,7 @@ class HyperLinkCtrl(StaticText):
         :param `ReportErrors`: ``True`` to display error dialog if an error occurrs
          navigating to the URL.
         """
-        
+
         if ReportErrors:
             wx.MessageBox(ErrorMessage, "HyperLinks Error", wx.OK | wx.CENTRE | wx.ICON_ERROR)
 
@@ -408,21 +408,21 @@ class HyperLinkCtrl(StaticText):
         :param `rollover`: a valid `wx.Colour` to use as text foreground for links
          rollovers (default=BLUE).
         """
-        
+
         self._LinkColour = link
         self._VisitedColour = visited
         self._LinkRolloverColour = rollover
 
-    
+
     def GetColours(self):
         """
         Gets the colours for the link, the visited link and the mouse
         rollover.
         """
-        
+
         return self._LinkColour, self._VisitedColour, self._LinkRolloverColour
 
-    
+
     def SetUnderlines(self, link=True, visited=True, rollover=True):
         """
         Sets whether the text should be underlined or not for new links, visited
@@ -435,7 +435,7 @@ class HyperLinkCtrl(StaticText):
         :param `rollover`: ``True`` to set the text of rollovers as underlined,
          ``False`` otherwise.
         """
-        
+
         self._LinkUnderline = link
         self._RolloverUnderline = rollover
         self._VisitedUnderline = visited
@@ -446,9 +446,9 @@ class HyperLinkCtrl(StaticText):
         Returns if link is underlined, if the mouse rollover is
         underlined and if the visited link is underlined.
         """
-        
+
         return self._LinkUnderline, self._RolloverUnderline, self._VisitedUnderline
-    
+
 
     def SetLinkCursor(self, cur=wx.CURSOR_HAND):
         """
@@ -456,13 +456,13 @@ class HyperLinkCtrl(StaticText):
 
         :param `cur`: an integer representing a `wx.StockCursor` constant.
         """
-        
+
         self._CursorHand = wx.StockCursor(cur)
 
 
     def GetLinkCursor(self):
         """ Gets the link cursor. """
-        
+
         return self._CursorHand
 
 
@@ -472,13 +472,13 @@ class HyperLinkCtrl(StaticText):
 
         :param `Visited`: ``True`` to set a link as visited, ``False`` otherwise.
         """
-        
+
         self._Visited = Visited
 
-        
+
     def GetVisited(self):
         """ Returns whether a link has been visited or not. """
-        
+
         return self._Visited
 
 
@@ -489,13 +489,13 @@ class HyperLinkCtrl(StaticText):
         :param `Bold`: ``True`` to set the L{HyperLinkCtrl} label as bold, ``False``
          otherwise.
         """
-        
+
         self._Bold = Bold
 
-        
+
     def GetBold(self):
         """ Returns whether the L{HyperLinkCtrl} has text in bold or not. """
-        
+
         return self._Bold
 
 
@@ -505,13 +505,13 @@ class HyperLinkCtrl(StaticText):
 
         :param `URL`: the new URL associated with L{HyperLinkCtrl}.
         """
-        
+
         self._URL = URL
 
-        
+
     def GetURL(self):
         """ Retrieve the URL associated to the L{HyperLinkCtrl}. """
-        
+
         return self._URL
 
 
@@ -522,7 +522,7 @@ class HyperLinkCtrl(StaticText):
         :param `NotSameWinIfPossible`: ``True`` to open an hyperlink in a new browser
          window, ``False`` to use an existing browser window.
         """
-        
+
         self._NotSameWinIfPossible = NotSameWinIfPossible
 
 
@@ -533,10 +533,10 @@ class HyperLinkCtrl(StaticText):
         :param `EnableRollover`: ``True`` to enable text effects during rollover,
          ``False`` to disable them.
         """
-        
+
         self._EnableRollover = EnableRollover
 
-    
+
     def ReportErrors(self, ReportErrors=True):
         """
         Set whether to report browser errors or not.
@@ -544,7 +544,7 @@ class HyperLinkCtrl(StaticText):
         :param `ReportErrors`: Use ``True`` to display error dialog if an error
          occurrs navigating to the URL;
         """
-        
+
         self._ReportErrors = ReportErrors
 
 
@@ -554,10 +554,10 @@ class HyperLinkCtrl(StaticText):
 
         :param `AutoBrowse`: ``True`` to automatically browse to an URL when clicked,
          ``False`` otherwise.
-         
+
         :note: Set `AutoBrowse` to ``False`` to receive ``EVT_HYPERLINK_LEFT`` events.
         """
-        
+
         self._AutoBrowse = AutoBrowse
 
 
@@ -567,7 +567,7 @@ class HyperLinkCtrl(StaticText):
 
         :param `DoPopup`: ``True`` to show a popup menu on right click, ``False`` otherwise.
         """
-        
+
         self._DoPopup = DoPopup
 
-    
+

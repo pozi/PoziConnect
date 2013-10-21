@@ -85,7 +85,7 @@ Event Name                Description
 License And Version
 ===================
 
-KnobCtrl is distributed under the wxPython license. 
+KnobCtrl is distributed under the wxPython license.
 
 Latest Revision: Andrea Gavana @ 30 Nov 2009, 14.00 GMT
 
@@ -164,7 +164,7 @@ class KnobCtrlEvent(wx.PyCommandEvent):
 
         return self._value
 
-    
+
 #----------------------------------------------------------------------
 # BUFFERENDWINDOW Class
 # This Class Has Been Taken From The wxPython Wiki, And Slightly
@@ -216,15 +216,15 @@ class BufferedWindow(wx.Window):
         # This might result in OnSize getting called twice on some
         # platforms at initialization, but little harm done.
         self.OnSize(None)
-        
+
 
     def Draw(self, dc):
         """
         This method should be overridden when sub-classed.
 
-        :param `dc`: an instance of `wx.DC`.        
+        :param `dc`: an instance of `wx.DC`.
         """
-        
+
         pass
 
 
@@ -234,8 +234,8 @@ class BufferedWindow(wx.Window):
 
         :param `event`: a `wx.PaintEvent` event to be processed.
         """
-        
-        # All that is needed here is to draw the buffer to screen        
+
+        # All that is needed here is to draw the buffer to screen
         if self._bufferedstyle == KC_BUFFERED_DC:
             dc = wx.BufferedPaintDC(self, self._Buffer)
         else:
@@ -261,13 +261,13 @@ class BufferedWindow(wx.Window):
         # This seems required on MacOS, it doesn't like wx.EmptyBitmap with
         # size = (0, 0)
         # Thanks to Gerard Grazzini
-        
+
         if "__WXMAC__" in wx.Platform:
             if self.Width == 0:
                 self.Width = 1
             if self.Height == 0:
                 self.Height = 1
-        
+
         self._Buffer = wx.EmptyBitmap(self.Width, self.Height)
 
         memory = wx.MemoryDC()
@@ -305,7 +305,7 @@ class BufferedWindow(wx.Window):
             self.Draw(dc)
             # update the screen
             wx.ClientDC(self).Blit(0, 0, self.Width, self.Height, dc, 0, 0)
-        
+
 
 # ---------------------------------------------------------------------------- #
 # Class KnobCtrl
@@ -316,7 +316,7 @@ class KnobCtrl(BufferedWindow):
     This class can be used to simulate a knob volume control often found in
     PC music players.
     """
-    
+
     def __init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=wx.DefaultSize,
                  bufferedstyle=KC_BUFFERED_DC):
@@ -350,7 +350,7 @@ class KnobCtrl(BufferedWindow):
         self._old_ang = 0
         self._trackposition = 0
         self._knobradius = 4
-        
+
         BufferedWindow.__init__(self, parent, id, pos, size,
                                 style=wx.NO_FULL_REPAINT_ON_RESIZE,
                                 bufferedstyle=bufferedstyle)
@@ -358,7 +358,7 @@ class KnobCtrl(BufferedWindow):
         self.Bind(wx.EVT_MOUSE_EVENTS, self.OnMouseEvents)
         self.SetValue(self._trackposition)
 
-        
+
     def OnMouseEvents(self, event):
         """
         Handles the ``wx.EVT_MOUSE_EVENTS`` event for L{KnobCtrl}.
@@ -367,16 +367,16 @@ class KnobCtrl(BufferedWindow):
         """
 
         if self._state == 0 and event.Entering():
-            self._state = 1 
+            self._state = 1
         elif self._state >= 1 and event.Leaving():
-            self._state = 0 
+            self._state = 0
         elif self._state == 1 and event.LeftDown():
-            self._state = 2 
+            self._state = 2
             self._mousePosition = event.GetPosition()
-            self.SetTrackPosition() 
+            self.SetTrackPosition()
         elif self._state == 2 and event.LeftIsDown():
             self._mousePosition = event.GetPosition()
-            self.SetTrackPosition() 
+            self.SetTrackPosition()
         elif self._state == 2 and event.LeftUp():
             self._state = 1
 
@@ -387,7 +387,7 @@ class KnobCtrl(BufferedWindow):
 
         :param `tags`: a list of integers ranging from `minvalue` to `maxvalue`.
         """
-        
+
         self._tags = tags
         if min(tags) < self._minvalue:
             self._minvalue = min(tags)
@@ -429,11 +429,11 @@ class KnobCtrl(BufferedWindow):
         self._knobradius = radius
         self.UpdateDrawing()
 
-        
+
     def GetTags(self):
         """ Returns the L{KnobCtrl} tags. """
 
-        return self._tags        
+        return self._tags
 
 
     def SetTagsColour(self, colour):
@@ -450,7 +450,7 @@ class KnobCtrl(BufferedWindow):
     def GetTagsColour(self):
         """ Returns the tags colour. """
 
-        return self._tagscolour        
+        return self._tagscolour
 
 
     def SetBoundingColour(self, colour):
@@ -486,7 +486,7 @@ class KnobCtrl(BufferedWindow):
 
         return self._startcolour
 
-    
+
     def SetSecondGradientColour(self, colour):
         """
         Sets the second gradient colour for shading.
@@ -515,7 +515,7 @@ class KnobCtrl(BufferedWindow):
         self._anglestart = start
         self._angleend = end
         self.UpdateDrawing()
-        
+
 
     def GetAngularRange(self):
         """
@@ -523,9 +523,9 @@ class KnobCtrl(BufferedWindow):
         in degrees, clockwise.
         """
 
-        return self._anglestart, self._angleend        
+        return self._anglestart, self._angleend
 
-                    
+
     def Draw(self, dc):
         """
         Draws everything on the empty bitmap.
@@ -533,9 +533,9 @@ class KnobCtrl(BufferedWindow):
 
         :param `dc`: an instance of `wx.DC`.
         """
-        
+
         size  = self.GetClientSize()
-        
+
         if size.x < 21 or size.y < 21:
             return
 
@@ -584,9 +584,9 @@ class KnobCtrl(BufferedWindow):
             else:
                 dcPen.SetWidth(1)
                 tagLen = 6
-                
+
             dc.SetPen(dcPen)
-                
+
             tg = tags - self._tags[0]
             angle = tg*coeff + self._anglestart
             angle = angle*math.pi/180.0
@@ -598,8 +598,8 @@ class KnobCtrl(BufferedWindow):
             dyi = math.sin(angle)*((height - yshift + tagLen - 6)/2.0 - tagLen)
 
             dc.DrawLine(width/2 - sxi, height/2 - syi,
-                        width/2 - dxi, height/2 - dyi) 
-                
+                        width/2 - dxi, height/2 - dyi)
+
 
     def DrawDiagonalGradient(self, dc, size):
         """
@@ -611,12 +611,12 @@ class KnobCtrl(BufferedWindow):
 
         col1 = self._startcolour
         col2 = self._endcolour
-        
+
         r1, g1, b1 = int(col1.Red()), int(col1.Green()), int(col1.Blue())
         r2, g2, b2 = int(col2.Red()), int(col2.Green()), int(col2.Blue())
 
         maxsize = max(size.x, size.y)
-        
+
         flrect = maxsize
 
         rstep = float((r2 - r1)) / flrect
@@ -625,9 +625,9 @@ class KnobCtrl(BufferedWindow):
 
         rf, gf, bf = 0, 0, 0
         dc.SetBrush(wx.TRANSPARENT_BRUSH)
-            
+
         for ii in xrange(0, maxsize, 2):
-            currCol = (r1 + rf, g1 + gf, b1 + bf)                
+            currCol = (r1 + rf, g1 + gf, b1 + bf)
             dc.SetPen(wx.Pen(currCol, 2))
             dc.DrawLine(0, ii+2, ii+2, 0)
             rf = rf + rstep
@@ -635,7 +635,7 @@ class KnobCtrl(BufferedWindow):
             bf = bf + bstep
 
         for ii in xrange(0, maxsize, 2):
-            currCol = (r1 + rf, g1 + gf, b1 + bf)                
+            currCol = (r1 + rf, g1 + gf, b1 + bf)
             dc.SetPen(wx.Pen(currCol, 2))
             dc.DrawLine(ii+2, maxsize, maxsize, ii+2)
             rf = rf + rstep
@@ -668,7 +668,7 @@ class KnobCtrl(BufferedWindow):
 
         # Calculate max. allowed real offset
         if offset > 0:
-        
+
             if byRed + offset > 255:
                 offsetR = 255 - byRed
             if byGreen + offset > 255:
@@ -679,7 +679,7 @@ class KnobCtrl(BufferedWindow):
             offset = min(min(offsetR, offsetG), offsetB)
 
         else:
-        
+
             if byRed + offset < 0:
                 offsetR = -byRed
             if byGreen + offset < 0:
@@ -690,7 +690,7 @@ class KnobCtrl(BufferedWindow):
             offset = max(max(offsetR, offsetG), offsetB)
 
         c1 = wx.Colour(byRed + offset, byGreen + offset, byBlue + offset)
-        
+
         return c1
 
 
@@ -707,13 +707,13 @@ class KnobCtrl(BufferedWindow):
 
         cx, cy = self._knobcenter
         r = self._knobradius
-        
+
         p1 = wx.Pen(self.OffsetColour(pencolour, -70), 2)
         p2 = wx.Pen(self.OffsetColour(pencolour, 10), 1)
 
         pt1 = wx.Point(cx-r*math.sqrt(2)/2, cy+r*math.sqrt(2)/2)
         pt2 = wx.Point(cx+r*math.sqrt(2)/2, cy-r*math.sqrt(2)/2)
-        
+
         dc.SetPen(p2)
         dc.DrawArcPoint(pt1, pt2, (cx, cy))
         dc.SetPen(p1)
@@ -732,8 +732,8 @@ class KnobCtrl(BufferedWindow):
         dc.SetBrush(wx.TRANSPARENT_BRUSH)
         dc.SetPen(wx.Pen(self._boundingcolour))
         dc.DrawCircle(self.Width/2, self.Height/2, radius)
-        
-    
+
+
     def CircleCoords(self, radius, angle, centerX, centerY):
         """
         Converts the input values into logical x, y coordinates.
@@ -741,12 +741,12 @@ class KnobCtrl(BufferedWindow):
         :param `radius`: the L{KnobCtrl} radius;
         :param `angle`: the angular position of the mouse;
         :param `centerX`: the x position of the L{KnobCtrl} center;
-        :param `centerX`: the y position of the L{KnobCtrl} center.        
+        :param `centerX`: the y position of the L{KnobCtrl} center.
         """
-        
+
         x = radius*math.cos(angle) + centerX
         y = radius*math.sin(angle) + centerY
-        
+
         return x, y
 
 
@@ -754,13 +754,13 @@ class KnobCtrl(BufferedWindow):
         """ Used internally. """
 
         width, height = self.GetSize()
-        
-        x = self._mousePosition.x 
-        y = self._mousePosition.y 
-        
+
+        x = self._mousePosition.x
+        y = self._mousePosition.y
+
         ang = self.GetAngleFromCoord(x, y)
         val = ang*180.0/math.pi
-        
+
         deltarange = self._maxvalue - self._minvalue
         deltaangle = self._angleend - self._anglestart
 
@@ -772,13 +772,13 @@ class KnobCtrl(BufferedWindow):
             scaledval = (val  - self._anglestart)/coeff
 
         if scaledval > self._maxvalue or scaledval < self._minvalue:
-            ang = self._old_ang 
+            ang = self._old_ang
         else:
             event = KnobCtrlEvent(wxEVT_KC_ANGLE_CHANGING, self.GetId())
             event.SetEventObject(self)
             event.SetOldValue(self.GetValue())
             event.SetValue(int(round(scaledval)))
-            
+
             if self.GetEventHandler().ProcessEvent(event):
                 # the caller didn't use event.Skip()
                 return
@@ -787,7 +787,7 @@ class KnobCtrl(BufferedWindow):
             event.SetEventType(wxEVT_KC_ANGLE_CHANGED)
             event.SetOldValue(scaledval)
             self.GetEventHandler().ProcessEvent(event)
-            
+
         self._old_ang = ang
 
 
@@ -802,14 +802,14 @@ class KnobCtrl(BufferedWindow):
             return
 
         width, height = self.GetSize()
-        
+
         deltarange = self._maxvalue - self._minvalue
         deltaangle = self._angleend - self._anglestart
 
         coeff = float(deltaangle)/float(deltarange)
 
         ang = 360.0 + val*coeff + self._anglestart
-        
+
         ang = ang*math.pi/180.0
         self._old_ang = ang
 
@@ -825,7 +825,7 @@ class KnobCtrl(BufferedWindow):
 
     def GetTrackPosition(self):
         """ Used internally. """
-        
+
         return self._old_ang - math.pi
 
 
@@ -839,9 +839,9 @@ class KnobCtrl(BufferedWindow):
         """
 
         width, height = self.GetSize()
-        
+
         ang = 0
-        y = (height/2 - float(cy))/(height/2) 
+        y = (height/2 - float(cy))/(height/2)
         x = (float(cx) - width/2)/(height/2)
 
         ang = ang - math.atan2(-y, -x)
@@ -849,5 +849,5 @@ class KnobCtrl(BufferedWindow):
         if ang < 0:
             ang = ang + 2.0*math.pi
 
-        return  ang 
+        return  ang
 

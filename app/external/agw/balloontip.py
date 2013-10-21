@@ -66,7 +66,7 @@ What it can do:
 - Possibility to set the delay after which the BalloonTip is destroyed;
 - Three different behaviors for the BalloonTip window (regardless the delay
   destruction time set):
-  
+
   a) Destroy by leave: the BalloonTip is destroyed when the mouse leaves the
      target control/window;
   b) Destroy by click: the BalloonTip is destroyed when you click on any area
@@ -435,7 +435,7 @@ class BalloonFrame(wx.Frame):
         When the L{BalloonTip} is created with the `tipstyle` = ``BT_BUTTON``, this event
         provide some kind of 3D effect when the mouse enters the button area.
 
-        :param `event`: a `wx.MouseEvent` event to be processed.        
+        :param `event`: a `wx.MouseEvent` event to be processed.
         """
 
         button = event.GetEventObject()
@@ -474,7 +474,7 @@ class BalloonTip(object):
     window.
 
     This is the main class implementation.
-    """    
+    """
     def __init__(self, topicon=None, toptitle="",
                  message="", shape=BT_ROUNDED, tipstyle=BT_LEAVE):
         """
@@ -494,7 +494,7 @@ class BalloonTip(object):
          ``BT_ROUNDED``           0x1      `BalloonTip` will have a rounded rectangular shape.
          ``BT_RECTANGLE``         0x2      `BalloonTip` will have a rectangular shape.
          ======================= ========= ====================================
-         
+
         :param `tipstyle`: the L{BalloonTip} destruction behavior. It can be one of:
 
          ======================= ========= ====================================
@@ -633,7 +633,7 @@ class BalloonTip(object):
     def OnWidgetLeave(self, event):
         """
         Handles the ``wx.EVT_LEAVE_WINDOW`` for the target control/window.
-        
+
         :param `event`: a `wx.MouseEvent` event to be processed.
 
         :note: If the BalloonTip `tipstyle` is set to ``BT_LEAVE``, the L{BalloonTip} is destroyed.
@@ -813,11 +813,11 @@ class BalloonTip(object):
 
     def SetBalloonMessage(self, message):
         """
-        Sets the L{BalloonTip} tip message. 
+        Sets the L{BalloonTip} tip message.
 
         :param `message`: a string identifying the main message body of L{BalloonTip}.
 
-        :note: The L{BalloonTip} message should never be empty.        
+        :note: The L{BalloonTip} message should never be empty.
         """
 
         if len(message.strip()) < 1:
@@ -964,9 +964,9 @@ class BalloonTip(object):
         Handles the target destruction, specifically handling the ``wx.EVT_WINDOW_DESTROY``
         event.
 
-        :param `event`: a `wx.WindowDestroyEvent` event to be processed.        
+        :param `event`: a `wx.WindowDestroyEvent` event to be processed.
         """
-        
+
         if hasattr(self, "BalloonFrame"):
             if self.BalloonFrame:
                 try:
