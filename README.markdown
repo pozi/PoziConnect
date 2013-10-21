@@ -89,7 +89,7 @@ langugage bindings, but also many extra command line tools. PoziConnect
 uses GDAL via the command line (not via Python bindings). Install it
 on Mac using [homebrew](https://github.com/mxcl/homebrew):
 
-    brew update && brew install gdal --with-postgres
+    brew update && brew install gdal --with-postgres --with-postgresql
 
 After this, the output of `ogrinfo --formats` should include
 `-> "PostgreSQL" (read/write)`.
