@@ -265,17 +265,31 @@ class Task():
 
         formatRegs = {
             'SQLite': {
-                '1-File Path with Table Name specified': {
+                '1-File Path SQLite with Table Name specified': {
                     'regExp': globalRegs.get('fileFormat') + ',(.+)',
                     'formatRegs': {
                         'fileExtension' : r'\.sqlite',
                     },
                     'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', None, 'FileExtension', 'TableName'],
                 },
-                '2-File Path without Table Name': {
+                '2-File Path SQLite without Table Name': {
                     'regExp': globalRegs.get('fileFormat'),
                     'formatRegs': {
                         'fileExtension' : r'\.sqlite',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', None, 'FileExtension'],
+                },
+                '3-File Path db with Table Name specified': {
+                    'regExp': globalRegs.get('fileFormat') + ',(.+)',
+                    'formatRegs': {
+                        'fileExtension' : r'\.db',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', None, 'FileExtension', 'TableName'],
+                },
+                '4-File Path db without Table Name': {
+                    'regExp': globalRegs.get('fileFormat'),
+                    'formatRegs': {
+                        'fileExtension' : r'\.db',
                     },
                     'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', None, 'FileExtension'],
                 },
