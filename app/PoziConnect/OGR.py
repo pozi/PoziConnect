@@ -154,7 +154,7 @@ class OGRBase():
                 if format in ["SQLite"]:
                     if name:
                         # Remove the table from the geometry_columns first
-                        sql = "DELETE FROM geometry_columns WHERE f_table_name = '%s'" % (name)
+                        sql = "DELETE FROM geometry_columns WHERE upper(f_table_name) = upper('%s')" % (name)
                         tmpItems = {
                             'datasource': destination,
                             'sql': sql,
