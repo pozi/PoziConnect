@@ -84,50 +84,39 @@ class OGRBase():
         where = items.get('where')
         sql = items.get('sql')
 
-	# When SQLite is a source format, we need to add the name of the table to export
-	if sourceformat == "SQLite":
-		sourcetablename = items.get('sourcetablename', None)
-		# In case there is no source table name (ex: use of a SQL query or file), we don't add the tablename to the command
-		if sourcetablename:
-			command += [sourcetablename]
+        # When SQLite is a source format, we need to add the name of the table to export
+        if sourceformat == "SQLite":
+            sourcetablename = items.get('sourcetablename', None)
+            # In case there is no source table name (ex: use of a SQL query or file), we don't add the tablename to the command
+            if sourcetablename:
+                command += [sourcetablename]
 
         geometrytype = items.get('geometrytype', "GEOMETRY")
         if geometrytype:
             command += ['-nlt', geometrytype]
 
-	# Logging if the destination directory does not exist
-	destinationfilepath = items.get('destinationfilepath',None)
-	destinationdrivename = items.get('destinationdrivename','')
-	if destinationfilepath:
-		# Catering for URI paths that do not contain a drive letter
-		if destinationdrivename:
-			destinationfullpath = destinationdrivename + destinationfilepath
-		else:
-			destinationfullpath = destinationfilepath
-		if not(os.path.isdir(destinationfullpath)):
-			errorMessage = "The directory '%s' does not exist - please create it before running the task again.\n" % (destinationfullpath)
-			exitCode = 1
-			self.logger.info("#" * 60 + "\n#", errorMessage ,"#" * 60 + "\n#")
-			raise IOError(exitCode, errorMessage)
-
-        """
-        sqlfile = items.get('sqlfile')
-        if sqlfile:
-            if not os.path.exists(sqlfile):
+        # Logging if the destination directory does not exist
+        destinationfilepath = items.get('destinationfilepath',None)
+        destinationdrivename = items.get('destinationdrivename','')
+        if destinationfilepath:
+            # Catering for URI paths that do not contain a drive letter
+            if destinationdrivename:
+                destinationfullpath = destinationdrivename + destinationfilepath
+            else:
+                destinationfullpath = destinationfilepath
+            if not(os.path.isdir(destinationfullpath)):
+                errorMessage = "The directory '%s' does not exist - please create it before running the task again.\n" % (destinationfullpath)
                 exitCode = 1
-                errorMessage = "SQLFile file could not be found"
-                raise IOError(exitCode, errorMessage, str(sqlfile))
-
-            sql = " ".join(open(sqlfile, 'r').read().splitlines())
-        """
+                self.logger.info("#" * 60 + "\n#", errorMessage ,"#" * 60 + "\n#")
+                raise IOError(exitCode, errorMessage)
 
         if sourcetablename and not sql and sourceformat not in self.fileFormats and sourceformat not in ['ODBC']:
             if sourcetablename.replace(" ","")==sourcetablename:
-	    	sql = "SELECT %s FROM %s" % (select or '*', sourcetablename)
-	    	if where:
-	    		sql += " WHERE %s" % where
-	    else:
-	    	self.logger.debug("Source table name:'%s' contains spaces." % (sourcetablename), items)
+                sql = "SELECT %s FROM %s" % (select or '*', sourcetablename)
+                if where:
+                    sql += " WHERE %s" % where
+            else:
+                self.logger.debug("Source table name:'%s' contains spaces." % (sourcetablename), items)
 
         if not sql:
             if select:
@@ -154,14 +143,13 @@ class OGRBase():
         if append:
             command += ["-append"]
 
-	overwrite = items.get('overwrite', True)
+        overwrite = items.get('overwrite', True)
 
         if overwrite:
 
             # OGR's SQLite driver does not support DROPping tables,
             # so we do it ourselves
-            #if os.path.isfile(destination) or format == "PostgreSQL":
-	    if os.path.isfile(destination):
+            if os.path.isfile(destination):
 
                 if format in ["SQLite"]:
                     if name:
@@ -204,21 +192,9 @@ class OGRBase():
                 if overwrite:
                     command += ["-overwrite"]
 
-
-            # Don't add overwrite parameter with CSV since we take
-            # care of this manually
-            #elif format != "CSV":
-                #command += ["-overwrite"]
-
         if format == "SQLite":
             # Introduce spatialite support, but only when the file does not
             # exist yet (otherwise it's a useless option)
-
-            # As of GDAL 1.9, SpatiaLite output is an invalid DB if GDAL binaries have not been linked to a SpatiaLite library
-            # To maintain backward compatibility with the OGC spatial metadata table style, we set the flag to NO by default
-	    # After more testing, it seems that the database was not corrupted, but the viewers used were just not spatially-enabled.
-	    # Re-instating the SpatiaLite creation as default
-
             spatialite = items.get('spatialite', True)
             if spatialite:
 
@@ -247,140 +223,140 @@ class OGRBase():
             # Keep existing casing for table and column names (don't make it lower)
             launder = items.get('launder', False)
             if launder:
-	        command += ["-lco", 'LAUNDER=YES']
-	    else:
-	    	command += ["-lco", 'LAUNDER=NO']
+                command += ["-lco", 'LAUNDER=YES']
+            else:
+                command += ["-lco", 'LAUNDER=NO']
 
-	if format == "PostgreSQL":
-		# Normalisation of object (table, columns...) names
-        	command += ["-lco", 'LAUNDER=YES']
+        if format == "PostgreSQL":
+            # Normalisation of object (table, columns...) names
+            command += ["-lco", 'LAUNDER=YES']
 
-		# Not creating spatial indexes if spatialindex set to false
-		spatialindex = items.get('spatialindex', True)
-		if not spatialindex:
-			command += ["-lco", 'SPATIAL_INDEX=NO']
+            # Not creating spatial indexes if spatialindex set to false
+            spatialindex = items.get('spatialindex', True)
+            if not spatialindex:
+                command += ["-lco", 'SPATIAL_INDEX=NO']
 
-        	# This maintains the name of the spatial column in non-spatial object to wkb_geometry
-		if geometrytype != "NONE":
-	        	command += ["-lco", 'GEOMETRY_NAME=the_geom']
-	        # Skipping unsuccessful OGR2OGR commands
-		command += ["-skipfailures"]
-		# Catering for the case where we really want to overwrite the object (changed structure) - by default, we update/append
-		overwrite = items.get('overwrite', False)
-		if overwrite:
-			command += ["-overwrite"]
-		else:
-			command += ["-update"]
-			command += ["-append"]
+            # This maintains the name of the spatial column in non-spatial object to wkb_geometry
+            if geometrytype != "NONE":
+                command += ["-lco", 'GEOMETRY_NAME=the_geom']
+            # Skipping unsuccessful OGR2OGR commands
+            command += ["-skipfailures"]
+            # Catering for the case where we really want to overwrite the object (changed structure) - by default, we update/append
+            overwrite = items.get('overwrite', False)
+            if overwrite:
+                command += ["-overwrite"]
+            else:
+                command += ["-update"]
+                command += ["-append"]
 
-		# Removing the existing records - so that the append re-populates empty tables
-		if name:
-			# Truncate the table
-			sql = "TRUNCATE TABLE %s" % (name)
-			tmpItems = {
-				'datasource': destination,
-				'sql': sql,
-				'summary': False,
-			}
-			ogrinfo = OGRInfo(tmpItems)
-			ogrinfo.Process()
+            # Removing the existing records - so that the append re-populates empty tables
+            if name:
+                # Truncate the table
+                sql = "TRUNCATE TABLE %s" % (name)
+                tmpItems = {
+                    'datasource': destination,
+                    'sql': sql,
+                    'summary': False,
+                }
+                ogrinfo = OGRInfo(tmpItems)
+                ogrinfo.Process()
 
-	if format == "OCI":
-		# Normalisation of object (table, columns...) names
-		command += ["-lco", 'LAUNDER=YES']
+        if format == "OCI":
+            # Normalisation of object (table, columns...) names
+            command += ["-lco", 'LAUNDER=YES']
 
-		# Overwrite by default
-		command += ["-overwrite"]
+            # Overwrite by default
+            command += ["-overwrite"]
 
-		# Managing the target SRID - extract the numeric part coordinate system (only if geometry type is not NONE)
-		if geometrytype != "NONE":
-			if not assigncoordsys:
-				self.logger.error("The coordinate system is required via a parameter 'AssignCoordSys'")
-			else:
-				command += ["-lco", 'srid='+assigncoordsys.split(":")[1]]
+            # Managing the target SRID - extract the numeric part coordinate system (only if geometry type is not NONE)
+            if geometrytype != "NONE":
+                if not assigncoordsys:
+                    self.logger.error("The coordinate system is required via a parameter 'AssignCoordSys'")
+                else:
+                    command += ["-lco", 'srid='+assigncoordsys.split(":")[1]]
 
-		# Not creating spatial indexes if spatialindex set to false
-		spatialindex = items.get('index', True)
-		if not spatialindex:
-			command += ["-lco", 'INDEX=NO']
+            # Not creating spatial indexes if spatialindex set to false
+            spatialindex = items.get('index', True)
+            if not spatialindex:
+                command += ["-lco", 'INDEX=NO']
 
-		# This maintains the name of the spatial column in non-spatial object to wkb_geometry
-		if geometrytype != "NONE":
-			command += ["-lco", 'GEOMETRY_NAME=the_geom']
+            # This maintains the name of the spatial column in non-spatial object to wkb_geometry
+            if geometrytype != "NONE":
+                command += ["-lco", 'GEOMETRY_NAME=the_geom']
 
-	return command
+        return command
 
     def PostProcess(self, items):
-	try:
-		format = items.get('format', 'CSV')
-		if format == "PostgreSQL":
-		        self.logger.debug("POSTPROCESS", items)
+        try:
+            format = items.get('format', 'CSV')
+            if format == "PostgreSQL":
+                self.logger.debug("POSTPROCESS", items)
 
-		        ##################################################
-		        name = items.get('name', None)
-		        destination = items.get('destination', "DESTINATION_MISSING")
-		        datasource = items.get('datasource', "SOURCE_MISSING")
-			geometrytype = items.get('geometrytype', "GEOMETRY")
-			viewsupportingspatiallayer = items.get('viewsupportingspatiallayer')
-			viewname = items.get('destinationtablename')
+                ##################################################
+                name = items.get('name', None)
+                destination = items.get('destination', "DESTINATION_MISSING")
+                datasource = items.get('datasource', "SOURCE_MISSING")
+                geometrytype = items.get('geometrytype', "GEOMETRY")
+                viewsupportingspatiallayer = items.get('viewsupportingspatiallayer')
+                viewname = items.get('destinationtablename')
 
-			if name:
-				# Add a comment to date / time the update of the table
-				d_str=datetime.datetime.now().strftime("%d/%m/%y at %H:%M:%S")
+                if name:
+                    # Add a comment to date / time the update of the table
+                    d_str=datetime.datetime.now().strftime("%d/%m/%y at %H:%M:%S")
 
-				# Object type - defaults to TABLE
-				obj_type = "TABLE"
-				if viewsupportingspatiallayer:
-					obj_type = "VIEW"
-				if items.get('ogrinfoonly'):
-					datasource = "PoziConnect"
+                    # Object type - defaults to TABLE
+                    obj_type = "TABLE"
+                    if viewsupportingspatiallayer:
+                        obj_type = "VIEW"
+                    if items.get('ogrinfoonly'):
+                        datasource = "PoziConnect"
 
-				sql = "COMMENT ON %s %s IS 'Updated on %s (source: PoziConnect)'" % (obj_type,name,d_str)
-				tmpItems = {
-					'datasource': destination,
-					'sql': sql,
-					'summary': False,
-				}
-				ogrinfo = OGRInfo(tmpItems)
-				ogrinfo.Process()
+                    sql = "COMMENT ON %s %s IS 'Updated on %s (source: PoziConnect)'" % (obj_type,name,d_str)
+                    tmpItems = {
+                        'datasource': destination,
+                        'sql': sql,
+                        'summary': False
+                    }
+                    ogrinfo = OGRInfo(tmpItems)
+                    ogrinfo.Process()
 
-				if geometrytype =="NONE":
-					# Remove the dummy geometry column in the table
-					# DROP COLUMN IF EXISTS not available in 8.4
-					sql = "ALTER TABLE %s DROP COLUMN %s" % (name,"wkb_geometry")
-					tmpItems = {
-						'datasource': destination,
-						'sql': sql,
-						'summary': False,
-					}
-					ogrinfo = OGRInfo(tmpItems)
-					ogrinfo.Process()
+                    if geometrytype =="NONE":
+                        # Remove the dummy geometry column in the table
+                        # DROP COLUMN IF EXISTS not available in 8.4
+                        sql = "ALTER TABLE %s DROP COLUMN %s" % (name,"wkb_geometry")
+                        tmpItems = {
+                            'datasource': destination,
+                            'sql': sql,
+                            'summary': False
+                        }
+                        ogrinfo = OGRInfo(tmpItems)
+                        ogrinfo.Process()
 
-			# For views: special processing of the geometry_column records
-			if viewsupportingspatiallayer and viewname:
+                # For views: special processing of the geometry_column records
+                if viewsupportingspatiallayer and viewname:
 
-				# Delete the geometry_columns record for this view
-				sql = "DELETE FROM geometry_columns WHERE f_table_name='%s'" % (viewname)
-				tmpItems = {
-					'datasource': destination,
-					'sql': sql,
-					'summary': False,
-				}
-				ogrinfo = OGRInfo(tmpItems)
-				ogrinfo.Process()
+                    # Delete the geometry_columns record for this view
+                    sql = "DELETE FROM geometry_columns WHERE f_table_name='%s'" % (viewname)
+                    tmpItems = {
+                        'datasource': destination,
+                        'sql': sql,
+                        'summary': False
+                    }
+                    ogrinfo = OGRInfo(tmpItems)
+                    ogrinfo.Process()
 
-				# Insert the geometry_columns record based on the supporting spatial layer
-				sql = "INSERT INTO geometry_columns SELECT f_table_catalog,f_table_schema,'%s',f_geometry_column,coord_dimension,srid,type FROM geometry_columns WHERE f_table_name='%s'" % (viewname,viewsupportingspatiallayer)
-				tmpItems = {
-					'datasource': destination,
-					'sql': sql,
-					'summary': False,
-				}
-				ogrinfo = OGRInfo(tmpItems)
-				ogrinfo.Process()
+                    # Insert the geometry_columns record based on the supporting spatial layer
+                    sql = "INSERT INTO geometry_columns SELECT f_table_catalog,f_table_schema,'%s',f_geometry_column,coord_dimension,srid,type FROM geometry_columns WHERE f_table_name='%s'" % (viewname,viewsupportingspatiallayer)
+                    tmpItems = {
+                        'datasource': destination,
+                        'sql': sql,
+                        'summary': False
+                    }
+                    ogrinfo = OGRInfo(tmpItems)
+                    ogrinfo.Process()
 
-				# We don't remove the record in the geometry_columns table to allow for update/append
-				# If we delete this record, the update/append raises an error
+                    # We don't remove the record in the geometry_columns table to allow for update/append
+                    # If we delete this record, the update/append raises an error
 
         except Exception as e:
             self.logger.info("That didn't work well:", e)
