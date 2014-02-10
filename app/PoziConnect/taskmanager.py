@@ -5,6 +5,8 @@ import sys
 sys.path.extend(['.', '..', 'lib'])
 
 import os
+import datetime
+from datetime import datetime
 import sqlite3
 import StringIO
 
@@ -190,7 +192,7 @@ class TaskManager(Thread):
         # Execute Ready Callback if supplied
         if readyCallback:
             #self.logger.debug("Calling ready callback", readyCallback)
-            status = "Cancelled." if self.stopped() else "Complete."
+            status = "Cancelled." if self.stopped() else "Completed at "+str(datetime.datetime.now().strftime("%H:%M:%S"))+"."
             self.logger.info("#" * 60 + "\n#" + 'Task ' + status + "\n" + "#" * 60 )
             readyCallback(status)
 

@@ -265,6 +265,7 @@ class GUI_Main(Main ):
         Loads a selected task, but does not start it yet.
         """
         # Enable Start button
+        self.buttonStart.SetLabel('&Start')
         self.buttonStart.Enable()
 
         selection = self.taskSelect.GetSelection()
@@ -525,7 +526,8 @@ class GUI_Main(Main ):
         # Rename button to 'Close' (was Cancel)
         self.buttonClose.SetLabel('&Close')
 
-        self.buttonStart.Disable()
+        self.buttonStart.SetLabel('&Restart')
+        self.buttonStart.Enable()
 
         self.SetStatus(status)
 
