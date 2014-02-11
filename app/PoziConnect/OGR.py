@@ -470,8 +470,9 @@ class OGRBase():
         destination = items.get('destination')
         name = items.get('name')
         sql = items.get('sql')
+        sqlprocessing = (items.get('sqlprocessing', 'OGR')).upper()
 
-        if datasource == destination and sourceformat == 'SQLite' and sql:
+        if datasource == destination and sourceformat == 'SQLite' and sql and (sqlprocessing=="SQLITE"):
             message = "# Source and Destination are the same SQLite file:\n"
             message += "# will use internal SQLite module instead of OGR\n"
             message += "# SQLite file: %s\n" % datasource
@@ -523,21 +524,22 @@ class OGRBase():
             # Remove tmpDestDir (should be empty now)
             os.rmdir(tmpDestDir)
 
-	else:
-	    # When outputting to tab files, files can not be overwritten easily
-	    # We delete them manually if the overwrite option has been specified
-	    if items.get('format') == 'MapInfo File' and items.get('overwrite'):
-	        self.logger.info("\n# Overwrite option is on: will delete existing files with same name (if they exist)\n")
-	    	(filepath, filename) = os.path.split(items['destinationstore'])
-	    	(shortname, extension) = os.path.splitext(filename)
+        else:
+            # When outputting to tab files, files can not be overwritten easily
+            # We delete them manually if the overwrite option has been specified
+            if items.get('format') == 'MapInfo File' and items.get('overwrite'):
+                self.logger.info("\n# Overwrite option is on: will delete existing files with same name (if they exist)\n")
+                (filepath, filename) = os.path.split(items['destinationstore'])
+                (shortname, extension) = os.path.splitext(filename)
 
-	        #We go throught the possible extensions for MapInfo files that compose a layer and delete the corresponding files if they exists
-	    	for file in (glob.glob(os.path.join(filepath,shortname)+ext) for ext in ('.tab','.id','.map','.dat','.ind')):
-	        	#shutil.move(file, file+'.bak')
-			if file and os.path.isfile(file[0]):
-		        	self.logger.info("# Deleting file: '%s' " % (file[0]))
-		        	os.remove(file[0])
+                #We go throught the possible extensions for MapInfo files that compose a layer and delete the corresponding files if they exists
+                for file in (glob.glob(os.path.join(filepath,shortname)+ext) for ext in ('.tab','.id','.map','.dat','.ind')):
+                    #shutil.move(file, file+'.bak')
+                    if file and os.path.isfile(file[0]):
+                        self.logger.info("# Deleting file: '%s' " % (file[0]))
+                        os.remove(file[0])
 
+            # Basic processing
             command = self.CreateCommand(items)
             self.ExecuteCommand(command)
             self.PostProcess(items)
