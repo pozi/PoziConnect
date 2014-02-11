@@ -713,7 +713,7 @@
                             <property name="name">fieldsSizer</property>
                             <property name="non_flexible_grow_mode">wxFLEX_GROWMODE_ALL</property>
                             <property name="permission">none</property>
-                            <property name="rows">2</property>
+                            <property name="rows">0</property>
                             <property name="vgap">0</property>
                             <object class="sizeritem" expanded="0">
                                 <property name="border">5</property>
@@ -1160,7 +1160,7 @@
                     <property name="border">5</property>
                     <property name="flag">wxALL|wxEXPAND</property>
                     <property name="proportion">0</property>
-                    <object class="wxBoxSizer" expanded="0">
+                    <object class="wxBoxSizer" expanded="1">
                         <property name="minimum_size"></property>
                         <property name="name">footerSizer</property>
                         <property name="orient">wxVERTICAL</property>
@@ -1329,11 +1329,11 @@
                                 <event name="OnUpdateUI"></event>
                             </object>
                         </object>
-                        <object class="sizeritem" expanded="0">
+                        <object class="sizeritem" expanded="1">
                             <property name="border">5</property>
                             <property name="flag">wxEXPAND</property>
                             <property name="proportion">1</property>
-                            <object class="wxFlexGridSizer" expanded="0">
+                            <object class="wxFlexGridSizer" expanded="1">
                                 <property name="cols">3</property>
                                 <property name="flexible_direction">wxHORIZONTAL</property>
                                 <property name="growablecols">0</property>
@@ -1442,11 +1442,11 @@
                                         <property name="width">100</property>
                                     </object>
                                 </object>
-                                <object class="sizeritem" expanded="0">
+                                <object class="sizeritem" expanded="1">
                                     <property name="border">5</property>
                                     <property name="flag">wxALIGN_RIGHT</property>
                                     <property name="proportion">1</property>
-                                    <object class="wxBoxSizer" expanded="0">
+                                    <object class="wxBoxSizer" expanded="1">
                                         <property name="minimum_size"></property>
                                         <property name="name">buttonSizer</property>
                                         <property name="orient">wxHORIZONTAL</property>
