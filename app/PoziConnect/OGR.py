@@ -91,7 +91,21 @@ class OGRBase():
             if sourcetablename:
                 command += [sourcetablename]
 
-        geometrytype = items.get('geometrytype', "GEOMETRY")
+
+        # Detecting if the source is spatial or not:
+        dsIsODBC = datasource.lower().startswith('odbc:')
+        dsIsCSV = datasource.lower().endswith('.csv')
+        dsIsDBF = datasource.lower().endswith('.dbf')
+
+        # GeometryType provided in configuration (always overrides automatic detection)
+        geometrytype = items.get('geometrytype')
+
+        # Automatic detection of data sources that are not spatial
+        # This is limited - for instance, non-spatial MapInfo files not recognised as non-spatial
+        if not geometrytype:
+            if dsIsODBC or dsIsCSV or dsIsDBF:
+                geometrytype = "NONE";
+
         if geometrytype:
             command += ['-nlt', geometrytype]
 
@@ -208,10 +222,7 @@ class OGRBase():
                 # Rule: spatialindex is True unless:
                 # - Set to False in INI
                 # - DataSource is ODBC or CSV
-                dsIsODBC = datasource.lower().startswith('odbc:')
-                dsIsCSV = datasource.lower().endswith('.csv')
-
-                spatialindex = items.get('spatialindex', not (dsIsODBC or dsIsCSV))
+                spatialindex = items.get('spatialindex', not (geometrytype=="NONE"))
 
                 # It is a default for Spatialite, but let's make it explicit, even
                 # when it's set to yes
@@ -296,7 +307,7 @@ class OGRBase():
                 name = items.get('name', None)
                 destination = items.get('destination', "DESTINATION_MISSING")
                 datasource = items.get('datasource', "SOURCE_MISSING")
-                geometrytype = items.get('geometrytype', "GEOMETRY")
+                geometrytype = items.get('geometrytype')
                 viewsupportingspatiallayer = items.get('viewsupportingspatiallayer')
                 viewname = items.get('destinationtablename')
 
