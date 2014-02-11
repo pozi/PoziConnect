@@ -9,7 +9,7 @@ import datetime
 
 from logger import *
 from Crypt import *
-from SQLite import *
+import sqlite3
 
 class OGRBase():
     """
@@ -480,10 +480,7 @@ class OGRBase():
 
             self.logger.info("#" * 60 + "\n" + message)
 
-            #sql = "%r" % sql
-
-            sqlite = SQLite()
-            conn = sqlite.connect(datasource)
+            conn = sqlite3.connect(datasource)
             cursor = conn.cursor()
             cursor.execute('DROP TABLE IF EXISTS "%s"' % name)
             cursor.execute('CREATE TABLE "%s" AS %s' % (name, sql))
