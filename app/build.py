@@ -38,7 +38,7 @@ AUTHOR_URL = "http://groundtruth.com.au/placelab"
 PRODUCT_NAME = "Pozi Connect"
 SCRIPT_MAIN = os.path.join(APP_DIR, 'PoziConnect.py')
 VERSIONSTRING = PRODUCT_NAME + " BETA " + VERSION
-ICON_FILE = os.path.join(APP_DIR, 'PoziConnect\gui\PlaceLabIcon.ico')
+ICON_FILE = os.path.join(APP_DIR, 'PoziConnect\gui\Groundtruth.ico')
 
 MODULE_INCLUDES =[
     #'base64',
