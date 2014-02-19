@@ -242,7 +242,7 @@ class Task():
         self.logger.debug('ALL', self.items)
 
         # A reference list of file and database formats
-        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF','XLS']
+        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF','XLS', 'GeoJSON']
         self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL','OCI']
 
     def ParseDataStore(self, store, forcedFormat = None):
@@ -321,6 +321,22 @@ class Task():
                         'fileExtension' : r'\.kml',
                     },
                     'outputVars': ['Store', 'DriveName', 'FilePath', 'TableName', None, 'FileExtension'],
+                },
+            },
+            'GeoJSON':{
+                '1-File Path (GeoJSON ext)': {
+                    'regExp': globalRegs.get('fileFormat'),
+                    'formatRegs': {
+                        'fileExtension' : r'\.geojson',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', None, None, 'FileExtension'],
+                },
+                '2-File Path (JSON ext)': {
+                    'regExp': globalRegs.get('fileFormat'),
+                    'formatRegs': {
+                        'fileExtension' : r'\.json',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', None, None, 'FileExtension'],
                 },
             },
             'ESRI Shapefile': {

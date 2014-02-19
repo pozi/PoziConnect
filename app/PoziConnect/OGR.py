@@ -23,7 +23,7 @@ class OGRBase():
         self.items = items
         self.options = options
 
-        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF']
+        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF', 'GeoJSON']
         self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL','OCI']
 
         scriptName = ''
@@ -157,10 +157,10 @@ class OGRBase():
         if append:
             command += ["-append"]
 
+        # By default, overwriting the output file
         overwrite = items.get('overwrite', True)
 
         if overwrite:
-
             # OGR's SQLite driver does not support DROPping tables,
             # so we do it ourselves
             if os.path.isfile(destination):
@@ -185,6 +185,10 @@ class OGRBase():
                 else:
                     command += ["-overwrite"]
 
+                if format in ["GeoJSON"]:
+                    #self.logger.info("Deleting: "+destination)
+                    os.remove(destination)
+
             # If destination is a directory and we have an 'nln' (name)
             # then we check if a file that matches that name exists.
             # (based on the output format)
@@ -194,7 +198,7 @@ class OGRBase():
             if os.path.isdir(destination) and name:
                 formatExtensions = {
                     'ESRI Shapefile': ['shp', 'dbf'],
-                    'MapInfo File': ['tab', 'mif'],
+                    'MapInfo File': ['tab', 'mif']
                 }
                 extensions = formatExtensions.get(format, [])
                 overwrite = False
@@ -205,6 +209,10 @@ class OGRBase():
                         break;
                 if overwrite:
                     command += ["-overwrite"]
+
+        if format == "GeoJSON":
+            # The hardcoded layer name for a GeoJSON file is "OGRGeoJSON"
+            sourcetablename = "OGRGeoJSON"
 
         if format == "SQLite":
             # Introduce spatialite support, but only when the file does not
