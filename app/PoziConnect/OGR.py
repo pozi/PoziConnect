@@ -23,7 +23,7 @@ class OGRBase():
         self.items = items
         self.options = options
 
-        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF', 'GeoJSON']
+        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF', 'GeoJSON','XLSX']
         self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL','OCI']
 
         scriptName = ''
@@ -184,10 +184,6 @@ class OGRBase():
                         ogrinfo.Process()
                 else:
                     command += ["-overwrite"]
-
-                if format in ["GeoJSON"]:
-                    #self.logger.info("Deleting: "+destination)
-                    os.remove(destination)
 
             # If destination is a directory and we have an 'nln' (name)
             # then we check if a file that matches that name exists.

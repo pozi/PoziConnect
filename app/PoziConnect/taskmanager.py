@@ -242,7 +242,7 @@ class Task():
         self.logger.debug('ALL', self.items)
 
         # A reference list of file and database formats
-        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF','XLS', 'GeoJSON']
+        self.fileFormats = ['CSV', 'GML', 'VRT', 'KML', 'GPX', 'SQLite', 'ESRI Shapefile', 'MapInfo File', 'DGN', 'DXF','XLS', 'GeoJSON','XLSX']
         self.dbFormats = ['SQLite', 'ODBC', 'PostgreSQL','OCI']
 
     def ParseDataStore(self, store, forcedFormat = None):
@@ -309,9 +309,25 @@ class Task():
                 '1-File Path': {
                     'regExp': globalRegs.get('fileFormat'),
                     'formatRegs': {
-                        'fileExtension' : r'\.xls',
+                        'fileExtension' : r'\.xls^',
                     },
                     'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', 'TableName', 'FileExtension'],
+                },
+            },
+            'XLSX': {
+                '1-File Path with sheet name': {
+                    'regExp': globalRegs.get('fileFormat') + ',(.+)',
+                    'formatRegs': {
+                        'fileExtension' : r'\.xlsx',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', None, 'FileExtension', 'TableName'],
+                },
+                '2-File Path without sheet name': {
+                    'regExp': globalRegs.get('fileFormat'),
+                    'formatRegs': {
+                        'fileExtension' : r'\.xlsx',
+                    },
+                    'outputVars': ['Store', 'DriveName', 'FilePath', 'FileName', None, 'FileExtension'],
                 },
             },
             'KML': {
@@ -679,7 +695,7 @@ class Task():
             # destination directory instead of the full path
             # (ie: 'output' instead of 'output/file.shp')
             #if destinationFormat in ['GML','KML','DGN','ESRI Shapefile','MapInfo File']:
-            if destinationFormat in ['GML','KML','DGN']:
+            if destinationFormat in ['GML','KML','DGN','GeoJSON','XLSX']:
                 destination = ogrItems['destination']
                 if os.path.isfile(destination):
                     self.logger.info("Removing existing destination: %s" % destination)
