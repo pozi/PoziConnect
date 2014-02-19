@@ -35,7 +35,7 @@ LOGGER = Logger('main', 'output/PoziConnect.log')
 # Find all INI files in:
 # - root dir
 # - config dir
-def findIniFiles(tasksDir):
+def findIniFiles(tasksDir,filterInclude,filterExclude):
     """
     Will find all .INI files in a provided directory and will return them as
     a list
@@ -47,8 +47,20 @@ def findIniFiles(tasksDir):
     # Recurse through config directory to find INI files
     for root, subFolders, files in sorted(os.walk(tasksDir)):
         for f in files:
-            if f.lower().endswith(ext):
-                fileList.append(os.path.join(root,f))
+            for subst in filterInclude.split(","):
+                # Filtering tasks (including only those that contain a site-specific name)
+                if subst.lower().strip() in f.lower():
+                    fileToExclude = False
+                    for subst2 in filterExclude.split(","):
+                        if subst2.lower().strip() in f.lower():
+                            fileToExclude = True
+                            break
+
+                    # Filtering on file extension (including only .ini files)
+                    if not fileToExclude:
+                        if f.lower().endswith(ext):
+                            fileList.append(os.path.join(root,f))
+
     return fileList
 
 
@@ -126,6 +138,7 @@ def init():
     logDir = rootDir + os.path.sep + 'output'
 
     appConfigFile = rootDir + os.path.sep + scriptBaseName + '.ini'
+    siteConfigFile = rootDir + os.path.sep + scriptBaseName + '.site.ini'
 
     appConfigOptions = {
         'logger': LOGGER,
@@ -163,14 +176,30 @@ def init():
     else:
         LOGGER.warn('Application config file could not be found! (%s)' % appConfigFile)
 
+    siteConfigOptions = {
+        'logger': LOGGER,
+        'globalSections': ['Settings']
+    }
+    siteConfig = ConfigParser(siteConfigOptions)
+    if os.path.isfile(siteConfigFile):
+        siteConfig.read(siteConfigFile)
+        #appConfig.SubstituteVariablesFromSection('Settings')
+        for section in siteConfig.sections():
+            LOGGER.debug("SECTION:", section)
+            items = siteConfig.items(section)
+            LOGGER.debug(items)
+    else:
+        LOGGER.warn('Site specific config file could not be found! (%s)' % siteConfigFile)
+
     appSettings = {}
     try:
         appSettings = dict(appConfig.items('Application Settings'))
+        appSettings.update(dict(siteConfig.items('Settings')))
     except Exception as e:
         LOGGER.warn('Error:', e)
 
     # Log some information
-    LOGGER.info("PlaceLab version:", version)
+    LOGGER.info("PoziConnect version:", version)
     LOGGER.info("isExe", isExe)
     LOGGER.info("scriptPath", scriptPath)
     LOGGER.info("scriptName", scriptName)
@@ -179,6 +208,20 @@ def init():
     LOGGER.info("rootDir", rootDir)
     LOGGER.info("logDir", logDir)
     LOGGER.info("confFile", appConfigFile)
+
+    taskIncludeFilter = ''
+    taskExcludeFilter = 'Hopefully this string is not contained in any filename!'
+    if os.path.isfile(siteConfigFile):
+        LOGGER.info("siteConfFile", siteConfigFile)
+        LOGGER.info("siteConfig", siteConfig)
+        for a,b in siteConfig.items('Settings'):
+            if a.lower()=="include" and len(b.strip()):
+                taskIncludeFilter = b
+                LOGGER.info("Including tasks containing (any of): ",taskIncludeFilter)
+            if a.lower()=="exclude" and len(b.strip()):
+                taskExcludeFilter = b
+                LOGGER.info("Excluding tasks containing (any of): ",taskExcludeFilter)
+
     LOGGER.info("CWD", os.getcwd())
     """
     LOGGER.info("sys.path", sys.path)
@@ -245,7 +288,7 @@ def init():
         fileList = map(lambda x: os.path.join(tasksDir, string.strip(x)), open(options.recipe_filename).readlines())
     else:
         # Take file list from arguments if provided
-        fileList = args if (len(args) > 0) else findIniFiles(tasksDir)
+        fileList = args if (len(args) > 0) else findIniFiles(tasksDir,taskIncludeFilter,taskExcludeFilter)
 
     ###############################################
     # Now create a list of tasks based on the ini
