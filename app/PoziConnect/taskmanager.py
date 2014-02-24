@@ -101,6 +101,7 @@ class TaskManager(Thread):
                 items = dict(items)
         else:
             self.logger.warn("Section %s does not exist!" % (section))
+            self.logger.warn(self.config)
         return items
 
     def GetTaskSections(self):
@@ -115,9 +116,41 @@ class TaskManager(Thread):
         tmpSections = sections[:]
         for section in tmpSections:
             if section not in globalSections:
-                taskSections.append(section)
+                # Check if the section needs to be expanded from another file
+                # Identify the "IncludeTask" item within the section
+                isIncludeTask = False
+                for item in self.GetSectionItems(section):
+                    self.logger.info("Section %s has item %s" % (section,item))
+                    k,v = item
+                    if k == "IncludeTask":
+                        # Parsing the target file into its sections
+                        incTaskCfg = ConfigParser()
 
-        self.logger.debug("sections", globalSections, sections, taskSections)
+                        if not os.path.isfile(v):
+                            self.logger.info("Can't find task file: %s" % (v))                            
+                        else:
+                            incTaskCfg.readfp(open(v))
+                            self.logger.info("Task file included: %s" % (v))
+                            for incSec in incTaskCfg.sections():
+                                if incSec not in globalSections:
+                                    self.logger.info("Section to include: %s" % (incSec))
+                                    taskSections.append(incSec)
+                                    # We also need to add the section and its item to the primary config object
+                                    self.config.add_section(incSec)
+                                    for i in incTaskCfg.items(incSec):
+                                        m,n = i
+                                        #self.logger.info("Including item: %s => %s in section %s" % (m,n,incSec))
+                                        self.config.set(incSec, m, n)
+                            # Bumping the original, now substituted, section out
+                            self.config.remove_section(section)
+                        # Setting the flag to true, to avoid adding the substituted section
+                        isIncludeTask = True
+
+                if not isIncludeTask:
+                    taskSections.append(section)
+
+        sections = self.config.sections()
+        #self.logger.info("sections", globalSections, sections, taskSections)
         return taskSections
 
     def run(self):
