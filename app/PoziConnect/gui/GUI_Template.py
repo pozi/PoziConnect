@@ -63,6 +63,12 @@ class Main ( wx.Frame ):
 		self.aboutLink.SetToolTipString(tip='Visit website for more info')
 		headerSizerRight.Add( self.aboutLink, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 		
+		self.updateLink = wx.StaticText( self, wx.ID_ANY, u".", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.updateLink.Wrap( -1 )
+		self.updateLink.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 91, False, wx.EmptyString ) )
+		
+		headerSizerRight.Add( self.updateLink, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
+		
 		
 		headerSizerRight.AddSpacer( ( 0, 0), 1, wx.EXPAND, 5 )
 		
@@ -157,6 +163,7 @@ class Main ( wx.Frame ):
 		self.Centre( wx.HORIZONTAL )
 		
 		# Connect Events
+		self.updateLink.Bind( wx.EVT_LEFT_DOWN, self.OnUpdateClick )
 		self.taskSelect.Bind( wx.EVT_CHOICE, self.OnTaskSelect )
 		self.buttonStart.Bind( wx.EVT_BUTTON, self.OnStart )
 		self.buttonClose.Bind( wx.EVT_BUTTON, self.OnClose )
@@ -166,6 +173,9 @@ class Main ( wx.Frame ):
 	
 	
 	# Virtual event handlers, overide them in your derived class
+	def OnUpdateClick( self, event ):
+		event.Skip()
+	
 	def OnTaskSelect( self, event ):
 		event.Skip()
 	

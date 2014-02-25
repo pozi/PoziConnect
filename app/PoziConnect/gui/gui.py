@@ -21,6 +21,7 @@ import wx
 from base64 import b64encode, b64decode
 
 import agw.hyperlink
+import urllib
 from PoziConnect.taskmanager import *
 from PoziConnect.logger import *
 
@@ -271,6 +272,19 @@ class GUI_Main(Main ):
         selection = self.taskSelect.GetSelection()
         self.LoadTask(selection)
     # OnTaskSelect()
+
+    def OnUpdateClick( self, event = None ):
+        """
+        Process the task update.
+        """
+        dlg = wx.MessageDialog(self,
+            "This will now download the latest tasks.\nThis might take a few seconds ...",
+            "", wx.OK|wx.ICON_INFORMATION)
+        result = dlg.ShowModal()
+        dlg.Destroy()
+        if result == wx.ID_OK:
+            url = "https://github.com/groundtruth/PoziConnectConfig/archive/master.zip"
+            urllib.urlretrieve(url, "PoziConnectConfig-master.zip")
 
     def _show_dialog(self, evt, dialog_cb, title):
         """
