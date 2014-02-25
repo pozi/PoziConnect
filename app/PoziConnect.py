@@ -39,7 +39,8 @@ def checkZipFile(folder,repoName):
     # Scan the folder for a ZIP file
     for f in os.listdir(folder):
         if f.lower().endswith("zip"):
-            if os.path.splitext(f)[0] == repoName+'-master':
+            # Using startsWith so that we cater for variations due to multiple downloads
+            if os.path.splitext(f)[0].startswith(repoName+'-master'):
                 zipFilename = os.path.join(folder,f)
 
     LOGGER.info("zipFilename", zipFilename)
