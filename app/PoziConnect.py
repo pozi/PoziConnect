@@ -9,6 +9,9 @@ import optparse
 import os
 import string
 import sys
+import wx
+import zipfile
+import datetime
 
 # Make modules from a virtualenv accessible if requested
 if os.environ.get('POZICONNECT_ACTIVATE_THIS', False):
@@ -30,6 +33,39 @@ from PoziConnect.logger import *
 
 # Create logger
 LOGGER = Logger('main', 'output/PoziConnect.log')
+
+def checkZipFile(folder):
+    zipFileList = []
+    # Scan the folder for a ZIP file
+    for f in os.listdir(folder):
+        if f.lower().endswith("zip"):
+            zipFileList.append(os.path.join(folder,f))
+
+    LOGGER.info("zipFileList", zipFileList)
+    return zipFileList
+
+# Helper function to zip an entire folder
+# http://coreygoldberg.blogspot.com.au/2009/07/python-zip-directories-recursively.html
+def zipper(dir, zip_file):
+    zip = zipfile.ZipFile(zip_file, 'w', compression=zipfile.ZIP_DEFLATED)
+    root_len = len(os.path.abspath(dir))
+    for root, dirs, files in os.walk(dir):
+        archive_root = os.path.abspath(root)[root_len:]
+        for f in files:
+            fullpath = os.path.join(root, f)
+            archive_name = os.path.join(archive_root, f)
+            print f
+            zip.write(fullpath, archive_name, zipfile.ZIP_DEFLATED)
+    zip.close()
+    return zip_file
+
+def cleanAndRemoveDir(folder):
+    for root, dirs, files in os.walk(folder, topdown=False):
+        for name in files:
+            os.remove(os.path.join(root, name))
+        for name in dirs:
+            os.rmdir(os.path.join(root, name))
+    os.rmdir(folder)
 
 ###############################################
 # Find all INI files in:
@@ -136,6 +172,7 @@ def init():
 
     tasksDir = rootDir + os.path.sep + 'tasks'
     logDir = rootDir + os.path.sep + 'output'
+    backupDir = rootDir + os.path.sep + 'backup'
 
     appConfigFile = rootDir + os.path.sep + scriptBaseName + '.ini'
     siteConfigFile = rootDir + os.path.sep + scriptBaseName + '.site.ini'
@@ -206,6 +243,7 @@ def init():
     LOGGER.info("scriptBaseName", scriptBaseName)
     LOGGER.info("scriptDir", scriptDir)
     LOGGER.info("rootDir", rootDir)
+    LOGGER.info("backupDir", backupDir)
     LOGGER.info("logDir", logDir)
     LOGGER.info("confFile", appConfigFile)
 
@@ -281,6 +319,76 @@ def init():
 
     #os.chdir(scriptHome)
 
+    # If exists a zip file in the directory, we prompt the user for upgrade
+
+    # Check for a ZIP file
+    zipFileList = []
+    zipFileList = checkZipFile(rootDir)
+    if zipFileList:
+        # Creates a mini-app, with a 0-sized frame, just to support a basic dialog
+        app = wx.App(False)
+        frame = wx.Frame(None, wx.ID_ANY, "", size=(0,0))
+
+        dlg = wx.MessageDialog(frame,
+            "There is a ZIP file in PoziConnect folder: "+str(zipFileList)+". Are you sure you want to update your tasks?",
+            "Update confirmation", wx.OK|wx.CANCEL|wx.ICON_QUESTION)
+        result = dlg.ShowModal()
+
+        # Destroying both the modal and its supporting frame
+        dlg.Destroy()
+        frame.Destroy()
+
+        # Processing the OK button, continuing unabatted otherwise
+        if result == wx.ID_OK:
+            LOGGER.info('Starting task upgrade ...')
+            # Perform backup of tasks
+            if not os.path.isdir(backupDir):
+                # Create the directory then!
+                os.makedirs(backupDir)
+
+            # Build a new ZIP file of all the tasks from the task dir
+            try:
+                zipped_tasks = zipper(tasksDir,backupDir+os.path.sep+datetime.datetime.now().strftime('%Y%m%d-%H%M%S')+'-tasks.zip')
+            except:
+                LOGGER.info('Not able to zip the tasks folder ...')
+
+            # Deleting the content of the tasks folder
+            try:
+                cleanAndRemoveDir(tasksDir)
+            except:
+                LOGGER.info('Not able to delete the tasks file ...')
+
+            # Expanding the ZIP file into the tasks directory
+            try:
+                # There should only ever be one (and only one) ZIP file
+                for zf in zipFileList:
+                    with zipfile.ZipFile(zf, "r") as z:
+                        # Extract all files at the rootDir
+                        z.extractall(rootDir)
+
+                        # Getting the repository mapping
+                        if appConfig.has_section('UPDATES'):
+                            for key,value in appConfig.items('UPDATES'):
+                                if key.lower() == 'repository':
+                                    # Assumption1: ZIP at the root of the app
+                                    # Assumption2: master branch has been downloaded, and suffixes the repository name
+                                    zippedDirName = rootDir+os.path.sep+value+'-master'
+                                    LOGGER.info('Renaming from: '+zippedDirName)
+                                    LOGGER.info('Renaming to  : '+tasksDir)
+                                    # Rename the extracted folder to tasks
+                                    os.rename(zippedDirName,tasksDir)
+
+            except:
+                LOGGER.info('Not able to unzip the zip file into a tasks folder ...')
+
+            # Removing the ZIP file
+            try:
+                for zf in zipFileList:
+                    os.remove(zf)
+            except:
+                LOGGER.info('Not able to delete the zip file ...')
+
+    # Now that the tasks have potentially be updated, we continue with loading the (new) filenames
     fileList = []
     if options.recipe_filename:
         print tasksDir
@@ -300,7 +408,6 @@ def init():
     taskList.sort()
 
     return options, appConfig, taskList
-
 
 if __name__ == "__main__":
     options, appConfig, taskList = init()
