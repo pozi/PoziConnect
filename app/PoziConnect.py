@@ -34,15 +34,16 @@ from PoziConnect.logger import *
 # Create logger
 LOGGER = Logger('main', 'output/PoziConnect.log')
 
-def checkZipFile(folder):
-    zipFileList = []
+def checkZipFile(folder,repoName):
+    zipFilename = ''
     # Scan the folder for a ZIP file
     for f in os.listdir(folder):
         if f.lower().endswith("zip"):
-            zipFileList.append(os.path.join(folder,f))
+            if os.path.splitext(f)[0] == repoName+'-master':
+                zipFilename = os.path.join(folder,f)
 
-    LOGGER.info("zipFileList", zipFileList)
-    return zipFileList
+    LOGGER.info("zipFilename", zipFilename)
+    return zipFilename
 
 # Helper function to zip an entire folder
 # http://coreygoldberg.blogspot.com.au/2009/07/python-zip-directories-recursively.html
@@ -321,17 +322,26 @@ def init():
 
     # If exists a zip file in the directory, we prompt the user for upgrade
 
+    # Getting the repository mapping
+    repositoryName = ''
+    if appConfig.has_section('UPDATES'):
+        for key,value in appConfig.items('UPDATES'):
+            if key.lower() == 'repository':
+                # Assumption1: ZIP at the root of the app
+                # Assumption2: master branch has been downloaded, and suffixes the repository name
+                repositoryName = value
+
     # Check for a ZIP file
-    zipFileList = []
-    zipFileList = checkZipFile(rootDir)
-    if zipFileList:
+    zipFilename = ''
+    zipFilename = checkZipFile(rootDir,repositoryName)
+    if zipFilename:
         # Creates a mini-app, with a 0-sized frame, just to support a basic dialog
         app = wx.App(False)
         frame = wx.Frame(None, wx.ID_ANY, "", size=(0,0))
 
         dlg = wx.MessageDialog(frame,
-            "There is a ZIP file in PoziConnect folder: "+str(zipFileList)+". Are you sure you want to update your tasks?",
-            "Update confirmation", wx.OK|wx.CANCEL|wx.ICON_QUESTION)
+            "Pozi Connect is about to install a configuration update. All existing configuration will be replaced. \nDo you wish to proceed?",
+            "Confirm update", wx.OK|wx.CANCEL|wx.ICON_QUESTION)
         result = dlg.ShowModal()
 
         # Destroying both the modal and its supporting frame
@@ -341,6 +351,7 @@ def init():
         # Processing the OK button, continuing unabatted otherwise
         if result == wx.ID_OK:
             LOGGER.info('Starting task upgrade ...')
+
             # Perform backup of tasks
             if not os.path.isdir(backupDir):
                 # Create the directory then!
@@ -361,30 +372,22 @@ def init():
             # Expanding the ZIP file into the tasks directory
             try:
                 # There should only ever be one (and only one) ZIP file
-                for zf in zipFileList:
-                    with zipfile.ZipFile(zf, "r") as z:
-                        # Extract all files at the rootDir
-                        z.extractall(rootDir)
+                with zipfile.ZipFile(zipFilename, "r") as z:
+                    # Extract all files at the rootDir
+                    z.extractall(rootDir)
 
-                        # Getting the repository mapping
-                        if appConfig.has_section('UPDATES'):
-                            for key,value in appConfig.items('UPDATES'):
-                                if key.lower() == 'repository':
-                                    # Assumption1: ZIP at the root of the app
-                                    # Assumption2: master branch has been downloaded, and suffixes the repository name
-                                    zippedDirName = rootDir+os.path.sep+value+'-master'
-                                    LOGGER.info('Renaming from: '+zippedDirName)
-                                    LOGGER.info('Renaming to  : '+tasksDir)
-                                    # Rename the extracted folder to tasks
-                                    os.rename(zippedDirName,tasksDir)
+                    # Rename the extracted folder to tasks
+                    unzippedDirName = rootDir + os.path.sep + repositoryName + '-master'
+                    LOGGER.info('Renaming from: ' + unzippedDirName)
+                    LOGGER.info('Renaming to  : ' + tasksDir)
+                    os.rename(unzippedDirName,tasksDir)
 
             except:
                 LOGGER.info('Not able to unzip the zip file into a tasks folder ...')
 
             # Removing the ZIP file
             try:
-                for zf in zipFileList:
-                    os.remove(zf)
+                os.remove(zipFilename)
             except:
                 LOGGER.info('Not able to delete the zip file ...')
 
