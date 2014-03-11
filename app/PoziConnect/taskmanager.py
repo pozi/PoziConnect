@@ -481,6 +481,10 @@ class Task():
                     'regExp': r'((ODBC:[^,]+),?({tableName}))',
                     'outputVars': ['Store', 'StoreBase', 'TableName'],
                 },
+                '3-Source Only': {
+                    'regExp': r'(ODBC:[^,]+)',
+                    'outputVars': ['Store'],
+                }
             },
             'PostgreSQL': {
                 #'1-Schema+Table': {

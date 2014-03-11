@@ -221,6 +221,7 @@ def init():
     }
     siteConfig = ConfigParser(siteConfigOptions)
     if os.path.isfile(siteConfigFile):
+        LOGGER.info('Site-specific config file: %s' % siteConfigFile)
         siteConfig.read(siteConfigFile)
         #appConfig.SubstituteVariablesFromSection('Settings')
         for section in siteConfig.sections():
@@ -228,14 +229,16 @@ def init():
             items = siteConfig.items(section)
             LOGGER.debug(items)
     else:
-        LOGGER.warn('Site specific config file could not be found! (%s)' % siteConfigFile)
+        pass
 
     appSettings = {}
     try:
         appSettings = dict(appConfig.items('Application Settings'))
-        appSettings.update(dict(siteConfig.items('Settings')))
+        # Only looking for a Settings section if the site-specific file exists
+        if os.path.isfile(siteConfigFile):
+            appSettings.update(dict(siteConfig.items('Settings')))
     except Exception as e:
-        LOGGER.warn('Error:', e)
+        LOGGER.warn("Site-specific config file: ", e)
 
     # Log some information
     LOGGER.info("PoziConnect version:", version)
@@ -252,8 +255,6 @@ def init():
     taskIncludeFilter = ''
     taskExcludeFilter = 'Hopefully this string is not contained in any filename!'
     if os.path.isfile(siteConfigFile):
-        LOGGER.info("siteConfFile", siteConfigFile)
-        LOGGER.info("siteConfig", siteConfig)
         for a,b in siteConfig.items('Settings'):
             if a.lower()=="include" and len(b.strip()):
                 taskIncludeFilter = b
