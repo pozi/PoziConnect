@@ -697,8 +697,10 @@ class Task():
                 errorMessage = "Section '%s'\nSource file could not be found" % (self.section)
                 raise IOError(exitCode, errorMessage, str(sourceStore))
 
-            # Perform an ogrinfo
-            self.doInfo(ogrItems)
+            # Perform an ogrinfo unless instructed to skip
+            skipInfo = self.items.get('SkipInfo',False)
+            if not skipInfo:
+                self.doInfo(ogrItems)
 
 	    if sourceFormat == 'XLS':
 	    	# We need to process the Excel file into a CSV file - CSV files can then be processed natively by OGR2OGR
