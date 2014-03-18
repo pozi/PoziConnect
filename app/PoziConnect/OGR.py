@@ -9,7 +9,7 @@ import datetime
 
 from logger import *
 from Crypt import *
-import sqlite3
+from SQLite import *
 
 class OGRBase():
     """
@@ -214,6 +214,10 @@ class OGRBase():
             # Introduce spatialite support, but only when the file does not
             # exist yet (otherwise it's a useless option)
             spatialite = items.get('spatialite', True)
+
+            # Performance: increasing the commit batch size
+            command += ['-gt', '65536']
+
             if spatialite:
 
                 # Only add this option when the destination does not exist yet
@@ -485,7 +489,8 @@ class OGRBase():
 
             self.logger.info("#" * 60 + "\n" + message)
 
-            conn = sqlite3.connect(datasource)
+            sqlite = SQLite()
+            conn = sqlite.connect(datasource)
             cursor = conn.cursor()
             cursor.execute('DROP TABLE IF EXISTS "%s"' % name)
             cursor.execute('CREATE TABLE "%s" AS %s' % (name, sql))
