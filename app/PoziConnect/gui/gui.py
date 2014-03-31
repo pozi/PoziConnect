@@ -540,7 +540,7 @@ class GUI_Main(Main ):
         # Rename button to 'Close' (was Cancel)
         self.buttonClose.SetLabel('&Close')
 
-        self.buttonStart.SetLabel('&Restart')
+        self.buttonStart.SetLabel('&Start')
         self.buttonStart.Enable()
 
         self.SetStatus(status)
