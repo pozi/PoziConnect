@@ -408,9 +408,16 @@ def init():
     # files found. Then sort it alphabetically
     taskList = []
     for f in fileList:
+        if not os.path.isfile(f):
+            LOGGER.error('The file '+str(f)+' cannot be found. Please check configuration.')
+            # Ending the script here; we don't want to start a recipe where (at least) one file is missing
+            sys.exit(0)
         taskName = os.path.splitext(os.path.basename(f))[0]
         taskList.append((taskName, f))
-    taskList.sort()
+
+    # Only sort if it's in GUI mode (INI files within a recipe should not be sorted)
+    if not options.recipe_filename:
+        taskList.sort()
 
     return options, appConfig, taskList
 
