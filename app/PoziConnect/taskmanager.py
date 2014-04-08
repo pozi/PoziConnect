@@ -632,146 +632,157 @@ class Task():
                 ogrinfo.Process(ogrInfoItems)
 
     def run(self):
-        self.logger.debug('Task running')
+        taskToExecute = True
+        ifCondition = self.items.get('If')
+        if ifCondition:
+            self.logger.info('Condition: '+str(ifCondition)+" is "+str(not not eval(ifCondition)))
+            if not eval(ifCondition):
+                self.logger.info('Skipping section ...')
+                taskToExecute = False
+            else:
+                self.logger.info('Executing section ...')
 
-        # Some preprocessing: read SQLFile into SQL parameter
-        sqlFile = self.items.get('SQLFile')
-        if sqlFile:
-            if not os.path.exists(sqlFile):
-                exitCode = 1
-                errorMessage = "SQLFile file could not be found"
-                raise IOError(exitCode, errorMessage, str(sqlFile))
+        if taskToExecute:
+            self.logger.debug('Task running')
 
-            sqlFileHandle = open(sqlFile, 'r')
-            sqlString = sqlFileHandle.read()
-            sqlFileHandle.close()
+            # Some preprocessing: read SQLFile into SQL parameter
+            sqlFile = self.items.get('SQLFile')
+            if sqlFile:
+                if not os.path.exists(sqlFile):
+                    exitCode = 1
+                    errorMessage = "SQLFile file could not be found"
+                    raise IOError(exitCode, errorMessage, str(sqlFile))
 
-            sql = " ".join(sqlString.splitlines())
+                sqlFileHandle = open(sqlFile, 'r')
+                sqlString = sqlFileHandle.read()
+                sqlFileHandle.close()
 
-            # Trick to do variable substitution on the sql
-            sql = Item(('sql', sql)).SubstituteVars(self.items)[1]
+                sql = " ".join(sqlString.splitlines())
 
-            # Store the SQL in the items so it can be used
-            self.items['SQL'] = sql
+                # Trick to do variable substitution on the sql
+                sql = Item(('sql', sql)).SubstituteVars(self.items)[1]
 
-        # Convert items into how OGR understands them (lower case
-        # and some different names):
-        translate = {
-            'sourcestore': 'datasource',
-            'destinationstore': 'destination',
-            'destinationformat': 'format',
-            'destinationtablename': 'name',
-        }
+                # Store the SQL in the items so it can be used
+                self.items['SQL'] = sql
 
-        ogrItems = {}
-        for key, value in self.items.items():
-            ogrItems[key.lower()] = value
+            # Convert items into how OGR understands them (lower case
+            # and some different names):
+            translate = {
+                'sourcestore': 'datasource',
+                'destinationstore': 'destination',
+                'destinationformat': 'format',
+                'destinationtablename': 'name',
+            }
 
-        for key, translated in translate.items():
-            if key in ogrItems:
-               ogrItems[translated] = ogrItems[key]
+            ogrItems = {}
+            for key, value in self.items.items():
+                ogrItems[key.lower()] = value
 
-        self.logger.info('Task items', self.items)
-        self.logger.info('OGR items', ogrItems)
+            for key, translated in translate.items():
+                if key in ogrItems:
+                   ogrItems[translated] = ogrItems[key]
 
-        # Execute Pre Command (if provided)
-        preCommand = self.items.get('PreCommand')
-        if preCommand:
-            self.ExecuteCommand(preCommand, 'PreCommand')
+            self.logger.info('Task items', self.items)
+            self.logger.info('OGR items', ogrItems)
 
-        # Execute Command (if provided)
-        Command = self.items.get('Command')
-        if Command:
-            self.ExecuteCommand(Command, 'Command')
+            # Execute Pre Command (if provided)
+            preCommand = self.items.get('PreCommand')
+            if preCommand:
+                self.ExecuteCommand(preCommand, 'PreCommand')
 
-        # Get sourece and destination stores
-        sourceStore = self.items.get('SourceStore')
-        sourceFormat = self.items.get('SourceFormat')
-        destinationStore = self.items.get('DestinationStore')
-        destinationFormat = self.items.get('DestinationFormat')
+            # Execute Command (if provided)
+            Command = self.items.get('Command')
+            if Command:
+                self.ExecuteCommand(Command, 'Command')
 
-        # Do OGRinfo
-        if sourceStore:
-            if sourceFormat in self.fileFormats and not os.path.exists(sourceStore):
-                exitCode = 1
-                errorMessage = "Section '%s'\nSource file could not be found" % (self.section)
-                raise IOError(exitCode, errorMessage, str(sourceStore))
+            # Get sourece and destination stores
+            sourceStore = self.items.get('SourceStore')
+            sourceFormat = self.items.get('SourceFormat')
+            destinationStore = self.items.get('DestinationStore')
+            destinationFormat = self.items.get('DestinationFormat')
 
-            # Perform an ogrinfo unless instructed to skip
-            skipInfo = self.items.get('SkipInfo',False)
-            if not skipInfo:
-                self.doInfo(ogrItems)
+            # Do OGRinfo
+            if sourceStore:
+                if sourceFormat in self.fileFormats and not os.path.exists(sourceStore):
+                    exitCode = 1
+                    errorMessage = "Section '%s'\nSource file could not be found" % (self.section)
+                    raise IOError(exitCode, errorMessage, str(sourceStore))
 
-	    if sourceFormat == 'XLS':
-	    	# We need to process the Excel file into a CSV file - CSV files can then be processed natively by OGR2OGR
-	    	# with the help of:
-	    	# - the CSVT file for the types
-	    	# - the VRT file for layer naming / conversion of XY into a geometry
-	    	# Then, we need to provide the correct items values for the source to OGR2OGR
-	    	# so that the source is now the resulting CSV (not the Excel file anymore)
+                # Perform an ogrinfo unless instructed to skip
+                skipInfo = self.items.get('SkipInfo',False)
+                if not skipInfo:
+                    self.doInfo(ogrItems)
 
-	    	# Excel to CSV
-	    	itemsForScript = ogrItems
-	    	try:
-		    	XLSread(itemsForScript,self)
+            if sourceFormat == 'XLS':
+                # We need to process the Excel file into a CSV file - CSV files can then be processed natively by OGR2OGR
+                # with the help of:
+                # - the CSVT file for the types
+                # - the VRT file for layer naming / conversion of XY into a geometry
+                # Then, we need to provide the correct items values for the source to OGR2OGR
+                # so that the source is now the resulting CSV (not the Excel file anymore)
+
+                # Excel to CSV
+                itemsForScript = ogrItems
+                try:
+                    XLSread(itemsForScript,self)
                 except Exception as e:
-                	self.logger.critical("Excel to CSV Failed:", e)
-                	raise
+                    self.logger.critical("Excel to CSV Failed:", e)
+                    raise
 
-        # Perform ogr2ogr, but only if both a source and destination are configured
-        if sourceStore and destinationStore:
+            # Perform ogr2ogr, but only if both a source and destination are configured
+            if sourceStore and destinationStore:
 
-            # If no destination table name is provided
-            # then we assume the new table name will be the
-            # same as the source table name
-            if not ogrItems.get('name'):
-                ogrItems['name'] = ogrItems.get('sourcetablename')
+                # If no destination table name is provided
+                # then we assume the new table name will be the
+                # same as the source table name
+                if not ogrItems.get('name'):
+                    ogrItems['name'] = ogrItems.get('sourcetablename')
 
-            # If destination format is any of the following, then manually
-            # remove the destination files (work around buggy behaviour
-            # in OGR).
-            # Some formats then need to have their destination being the
-            # destination directory instead of the full path
-            # (ie: 'output' instead of 'output/file.shp')
-            #if destinationFormat in ['GML','KML','DGN','ESRI Shapefile','MapInfo File']:
-            if destinationFormat in ['GML','KML','DGN','GeoJSON','XLSX']:
-                destination = ogrItems['destination']
-                if os.path.isfile(destination):
-                    self.logger.info("Removing existing destination: %s" % destination)
-                    os.remove(destination)
+                # If destination format is any of the following, then manually
+                # remove the destination files (work around buggy behaviour
+                # in OGR).
+                # Some formats then need to have their destination being the
+                # destination directory instead of the full path
+                # (ie: 'output' instead of 'output/file.shp')
+                #if destinationFormat in ['GML','KML','DGN','ESRI Shapefile','MapInfo File']:
+                if destinationFormat in ['GML','KML','DGN','GeoJSON','XLSX']:
+                    destination = ogrItems['destination']
+                    if os.path.isfile(destination):
+                        self.logger.info("Removing existing destination: %s" % destination)
+                        os.remove(destination)
 
-            if destinationFormat in ['ESRI Shapefile', 'MapInfo File']:
-                destDriveName = ogrItems.get('destinationdrivename') or ''
-                destFilePath = ogrItems.get('destinationfilepath') or ''
-                ogrItems['destination'] = destDriveName + destFilePath
+                if destinationFormat in ['ESRI Shapefile', 'MapInfo File']:
+                    destDriveName = ogrItems.get('destinationdrivename') or ''
+                    destFilePath = ogrItems.get('destinationfilepath') or ''
+                    ogrItems['destination'] = destDriveName + destFilePath
 
-            # Now we call ogr2ogr for this task (does the majority of the work)
-            # Since it can raise exceptions, be put it in a try clause
-            ogr2ogr = OGR2OGR()
-            try:
-                ogr2ogr.Process(ogrItems)
-            except Exception as e:
-                self.logger.critical("OGR Failed:", e)
-                raise
+                # Now we call ogr2ogr for this task (does the majority of the work)
+                # Since it can raise exceptions, be put it in a try clause
+                ogr2ogr = OGR2OGR()
+                try:
+                    ogr2ogr.Process(ogrItems)
+                except Exception as e:
+                    self.logger.critical("OGR Failed:", e)
+                    raise
 
-        # Create indices if provided
-        if destinationStore:
-            # Create indices
-            if ogrItems.get('index'):
-                self.doIndex(ogrItems)
+            # Create indices if provided
+            if destinationStore:
+                # Create indices
+                if ogrItems.get('index'):
+                    self.doIndex(ogrItems)
 
-	    if ogrItems.get('ogrinfoonly'):
-		ogrinfo = OGRInfo()
-		try:
-			ogrinfo.Process(ogrItems)
-		except Exception as e:
-			self.logger.critical("OGRINFO Failed:", e)
-                	raise
+    	    if ogrItems.get('ogrinfoonly'):
+    		ogrinfo = OGRInfo()
+    		try:
+    			ogrinfo.Process(ogrItems)
+    		except Exception as e:
+    			self.logger.critical("OGRINFO Failed:", e)
+                    	raise
 
-        # Execute Post Command (if provided)
-        postCommand = self.items.get('PostCommand')
-        if postCommand:
-            self.ExecuteCommand(postCommand, 'PostCommand')
+            # Execute Post Command (if provided)
+            postCommand = self.items.get('PostCommand')
+            if postCommand:
+                self.ExecuteCommand(postCommand, 'PostCommand')
 
     def ExecuteCommand(self, command, commandName = 'Command'):
         if command:
