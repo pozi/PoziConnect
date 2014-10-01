@@ -536,7 +536,7 @@ class OGRBase():
         else:
             # When outputting to tab files, files can not be overwritten easily
             # We delete them manually if the overwrite option has been specified
-            if items.get('format') == 'MapInfo File' and items.get('overwrite'):
+            if items.get('format') == 'MapInfo File' and items.get('overwrite',True):
                 self.logger.info("\n# Overwrite option is on: will delete existing files with same name (if they exist)\n")
                 (filepath, filename) = os.path.split(items['destinationstore'])
                 (shortname, extension) = os.path.splitext(filename)

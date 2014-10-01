@@ -771,13 +771,13 @@ class Task():
                 if ogrItems.get('index'):
                     self.doIndex(ogrItems)
 
-    	    if ogrItems.get('ogrinfoonly'):
-    		ogrinfo = OGRInfo()
-    		try:
-    			ogrinfo.Process(ogrItems)
-    		except Exception as e:
-    			self.logger.critical("OGRINFO Failed:", e)
-                    	raise
+            if ogrItems.get('ogrinfoonly'):
+                ogrinfo = OGRInfo()
+                try:
+                    ogrinfo.Process(ogrItems)
+                except Exception as e:
+                    self.logger.critical("OGRINFO Failed:", e)
+                    raise
 
             # Execute Post Command (if provided)
             postCommand = self.items.get('PostCommand')
