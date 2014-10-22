@@ -62,12 +62,17 @@ def zipper(dir, zip_file):
     return zip_file
 
 def cleanAndRemoveDir(folder):
-    for root, dirs, files in os.walk(folder, topdown=False):
-        for name in files:
-            os.remove(os.path.join(root, name))
-        for name in dirs:
-            os.rmdir(os.path.join(root, name))
-    os.rmdir(folder)
+    try:
+        for root, dirs, files in os.walk(folder, topdown=False):
+            for name in files:
+                os.remove(os.path.join(root, name))
+            for name in dirs:
+                os.rmdir(os.path.join(root, name))
+        os.rmdir(folder)
+    except Exception as e:
+        LOGGER.error(e)
+        dial = wx.MessageDialog(None, "Error while removing folder '"+folder+"' due to file '"+e.filename+"'.\n Please close any window or program using this file, and re-update the tasks after that.", 'Error', wx.OK | wx.ICON_ERROR)
+        dial.ShowModal()
 
 ###############################################
 # Find all INI files in:

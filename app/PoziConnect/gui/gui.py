@@ -278,7 +278,7 @@ class GUI_Main(Main ):
         Process the task update.
         """
         dlg = wx.MessageDialog(self,
-            "This will now download the latest tasks.\nThis might take a few seconds ...",
+            "Pressing OK will download the latest tasks.\nThis might take a few seconds.",
             "", wx.OK|wx.ICON_INFORMATION)
         result = dlg.ShowModal()
         dlg.Destroy()
