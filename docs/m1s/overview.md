@@ -4,11 +4,7 @@
 
 * Introduction
 * [Configuration](/poziconnect/m1s/configuration)
-* [Audits]((/poziconnect/m1s/audits)
-* Statistics
+* [Audits](/poziconnect/m1s/audits)
+* [Statistics](/poziconnect/m1/statistics)
 
 ## Introduction
-
-col1|col2
----|---
-A|B
