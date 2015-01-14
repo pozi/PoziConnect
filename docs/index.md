@@ -4,11 +4,11 @@
 
 ## Contents
 
-* ### Overview
-* ### User Guide
-  * ### [M1s](/m1s)
-    * #### Configuration
-    * #### Audits
-    * #### Statistics
-* ### Installation Guide
-* ### Config Guide
+* Overview
+* User Guide
+  * [M1s](/poziconnect/m1s)
+    * Configuration
+    * Audits
+    * Statistics
+* Installation Guide
+* Config Guide

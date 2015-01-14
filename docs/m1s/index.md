@@ -1,5 +1,5 @@
 # Pozi Connect for M1s
 
-* ### Configuration
-* ### Audits
-* ### Statistics
+* [Configuration](/configuration)
+* Audits
+* Statistics
