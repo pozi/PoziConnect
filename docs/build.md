@@ -1,0 +1,1 @@
+resolve the "Errno -1073741512" error by copying the libeay32.dll file from `PoziConnect\App\include\release-1600-gdal-1-9-mapserver-6-0\bin\` to `PoziConnect\App\include\release-1600-gdal-1-9-mapserver-6-0\bin\gdal\apps\`
