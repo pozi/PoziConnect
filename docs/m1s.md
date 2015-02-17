@@ -66,7 +66,9 @@ Log on to [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) and upload the sp
 
 ## Troubleshooting
 
-### Edits are not handled by Pozi Connect
+### Edits are not yet handled by Pozi Connect
 
 * secondary addresses
 * multi-assessment properties where all existing propnums in Vicmap are incorrctly matched
+* transfers of parcels that contain a primary address
+* address position update
