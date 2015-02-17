@@ -5,6 +5,6 @@
 ## Contents
 
 * Overview
-* [Pozi Connect for M1s](/poziconnect/m1s/overview)
+* [Pozi Connect for M1s](/poziconnect/m1s)
 * Installation Guide
 * Config Guide
