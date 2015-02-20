@@ -10,6 +10,8 @@ Pozi Connect compares the council's property data with the latest Vicmap data an
 
 After Groundtruth configures and implements Pozi Connect for your council, you can generate M1s at any time by launching Pozi Connect and running the three or four M1 tasks from the picklist. Your M1 report will be generated to a pre-defined location, and it is ready to be submitted via the [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) system.
 
+(See Pozi Connect's [history](/poziconnect/m1s/audits) to see the our most recent changes.)
+
 ## Preparation
 
 Download and unzip the following MapInfo or SHP datasets to the predefined location on your network:
