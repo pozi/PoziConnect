@@ -52,7 +52,7 @@ class Main ( wx.Frame ):
 		headerSizerRight.Add( self.headerSizerSpacerText, 0, wx.ALL, 5 )
 		
 		self.helpLink = agw.hyperlink.HyperLinkCtrl(parent=self, pos=(225, 60))
-		self.helpLink.SetURL(URL='http://www.groundtruth.com.au/pozi-connect-admin-guide/')
+		self.helpLink.SetURL(URL='http://groundtruth.viewdocs.io/poziconnect')
 		self.helpLink.SetLabel(label='Help')
 		self.helpLink.SetToolTipString(tip='Visit website for help')
 		headerSizerRight.Add( self.helpLink, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )

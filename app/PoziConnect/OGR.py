@@ -167,13 +167,28 @@ class OGRBase():
 
                 if format in ["SQLite"]:
                     if name:
-                        # Remove the table from the geometry_columns first
-                        sql = "DELETE FROM geometry_columns WHERE upper(f_table_name) = upper('%s')" % (name)
+                        # Fixing the spatial index "corruption" when table re-created without deleting the index
+                        # Source: http://gis.stackexchange.com/questions/1506/how-to-delete-a-broken-index-in-spatialite
+
+                        # Fix step 1: Disabling of the spatial index
+                        sql = "SELECT DisableSpatialIndex(upper('%s'), 'GEOMETRY')" % (name)
                         tmpItems = {
                             'datasource': destination,
                             'sql': sql,
                             'summary': False,
                         }
+                        ogrinfo = OGRInfo(tmpItems)
+                        ogrinfo.Process()
+
+                        # Fix step 2: Removing the spatial index
+                        sql = "DROP TABLE IF EXISTS idx_%s_GEOMETRY" % (name)
+                        tmpItems['sql'] = sql
+                        ogrinfo = OGRInfo(tmpItems)
+                        ogrinfo.Process()
+
+                        # Remove the table from the geometry_columns first
+                        sql = "DELETE FROM geometry_columns WHERE upper(f_table_name) = upper('%s')" % (name)
+                        tmpItems['sql'] = sql
                         ogrinfo = OGRInfo(tmpItems)
                         ogrinfo.Process()
 
