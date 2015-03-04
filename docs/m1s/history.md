@@ -11,6 +11,12 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the important developments over the last twelve months. 
 
+#### Mar 2015
+
+* fix bug to properly display updated layers in QGIS
+* upgrade GDAL library to `release-1600-gdal-1-11-1-mapserver-6-4-1` (from 1-10-1)
+* improve comments on M1s to clarify which propnums and crefnos being replaced do not exist in council
+
 ##### Feb 2015
 
 * massively improve performance of council parcel audit for councils who don't maintain crefno (from 14 minutes down to 16 seconds)

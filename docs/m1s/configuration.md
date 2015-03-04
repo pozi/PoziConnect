@@ -10,6 +10,7 @@ Obtain from Council
 * assign 'NCPR' to all common properties?
 * SHP or TAB?
 * rural addressing (separate table and/or flag in property system)
+* for Authority sites, obtain Type Type table (eg, as supplied from Murrindindi in Feb 2015)
 
 Start Configuration
 
