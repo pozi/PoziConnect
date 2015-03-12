@@ -40,7 +40,7 @@ Launch Pozi Connect. From the picklist, select the first M1 task that relates to
 For each of the three to four M1 tasks in the picklist:
 
 * select respective M1 item from list
-* enter any credentials if prompted (if a username/password is required, enter the *database* credentials)
+* enter any credentials if prompted (if a username/password is required, enter the *database* credentials, as opposed to any *application* credentials you may use for accessing your property system)
 * click 'Start' (each task will take between half a minute and ten minutes)
 
 There are three or four tasks, depending on whether your council has been configured for importing any custom address locations.
@@ -55,7 +55,7 @@ Open up the M1 report in Excel to preview the updates that Pozi Connect has gene
 
 ![M1 Comments](http://i.imgur.com/bZz3m1Z.png "M1 Comments")
 
-You may find you want to hold back some updates if you're not sure that you want to submit them. For example, if an update's comments show that a property is going to be added as a multi-assessment and you're not sure that it should be a multi-assessment, you may delete the row before you submit the M1. This gives you the opportunity to check your property system to see if you're happy with affected properties' parcel description (if two properties share the same parcel description, Pozi Connect will assume they are meant to be a multi-assessment).
+For the first few times you run Pozi Connect, you may find you want to hold back some updates if you're not sure that you want to submit them. For example, if an update's comments show that a property is going to be added as a multi-assessment and you're not sure that it should be a multi-assessment, you may delete the row before you submit the M1. This gives you the opportunity to check your property system to see if you're happy with affected properties' parcel description (if two properties share the same parcel description, Pozi Connect will assume they are meant to be a multi-assessment).
 
 Any rows you delete will simply appear on the next M1 if there are no changes made to the council's property data.
 
@@ -79,6 +79,6 @@ Log on to [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) and upload the sp
 ### Edits are not yet handled by Pozi Connect
 
 * secondary addresses
-* multi-assessment properties where all existing propnums in Vicmap are incorrectly matched
+* multi-assessment properties where all existing propnums in Vicmap are incorrectly matched (typical multi-assessments are OK)
 * transfers of parcels that contain a primary address
-* address position update
+* address position update (ie, addresses that have *moved* from their original position)
