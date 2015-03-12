@@ -10,7 +10,15 @@ Pozi Connect compares the council's property data with the latest Vicmap data an
 
 After Groundtruth configures and implements Pozi Connect for your council, you can generate M1s at any time by launching Pozi Connect and running the three or four M1 tasks from the picklist. Your M1 report will be generated to a pre-defined location, and it is ready to be submitted via the [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) system.
 
-(See Pozi Connect's [history](/poziconnect/m1s/audits) to see the our most recent changes.)
+(See Pozi Connect's [history](/poziconnect/m1s/history) to see the our most recent changes.)
+
+## Vicmap Maintenance Cycle
+
+Vicmap data is maintained by DELWP. Councils obtain updates of 'Vicmap Address' and 'Vicmap Property Simplified 1' by downloading it weekly (recommended) or fortnightly from the Spatial Datamart.
+
+Pozi Connect uses this downloaded Vicmap data (as well as the council's current rates data) to automatically generate the required M1s. When the M1 is submitted, it feeds into the Vicmap maintenance cycle. The changes will not be immediate because of the DELWP/Jacobs maintenance schedules and occasional backlogs. Allow at least two weeks before you can expect to see the changes in Vicmap.
+
+Manual M1s (or using software like Common Ground) are no longer required for routine data maintenance. Pozi Connect takes care of most property number and address updates when you run it on a regular basis. It will even use any rural address point locations that you specify in a point table (if Pozi Connect is configured for it).
 
 ## Preparation
 
@@ -71,6 +79,6 @@ Log on to [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) and upload the sp
 ### Edits are not yet handled by Pozi Connect
 
 * secondary addresses
-* multi-assessment properties where all existing propnums in Vicmap are incorrctly matched
+* multi-assessment properties where all existing propnums in Vicmap are incorrectly matched
 * transfers of parcels that contain a primary address
 * address position update
