@@ -16,6 +16,7 @@ Here are some of the important developments over the last twelve months.
 * fix bug to properly display updated layers in QGIS
 * upgrade GDAL library to `release-1600-gdal-1-11-1-mapserver-6-4-1` (from 1-10-1)
 * improve comments on M1s to clarify which propnums and crefnos being replaced do not exist in council
+* improve readability of documentation with `viewdocs-yeti` template
 
 ##### Feb 2015
 
