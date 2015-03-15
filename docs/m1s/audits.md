@@ -106,6 +106,7 @@ Column|Description|Usage
 `vicmap_parcels`|list of parcels in Vicmap that match this propnum
 `vicmap_address`|address of property in Vicmap that matches this propnum
 `vicmap_locality`|locality of property in Vicmap that matches this propnum|filter on `N` to list wrong locality in Council
+`propnum_in_vicmap`|Council property number exists in Vicmap (Y/N)
 `address_match_in_vicmap`|Council address matches Vicmap address (Y/N)
 `locality_match_in_vicmap`|Council locality matches Vicmap locality (Y/N)
 `road_locality_in_vicmap`|Council road name/locality combination exists in Vicmap (Y/N)
