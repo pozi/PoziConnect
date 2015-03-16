@@ -11,7 +11,7 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the important developments. 
 
-#### Mar 2015
+##### Mar 2015
 
 * fix bug to properly display updated layers in QGIS
 * upgrade GDAL library to `release-1600-gdal-1-11-1-mapserver-6-4-1` (from 1-10-1)
