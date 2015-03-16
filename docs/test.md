@@ -1,5 +1,3 @@
-<img src="http://i.imgur.com/TLMFPUa.png" alt="Groundtruth" width="200">
-
 # Heading 1
 
 ## Heading 2

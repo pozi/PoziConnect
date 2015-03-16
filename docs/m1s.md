@@ -1,5 +1,3 @@
-<img src="http://i.imgur.com/TLMFPUa.png" alt="Groundtruth" width="200">
-
 # Pozi Connect for M1s
 
 Pozi Connect automatically generates council 'M1' reports that are used for updating the Victorian state map base.

@@ -1,5 +1,3 @@
-<img src="http://i.imgur.com/TLMFPUa.png" alt="Groundtruth" width="200">
-
 # Pozi Connect
 
 Pozi Connect is a powerful data extraction and processing application that draws on data from multiple spatial and non-spatial sources to generate derived datasets and map layers.

@@ -1,5 +1,3 @@
-<img src="http://i.imgur.com/TLMFPUa.png" alt="Groundtruth" width="200">
-
 # PIQA
 
 Each year, Victoria's [Department of Environment, Land, Water & Planning](http://www.depi.vic.gov.au/) (DELWP) requires councils to supply it with an extract of property and address information from their internal property systems to be used for an annual Property Information Quality Audit (PIQA).
