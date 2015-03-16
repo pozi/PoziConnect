@@ -9,7 +9,7 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 ### Highlights
 
-Here are some of the important developments over the last twelve months. 
+Here are some of the important developments. 
 
 #### Mar 2015
 
