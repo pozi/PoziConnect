@@ -18,6 +18,7 @@ Here are some of the important developments.
 * improve comments on M1s to clarify which propnums and crefnos being replaced do not exist in council
 * improve readability of documentation with `viewdocs-yeti` template
 * add parcel area to Vicmap audit
+* provide central location for latest releases: https://github.com/groundtruth/PoziConnect/releases/latest
 
 ##### Feb 2015
 
