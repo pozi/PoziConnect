@@ -1,5 +1,3 @@
-<img src="http://i.imgur.com/TLMFPUa.png" alt="Groundtruth" width="200">
-
 # Pozi Connect: Victorian Council Data Audits
 
 Pozi Connect generates parcel and property/address audits when it creates an M1. Use these audit reports to uncover anomalies in your council's data.
