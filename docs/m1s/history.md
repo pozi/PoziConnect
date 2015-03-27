@@ -11,10 +11,10 @@ Here are some of the important developments.
 
 ##### Mar 2015
 
-* fix bug to properly display updated layers in QGIS
-* upgrade GDAL library to `release-1600-gdal-1-11-1-mapserver-6-4-1` (from 1-10-1)
+* improve QGIS integration by forcing refresh of spatial index
+* upgrade to latest GDAL library `release-1600-gdal-1-11-1-mapserver-6-4-1` (up from `1-10-1`)
 * improve comments on M1s to clarify which propnums and crefnos being replaced do not exist in council
-* improve readability of documentation with `viewdocs-yeti` template
+* improve readability of documentation with new webpage template (`viewdocs-yeti`)
 * add parcel area to Vicmap audit
 * provide central location for latest releases: https://github.com/groundtruth/PoziConnect/releases/latest
 
