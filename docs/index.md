@@ -1,4 +1,6 @@
-# Pozi Connect
+# Pozi Connect: Documentation
+
+## About Pozi Connect
 
 Pozi Connect is a powerful data extraction and processing application that draws on data from multiple spatial and non-spatial sources to generate derived datasets and map layers.
 
@@ -8,7 +10,7 @@ Read more about Pozi Connect at the Groundtruth [website](http://www.groundtruth
 
 This site contains the documentation for Pozi Connect to enable you to get the most of out of the application.
 
-### Contents
+## Contents
 
 * Use Cases
   * [Pozi Connect for M1s](/poziconnect/m1s)
