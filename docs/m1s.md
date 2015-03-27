@@ -1,6 +1,6 @@
 # Pozi Connect for M1s
 
-Pozi Connect automatically generates council 'M1' reports that are used for updating the Victorian state map base.
+Pozi Connect generates council 'M1' reports that are critical link for updating the Victorian state map base.
 
 ![M1 Form](http://i.imgur.com/rlp9JKS.jpg "M1 Form")
 
