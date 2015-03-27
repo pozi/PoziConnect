@@ -6,8 +6,9 @@
 2. in the Downloads section, click on the link to the .msi file to download the installer
 3. run the installer
 4. change the default path to the desired PoziConnect location on your network
-<img src="http://i.imgur.com/yvkIfL9.png" alt="Pozi Connect Setup" width="350">
 5. follow the prompts to complete the installation
+
+<img src="http://i.imgur.com/yvkIfL9.png" alt="Pozi Connect Setup" width="350">
 
 ## Tips for users who haven't upgraded since 2014
 
