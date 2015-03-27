@@ -1,11 +1,17 @@
 # Pozi Connect Installation
 
-Latest version:
-https://github.com/groundtruth/PoziConnect/releases/latest
+## Instructions
 
-Pozi Connect is now distributed as a Windows installer package. It is designed to update the necessary application and configuration files without affecting the associated data (such as M1 files). However, before running this installer for the first time, please make a backup of your existing PoziConnect folder.
+1. go to https://github.com/groundtruth/PoziConnect/releases/latest
+2. in the Downloads section, click on the link to the .msi file to download the installer
+3. run the installer
+4. change the default path to the desired PoziConnect location on your network
+<img src="http://i.imgur.com/yvkIfL9.png" alt="Pozi Connect Setup" width="350">
+5. follow the prompts to complete the installation
 
-When you run the installer, it will prompt you for a path. Please change it from the default path of C:\PoziConnect to the existing PoziConnect folder on your network.
+## Tips for users who haven't upgraded since 2014
+
+Since January 2015, Pozi Connect is distributed as a Windows installer package. It is designed to update the necessary application and configuration files without affecting the associated data (such as M1 output files). However, before running this installer for the first time, please make a backup of your existing PoziConnect folder.
 
 The new version organises the various output files as follows:
 
@@ -18,7 +24,6 @@ Spatial Files: PoziConnect\output\Spatial
 
 The new audits are documented here:
 http://groundtruth.viewdocs.io/poziconnect/m1s/audits
-
 
 ## Subscribe
 
