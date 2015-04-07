@@ -80,6 +80,14 @@ After you've removed any records you don't want to submit, save the spreadsheet 
 
 Log on to [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) and upload the spreadsheet file as per the [M1 Form Load Guide](http://nes.land.vic.gov.au/WebSite/help/NES_Quick_Guides_-_M1_Form_Load_V1.8.pdf) [pdf].
 
+## M1 Edit Codes
+
+Pozi Connect generates separate edits for property number updates and address updates.
+
+If you were filling out an M1 manually, you would typically update property number and address at the same time with an 'E' edit. Because of the way Pozi Connect systematically evaluates every property's suitability for updating, it processes property number updates (P) separately from the address updates (S).
+
+In the case of a new property, there would be a P edit to allocate the new property number, followed by an S edit further down the spreadsheet.
+
 ## Data Audits
 
 [Audits](/poziconnect/m1s/audits)
