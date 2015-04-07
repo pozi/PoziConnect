@@ -10,6 +10,20 @@
 
 <img src="http://i.imgur.com/yvkIfL9.png" alt="Pozi Connect Setup" width="350">
 
+### Customise Configuration
+
+You can customise the Pozi Connect drop-down task list to display only the tasks that you're interested in.
+
+The `PoziConnect\PoziConnect.site.ini` file contains filters to specifically include or exclude tasks. Open the file in a text editor, and specify the filter. For example, if you only want to display tasks that relate to 'Glen Eira', update the file as follows:
+
+    [Settings]
+    Include: Glen Eira
+    Exclude: 
+
+You can enter multiple filter terms, separated by commas. Save the file and exit.
+
+This file will persist in your Pozi Connect application folder, so you need only do this step once, not every time you update the application or configuration.
+
 ## Tips for users who haven't upgraded since 2014
 
 Since January 2015, Pozi Connect is distributed as a Windows installer package. It is designed to update the necessary application and configuration files without affecting the associated data (such as M1 output files). However, before running this installer for the first time, please make a backup of your existing PoziConnect folder.

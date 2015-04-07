@@ -22,20 +22,6 @@ If you are installing Pozi Connect for the first time, or if your current versio
 2. run the installer
 3. when it prompts you, specify a folder location. You can choose anywhere; somewhere like `C:\` or `C:\Program Files\`, or even a folder on your network. A folder named ‘PoziConnect’ will be created for you within the folder you choose.
 
-##### Customise Configuration
-
-You can customise the Pozi Connect drop-down task list to display only the tasks that you're interested in.
-
-The `PoziConnect\PoziConnect.site.ini` file contains filters to specifically include or exclude tasks. Open the file in a text editor, and specify the filter. For example, if you only want to display tasks that relate to 'Glen Eira', update the file as follows:
-
-    [Settings]
-    Include: Glen Eira
-    Exclude: 
-
-You can enter multiple filter terms, separated by commas. Save the file and exit.
-
-This file will persist in your Pozi Connect application folder, so you need only do this step once, not every time you update the application or configuration.
-
 ### Update Existing Installation
 
 If you already have Pozi Connect v1.25 or above, you can easily update your application (or configuration for Groundtruth clients) by downloading the necessary files without re-installing the application.
