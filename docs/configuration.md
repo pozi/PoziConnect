@@ -12,39 +12,7 @@ It uses the power of the popular open source [GDAL/OGR translator library](http:
 
 ---
 
-## Installation
-
-If you are installing Pozi Connect for the first time, or if your current version is less than than version 1.25, follow the steps for the full installation. If you have version 1.25 or above, skip the full installation, and instead follow the steps for updating your application and configuration files.
-
-### Full Installation
-
-1. download the full [Pozi Connect installer](https://dl.dropboxusercontent.com/u/401098/Pozi-Connect-Installer-1.31a.exe) (version: 1.31a, updated on 27 Dec 2014)
-2. run the installer
-3. when it prompts you, specify a folder location. You can choose anywhere; somewhere like `C:\` or `C:\Program Files\`, or even a folder on your network. A folder named ‘PoziConnect’ will be created for you within the folder you choose.
-
-### Update Existing Installation
-
-If you already have Pozi Connect v1.25 or above, you can easily update your application (or configuration for Groundtruth clients) by downloading the necessary files without re-installing the application.
-
-#### Application
-
-*Note: this requires the full installation of Pozi Connect before proceeding with the update.*
-
-1. download the latest [Pozi Connect exe](https://dl.dropboxusercontent.com/u/401098/PoziConnect.exe) file (version 1.31)
-2. save downloaded file into your `PoziConnect` folder, overwriting the existing file of the same name.
-
-#### Configuration
-
-Groundtruth maintains the configuration settings for its clients in an online repository. Groundtruth's clients can update their configuration to the latest version by following these steps.
-
-*Note: if you have your own custom configuration (ie, you've written or modified INI or SQL files within the `PoziConnect\tasks` folder), the following process will zip up and archive any custom files. You'll need to manually restore these files or take steps beforehand and save them back into the updated `tasks` folder.*
-
-1. close any applications (including Windows Explorer) that may be using or looking at files *inside* the `PoziConnect` application folder
-2. download the latest [config zip file](https://github.com/groundtruth/PoziConnectConfig/archive/master.zip)
-3. save the zip file into the `PoziConnect` application folder (don’t unzip it), and ensure the file name is **`PoziConnectConfig-master.zip`** (not any other variation like `PoziConnectConfig-master (1).zip`)
-4. launch Pozi Connect - it will automatically extract the latest configuration files from the zip file
-
-#### Running as a batch task
+## Running as a batch task
 
 To run multiple Pozi Connect tasks sequetially and avoid having to open up Pozi Connect and pick and run individual tasks, you can configure a 'recipe' for Pozi Connect to follow. This is useful if you have a series of tasks you regularly need to run (for example, M1s) or for setting up as a scheduled task.
 
