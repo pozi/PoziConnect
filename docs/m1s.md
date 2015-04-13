@@ -100,3 +100,8 @@ In the case of a new property, there would be a P edit to allocate the new prope
 * multi-assessment properties where all existing propnums in Vicmap are incorrectly matched (typical multi-assessments are OK)
 * transfers of parcels that contain a primary address
 * address position update (ie, addresses that have *moved* from their original position)
+
+
+Groundtruth offers consulting services to improve councils' property data maintenance processes.
+
+[Read more](http://www.groundtruth.com.au/property-data-maintenance/), or [contact](http://www.groundtruth.com.au/contact/) Groundtruth.
