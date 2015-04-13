@@ -9,6 +9,10 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the important developments. 
 
+##### Apr 2015
+
+* fix bug in address match statistics
+
 ##### Mar 2015
 
 * improve QGIS integration by forcing refresh of spatial index
