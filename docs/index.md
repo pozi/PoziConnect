@@ -12,8 +12,8 @@ This site contains the documentation for Pozi Connect to enable you to get the m
 
 ## Contents
 
+* [Installation Guide](/poziconnect/installation)
+* [Configuration Guide](/poziconnect/configuration)
 * Use Cases
   * [Pozi Connect for M1s](/poziconnect/m1s)
   * [PIQA](/poziconnect/piqa)
-* [Installation Guide](/poziconnect/installation)
-* [Configuration Guide](/poziconnect/configuration)
