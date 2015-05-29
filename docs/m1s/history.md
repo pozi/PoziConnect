@@ -7,11 +7,16 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 ### Highlights
 
-Here are some of the important developments. 
+Here are some of the important developments.
+
+##### May 2015
+
+* improve address validity check to detect invalid ranges for unit and house numbers
 
 ##### Apr 2015
 
 * fix bug in address match statistics
+* improve accuracy of audits and statistics by excluding hyphens and apostrophes from road name comparisons
 
 ##### Mar 2015
 

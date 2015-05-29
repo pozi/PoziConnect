@@ -12,10 +12,6 @@ View your statistics.
 
 Optionally download a PDF report by clicking the red button.
 
-#### Troubleshooting
-
-If you experience problems with seeing the result in Internet Explorer, try using a different web browser.
-
 ## Statistics Items
 
 Item|Description
@@ -55,3 +51,17 @@ Item|Description
 Pozi Connect treats properties as council-defined entities. In a council-centric view, a 'property' is created when the council assigns a property number to one or more parcels. (Although Vicmap does create property records with null property numbers, Pozi Connect doesn't see these as having any real meaning to the council.)
 
 Statistics items like `vicmap_parcels_no_propnum` are measures of the number of parcels to which the council should assign a property number.
+
+##### I've just updated Vicmap, and now I want to see my latest stats.
+
+To generate updated statistics, Pozi Connect needs to import the council's latest property data and the latest version of Vicmap. It re-calculates the statistics when it generates the M1.
+
+Follow the usual three (or four) steps that you do for doing an M1. At the end of the step 3, Pozi Connect automatically launches the [webpage](http://dashboard.pozi.com/property/) in your browser and you can drag the `PoziConnect\output\Statistics\[your council] Property Statistics.json` file into the webpage.
+
+Whether you choose to submit the M1 that gets created is optional.
+
+#### Troubleshooting
+
+If you experience problems with seeing the result in Internet Explorer, try using a different web browser.
+
+

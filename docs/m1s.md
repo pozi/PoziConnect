@@ -82,7 +82,11 @@ Log on to [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) and upload the sp
 
 ## M1 Edit Codes
 
-Pozi Connect generates separate edits for property number updates and address updates.
+Pozi Connect generates separate edits for property number, crefno and address changes. Instead of analysing a property in its entirety to see all the things that need to be updated, it checks the eligibility of each property to be included in an update based on the edit code.
+
+In the first pass, it works out if a multi-assessment needs to be added (A). In the next pass, it works out if a crefno needs to be updated (C). Then it works out if a property needs to be removed (E). And so on.
+
+This is why Pozi Connect generates separate edits for property number updates and address updates.
 
 If you were filling out an M1 manually, you would typically update property number and address at the same time with an 'E' edit. Because of the way Pozi Connect systematically evaluates every property's suitability for updating, it processes property number updates (P) separately from the address updates (S).
 

@@ -9,6 +9,7 @@ Obtain from Council
 * SHP or TAB?
 * rural addressing (separate table and/or flag in property system)
 * for Authority sites, obtain Type Type table (eg, as supplied from Murrindindi in Feb 2015)
+* maintaining own SPI? (eg Mount Alexander Title.Title_SPI_Reference; Baw Baw nucLand.TEXT5; West Wimmera auprparc.ttl_nme; Campaspe pr_parcel.SPI_REF)
 
 Start Configuration
 
