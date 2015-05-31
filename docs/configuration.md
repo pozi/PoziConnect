@@ -1,4 +1,4 @@
-# Pozi Connect Admin Guide
+# Pozi Connect Configuration
 
 PoziConnect provides a simple interface for accessing, processing, analysing and exporting spatial and non-spatial data.
 
@@ -36,49 +36,13 @@ Then create a batch file or scheduled task with the following target:
 
 This will launch Pozi Connect and run all the tasks specified in the recipe.
 
-### Installation Troubleshooting
-
-#### Pozi Connect fails to start.
-
-Download and install the [Microsoft Visual C++ 2008 Redistributable Package (x86)](http://www.microsoft.com/downloads/details.aspx?FamilyID=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en), and try running Pozi Connect again.
-
-#### Pozi Connect cannot connect to my DSN
-
-You may need to set up your DSN with a 32 bit Windows driver. Run the 32 bit ODBC setup wizard (instead of the standard DSN wizard in the Control Panel). At the Windows Start menu, type in cmd, then at the command-line prompt, type or paste in the following, then hit 'Enter':
-
-`C:\Windows\SysWOW64\odbcad32.exe`
-
-Then set up a new DSN for property system, using the same settings as your existing one. It is recommended to use a different name for this 32 bit version. For example, if your existing DSN is called 'Proclaim', name it 'Proclaim32' or similar so it can be distinguished separately from the existing DSN.
-
-Remember when you run PoziConnect, change the DSN name from Proclaim to Proclaim32.
-
-#### Pozi Connect returns an error number 1073741512
-
-Go into your `C:\Windows\System32` folder and see if there is a file called `libeay32.dll`. If so, rename it to `libeay32.bak`. Then try running Pozi Connect again.
-
-(Rename the file back again when you’ve finished so that any other programs that may rely on it can use it.)
-
-### Ready to Go
-
-You're now ready to launch Pozi Connect.
-
-Read on if you want to understand more and learn how to configure your own custom tasks.
-
----
-
-## FAQ
-
-### What user settings and permissions are required to install and run the application?
-
-The Pozi Connect installation file is an exe file, which when run on any PC, will extract itself and create a folder called PoziConnect in a location of the user’s choosing. This ‘installation’ requires no administrator rights, and has no impact on the PC other than the creation of the PoziConnect folder and the application files within. No registry settings are changed, and the PoziConnect folder can be moved or deleted with no effect to the PC.
-
-### How does Pozi Connect connect to my corporate database?
-
-Pozi Connect uses your PC’s existing ODBC connection settings. It does not require any additional network or firewall configuration. It requires only that the user's PC has the appropriate DSN configured to access (read-only) the council's property database. Authentication can be based on a username/password or trusted connection (using Windows login name).
-
 ---
 
 ## Configuration
+
+Pozi Connect is controlled using INI files. You can edit these files in a text editor.
+
+If using Windows Notepad, the line returns in existing files may not display correctly. Notepad++ is recommended for editing these files.
 
 ### User Settings
 

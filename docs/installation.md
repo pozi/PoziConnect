@@ -71,3 +71,9 @@ Open the Pozi Connect config file in a text editor and update the DSN name:
 ```
 Pathway_DSN: pthprod32
 ```
+
+#### Pozi Connect returns an error number 1073741512
+
+Go into your `C:\Windows\System32` folder and see if there is a file called `libeay32.dll`. If so, rename it to `libeay32.bak`. Then try running Pozi Connect again.
+
+(Rename the file back again when you’ve finished so that any other programs that may rely on it can use it.)
