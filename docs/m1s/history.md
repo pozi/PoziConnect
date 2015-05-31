@@ -12,6 +12,9 @@ Here are some of the important developments.
 ##### May 2015
 
 * improve address validity check to detect invalid ranges for unit and house numbers
+* improve speed of address update query
+* improve support for hotel-style addressing
+* improve comments to show original source of properties being removed
 
 ##### Apr 2015
 
