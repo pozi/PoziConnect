@@ -7,11 +7,18 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 ### Highlights
 
-Here are some of the important developments.
+Here are some of the improvements and bug fixes.
+
+##### Jun 2015
+
+* improve comments to show if multi-assessments relate to proposed parcels
+* improve handling of addresses for proposed parcels by limiting to one per property number
+* improve handling of muti-assessment retirements by better detection of overlapping parcels
 
 ##### May 2015
 
 * improve address validity check to detect invalid ranges for unit and house numbers
+* improve parcel validity check to detect missing parish
 * improve speed of address update query
 * improve support for hotel-style addressing
 * improve comments to show original source of properties being removed
