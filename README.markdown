@@ -43,6 +43,8 @@ directory. For example:
 
     GDAL_BASE: vendor\release-1600-gdal-1-9-mapserver-6-2\bin
 
+Copy `bin\libeay32.dll` to `bin\gdal\apps` to avoid error "That didn't work well: [Errno -1073741512]" on some PCs.
+
 ### Run it
 
 Launch `PoziConnect.bat` to run PoziConnect from the source code.

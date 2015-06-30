@@ -109,7 +109,7 @@ Example:
 * Oracle
 * ODBC
 
-A reference guide for the SQL functions in SQLite and Spatialite is [here](http://www.gaia-gis.it/spatialite-2.3.1/spatialite-sql-2.3.1.html).
+A reference guide for the SQL functions in SQLite and Spatialite is [here](http://www.gaia-gis.it/spatialite-2.3.1/spatialite-sql-2.3.1.html). A tutorial with examples is [here](http://www.gaia-gis.it/gaia-sins/spatialite-tutorial-2.3.1.html).
 
 #### Web Service
 

@@ -11,9 +11,16 @@ Here are some of the improvements and bug fixes.
 
 ##### Jun 2015
 
-* improve comments to show if multi-assessments relate to proposed parcels
-* improve handling of addresses for proposed parcels by limiting to one per property number
-* improve handling of muti-assessment retirements by better detection of overlapping parcels
+* improve edit rules:
+  * resolution of 'gridlocked' properties - now P edits can replace a property if that property can be matched elsewhere
+  * limit address updates for proposed parcels to one per property number
+  * better detect overlapping parcels when dealing with muti-assessment retirements
+  * better determining of when to use new_road flag
+  * prevent retiring multi-assessment properties that can't be matched later to another valid parcel
+* improve comments:
+  * show if multi-assessments relate to proposed parcels
+  * show if property updates involve new properties
+  * explain why valid properties are being removed from multi-assessments (so they can be later matched to the correct parcel)
 
 ##### May 2015
 
