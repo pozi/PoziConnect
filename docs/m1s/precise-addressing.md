@@ -72,9 +72,9 @@ Swan Hill M1 - 4 - Generate M1
 
 ## Use Cases
 
-* Rural address: place point at property entrance, eight metres inside the boundary, and populate the property number
-* Differentiate property entrance locations for multi-assessments: place point at each entrance, and populate each with the respective property number
-* Shared rural driveways: as above, and maintain a field for `outside_property` and populate it with 'N' in any of the records where the address point is not within its own property boundary
+* **Rural address**: place point at property entrance, eight metres inside the boundary, and populate the property number
+* **Differentiate property entrance locations for multi-assessments**: place point at each entrance, and populate each with the respective property number
+* **Shared rural driveways**: as above, and maintain a field for `outside_property` and populate it with 'N' in any of the records where the address point is not within its own property boundary
 
 ## Limitations
 
@@ -82,11 +82,11 @@ There are some limitations of support for precise addressing in Pozi Connect.
 
 Councils can choose to fund development of Pozi Connect to provide the functionality they require. Contact Groundtruth for a quote.
 
-#### Updating Address Locations
+##### Updating Address Locations
 
 Pozi Connect bases its updates on non-spatial criteria. It doesn't compare coordinates of Vicmap vs coordinates in the council's point table. Therefore, differences in address point locations are not currently detected by Pozi Connect.
 
-#### Secondary Adresses
+##### Secondary Adresses
 
 Pozi Connect currently supports updating of only one address per property. There is no support for updating secondary addresses.
 
