@@ -9,6 +9,11 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Jul 2015
+
+* improve edit rules:
+  * exclude properties being matched to an approved parcel if the number is already matched to a proposed parcel
+
 ##### Jun 2015
 
 * improve edit rules:
