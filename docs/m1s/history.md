@@ -9,6 +9,11 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Sep 2015
+
+* improve edit rules:
+  * exclude any address updates for proposed parcels if the address belongs to a property that is already being updated in another address edit
+
 ##### Jul 2015
 
 * improve edit rules:

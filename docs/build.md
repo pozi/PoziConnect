@@ -20,7 +20,7 @@ To create a new release:
   * delete `PoziConnect\output\PoziConnect.log` file
 * update `PoziConnect\docs` by copying files from development version of Pozi Connect
 * launch Advanced Installer
-* update version number (and when given the option, choose new version, not update)
+* update version number (eg update 1.32.14 to 1.32.15) (and when prompted about the product code, choose 'Generate new', not 'Keep existing')
 * build new version - new msi file is created in C:\Temp\
 * go to https://github.com/groundtruth/PoziConnect/releases, and create new release
 * update
