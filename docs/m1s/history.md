@@ -9,6 +9,13 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Oct 2015
+
+* improve edit rules:
+  * prevent retiring properties created via SPEAR
+* improve comments
+  * warn of transfer of parcel that includes existing primary distance-based address
+
 ##### Sep 2015
 
 * improve edit rules:
