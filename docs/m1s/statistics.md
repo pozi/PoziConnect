@@ -52,7 +52,7 @@ Pozi Connect treats properties as council-defined entities. In a council-centric
 
 Statistics items like `vicmap_parcels_no_propnum` are measures of the number of parcels to which the council should assign a property number.
 
-##### I've just updated Vicmap, and now I want to see my latest stats.
+#### I've just updated Vicmap, and now I want to see my latest stats.
 
 To generate updated statistics, Pozi Connect needs to import the council's latest property data and the latest version of Vicmap. It re-calculates the statistics when it generates the M1.
 
