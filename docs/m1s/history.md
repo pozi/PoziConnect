@@ -9,6 +9,13 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Nov 2015
+
+* reduce time taken for council parcel audit by up to two thirds
+* reduce time taken for council property audit by up to one third
+* re-enable retiring of invalid multi-assessments so they can be matched properly in subsequent M1 (bug fix)
+* improve parcel audit results by checking for invalid section values
+
 ##### Oct 2015
 
 * improve edit rules:
