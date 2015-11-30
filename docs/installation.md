@@ -57,7 +57,7 @@ Run the 32 bit ODBC setup wizard (instead of the standard DSN wizard in the Cont
 
 In the System DSN tab, check if there is a data source for 'pthprod'. If not, add a new DSN, using the same settings as your existing 64 bit one. It is recommended to use a different name for the new 32 bit DSN. For example, name it 'pthprod32' or similar so it can be distinguished from the existing DSN.
 
-Open the Pozi Connect config file in a text editor and update the DSN name:
+Open the relevant Pozi Connect config file (eg `PoziConnect\tasks\~Shared\M1 Shared - Import Pathway.ini` or equivalent client-specific task) in a text editor and update the DSN name:
 
 ```
 Pathway_DSN: pthprod32
