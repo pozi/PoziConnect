@@ -9,6 +9,10 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Dec 2015
+
+* fix bug in generating map links
+
 ##### Nov 2015
 
 * reduce time taken for council parcel audit by up to two thirds
