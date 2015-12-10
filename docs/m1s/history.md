@@ -12,6 +12,8 @@ Here are some of the improvements and bug fixes.
 ##### Dec 2015
 
 * fix bug in generating map links
+* fix bug that generated retirements when a spi value was blank
+* fix bug that caused incorrect address to be displayed in comments on rare occasions
 
 ##### Nov 2015
 
