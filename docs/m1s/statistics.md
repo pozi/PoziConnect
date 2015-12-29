@@ -44,6 +44,32 @@ Item|Description
 `council_address_in_vicmap`|
 `council_address_in_vicmap`|
 
+## Data Health Indicators
+
+The three main statistics displayed at the top of the report will give you a good idea of the health of the council's data. We expect these statistics to improve as the council submits its M1s. The tips below will enable you to proactively target the issues behind the remaining issues to further improve the statistics.
+
+### Council properties not in Vicmap
+
+Open your `Audit - Council Parcel.csv` spreadsheet, and filter by:
+
+* propnum_in_vicmap = 0
+* m1_edit_code = (blank)
+
+This will give you all the properties that aren't in Vicmap and aren't being matched by Pozi Connect. You'll probably need to fix the parcel descriptions in your property system in order for Pozi Connect to find a match.
+
+### Vicmap parcels without propnum
+
+Open your `Audit - Vicmap Parcel.csv` spreadsheet, and filter by:
+
+* propnum_in_council = 0
+
+This will give you all the parcels that don't have a property number. You'll need to allocate the parcel descriptions to the appropriate properties in your property system in order for Pozi Connect to find a match.
+
+### Vicmap propnum not in Council
+
+There is no need to do anything about these. They will be removed on the
+next M1.
+
 ## FAQ
 
 #### Why are there items like `vicmap_parcels_no_propnum`, and not `vicmap_properties_no_propnum`?
