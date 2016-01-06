@@ -9,6 +9,10 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Jan 2016
+
+* make task names easier to understand: rename 'VG Report' to 'Valuer General Report'
+
 ##### Dec 2015
 
 * fix bug in generating map links
