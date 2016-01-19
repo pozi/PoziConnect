@@ -12,6 +12,10 @@ Here are some of the improvements and bug fixes.
 ##### Jan 2016
 
 * make task names easier to understand: rename 'VG Report' to 'Valuer General Report'
+* improve comments
+  * warn of house number being removed
+  * warn of adding multi-assessment with different road name
+  * warn of replacing distance-based address with non-distance-based address
 
 ##### Dec 2015
 
@@ -157,10 +161,7 @@ Here are some of the improvements and bug fixes.
 * introduce council parcel audit
 * check for valid property numbers
 
-### Future Development
+### Complete History
 
-Here's what is on the cards for the next twelve months:
-
-* improve documentation
-* working closer with SKM to improve M1 loads
-* QGIS integration
+For a complete history of all changes, see:
+https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
