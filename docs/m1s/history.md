@@ -11,6 +11,8 @@ Here are some of the improvements and bug fixes.
 
 ##### Jan 2016
 
+* improve edit rules:
+  * prevent multi-assessments being added where property already exists in overlapping multi-lot parcel
 * make task names easier to understand: rename 'VG Report' to 'Valuer General Report'
 * improve comments
   * warn of house number being removed
