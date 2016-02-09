@@ -9,6 +9,12 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Feb 2016
+
+* improve edit rules:
+  * prevent "Property PFI is superseded" error
+  * when updating distance-related addresses, populate with existing coordinates
+
 ##### Jan 2016
 
 * improve edit rules:
