@@ -14,6 +14,7 @@ Here are some of the improvements and bug fixes.
 * improve edit rules:
   * prevent "Property PFI is superseded" error
   * when updating distance-related addresses, populate with existing coordinates
+  * ensure every invalid multi-assessment is retired
 
 ##### Jan 2016
 
