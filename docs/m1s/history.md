@@ -9,6 +9,14 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Apr 2016
+
+* improve address validity check to detect invalid house suffix values
+
+##### Mar 2016
+
+* improve performance of audit queries
+
 ##### Feb 2016
 
 * improve edit rules:
