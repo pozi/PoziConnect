@@ -9,6 +9,11 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### May 2016
+
+* update map links
+* add generic Property.Gov extract task
+
 ##### Apr 2016
 
 * improve address validity check to detect invalid house suffix values
