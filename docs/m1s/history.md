@@ -9,6 +9,13 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Jun 2016
+
+* fix SPI formula - cater for parcels with section but no allotment
+* change default projection for distance-based addresses to VicGrid (because Jacobs can't handle lon/lat)
+* support for multi-status addresses (to avoid reject "Property Identifier has multiple matches")
+* prevent attempting to match to non-existent road properties
+
 ##### May 2016
 
 * update map links
