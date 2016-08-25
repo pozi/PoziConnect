@@ -9,6 +9,10 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Aug 2016
+
+* add parcel area output to Valuer General report
+
 ##### Jun 2016
 
 * fix SPI formula - cater for parcels with section but no allotment
