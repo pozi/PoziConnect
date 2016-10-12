@@ -9,6 +9,13 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
 
 Here are some of the improvements and bug fixes.
 
+##### Oct 2016
+
+* warn user if building name exceeds valid length
+* improve audit performance by removing `alt_spi_in_council` calculation
+* improve comments for R edits involving NCPR properties
+* update audit map links
+
 ##### Aug 2016
 
 * add parcel area output to Valuer General report
