@@ -1,13 +1,9 @@
 # Pozi Connect for M1s Release History
 
-### Complete History
-
-For a complete history of all changes, see:
-https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
-
 ### Highlights
 
-Here are some of the improvements and bug fixes.
+Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
+https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
 ##### Oct 2016
 
