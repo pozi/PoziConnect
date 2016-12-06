@@ -114,14 +114,14 @@ class GUI(wx.App):
         #####################################################
         # Logo:
         #
-        # We import PlaceLabBanner_png which has a base64 encoded
+        # We import gui_logo_png which has a base64 encoded
         # version of PlaceLab.png. We do this to work around in
         # issue where we cannot include the image in the PlaceLab
         # executable
         #
         #####################################################
-        import PlaceLabBanner_png
-        imageStream = PlaceLabBanner_png.imageStream
+        import gui_logo_png
+        imageStream = gui_logo_png.imageStream
         logoBitmap = wx.BitmapFromImage( wx.ImageFromStream( imageStream ))
         frame.logoBitmap.SetBitmap(logoBitmap)
 

@@ -1,8 +1,11 @@
 call setenv_python.bat
-
+REM Cleanup
 rmdir /S /Q build
 rmdir /S /Q dist
-
+REM Build application logo
+python app\PoziConnect\gui\gui_logo_build.py %~dp0\app\PoziConnect\gui\gui_logo.png
+pause
+REM Convert to exe
 python app\build.py py2exe
 
 rmdir /S /Q build
