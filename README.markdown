@@ -43,8 +43,6 @@ directory. For example:
 
     GDAL_BASE: vendor\release-1600-gdal-1-9-mapserver-6-2\bin
 
-Copy `bin\libeay32.dll` to `bin\gdal\apps` to avoid error "That didn't work well: [Errno -1073741512]" on some PCs.
-
 ### Run it
 
 Launch `PoziConnect.bat` to run PoziConnect from the source code.
@@ -59,12 +57,10 @@ A full release of PoziConnect will be output to the `dist` directory. It should
 contain `PoziConnect.exe`, additional DLLs, GDAL (from `vendor\*gdal*`), and
 runtime directories and configuration taken from the top level of this repository.
 
-#### To build with an alternate logo:
+#### Customising Logo:
 
-1.  Transform the desired image file into a base64 string.
-2.  Put that string in: `app/PoziConnect/gui/PlaceLabBanner.py`,
-    in the imageBase64 variable (within triple double quotes).
-3.  Perform the build as usual.
+Logos are compiled when the application is built using build.bat. To update 
+a logo, simply edit/replace the file at app\PoziConnect\gui\gui_logo.png
 
 #### Other notes:
 
