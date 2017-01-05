@@ -108,7 +108,7 @@ For more details about how Pozi Connect determines which records are included in
 
 ## Troubleshooting
 
-### Edits are not yet handled by Pozi Connect
+### Edits that are not yet handled by Pozi Connect
 
 * secondary addresses
 * multi-assessment properties where all existing propnums in Vicmap are incorrectly matched (typical multi-assessments are OK)
