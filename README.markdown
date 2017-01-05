@@ -62,6 +62,12 @@ runtime directories and configuration taken from the top level of this repositor
 Logos are compiled when the application is built using build.bat. To update 
 a logo, simply edit/replace the file at app\PoziConnect\gui\gui_logo.png
 
+#### Program Icon
+
+To create an icon file, upload a 48x48 png to http://convertico.com/ and download the ico file it generates to `app\PoziConnect\gui`.
+
+After the build process, the `PoziConnect.exe` will not display the program icon on all systems. Follow instructions at https://command-tab.com/2008/07/21/how-to-combine-ico-files-into-a-windows-exe/ to manually add the icon to the exe.
+
 #### Other notes:
 
 * Additional logging can be activated by setting the log level in `logger.py`
@@ -133,6 +139,20 @@ You can set the `POZICONNECT_ACTIVATE_THIS` variable using a tool like
 With this done, run `deactivate` to leave your virtualenv and return to
 your system's Python, then launch PoziConnect using the `PoziConnect.sh` bash
 script.
+
+### Working with PoziConnectConfig
+
+The Pozi Connect tasks that Groundtruth maintains for its clients are kept in a separate repository. To test Pozi Connect with the available tasks, set up a symlink so that Pozi Connect can read the tasks from the PoziConnectConfig repository.
+
+```
+mklink /D C:\Users\Simon\GitHub\PoziConnect\tasks C:\Users\Simon\GitHub\PoziConnectConfig
+```
+
+Any data files that Pozi Connect expects to find in the output folder can also be linked.
+
+```
+mklink /D C:\Users\Simon\GitHub\PoziConnect\output C:\Data\_PoziConnect
+```
 
 ### Other notes
 

@@ -4,7 +4,7 @@
 build
 dist
 backup
-tasks_old
+tasks
 
 # unbundled dependencies
 vendor
