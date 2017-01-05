@@ -5,6 +5,23 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
+##### Jan 2017
+
+* add Valuer General Reports for all councils
+* upgrade GDAL library from `release-1600-gdal-1-11-1-mapserver-6-4-1` to `release-1800-gdal-2-1-2-mapserver-7-0-2`
+
+##### Dec 2016
+
+* prompt user to confirm property_pfi for parcels that relate to multiple properties
+* eliminate duplicate multi-assessment edits
+* client config (delete this): Monash, Northern Grampians
+
+##### Nov 2016
+
+* generate address updates only for valid road names
+* improve readability of M1 by removing redundant attributes (plan_number and lot_number)
+* client config (delete this): Northern Grampians, Mornington Peninsula, Manningham
+
 ##### Oct 2016
 
 * warn user if building name exceeds valid length
