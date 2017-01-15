@@ -1,4 +1,4 @@
-# Pozi Connect for M1s Release History
+# Pozi Connect Release History
 
 ### Highlights
 
@@ -14,13 +14,11 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
 * prompt user to confirm property_pfi for parcels that relate to multiple properties
 * eliminate duplicate multi-assessment edits
-* client config (delete this): Monash, Northern Grampians
 
 ##### Nov 2016
 
 * generate address updates only for valid road names
 * improve readability of M1 by removing redundant attributes (plan_number and lot_number)
-* client config (delete this): Northern Grampians, Mornington Peninsula, Manningham
 
 ##### Oct 2016
 
