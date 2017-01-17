@@ -144,6 +144,118 @@ class OGRBase():
         if name:
             command += ["-nln", name ]
 
+        dsco = items.get('dsco', None)
+        print dsco
+        if dsco:
+            for value in dsco.split('|'):
+                command += ["-dsco", value ]
+
+        lco = items.get('lco', None)
+        print lco
+        if lco:
+            for value in lco.split('|'):
+                command += ["-lco", value ]
+
+
+        oo = items.get('oo', None)
+        if oo:
+            for value in oo.split('|'):
+                command += ["-oo", value ]
+
+        doo = items.get('doo', None)
+        print doo
+        if doo:
+            for value in doo.split('|'):
+                command += ["-doo", value ]
+
+        dim = items.get('dim', None)
+        if dim:
+            command += ["-dim", dim ]
+
+        spatialfilter = items.get('spat', None)
+        if spatialfilter:
+            command += ["-spat", spatialfilter ]
+
+        spatialfilter_srs = items.get('spat_srs', None)
+        if spatialfilter_srs:
+            command += ["-spat_srs", spatialfilter_srs ]
+
+        gt = items.get('gt', None)
+        if gt:
+            command += ["-gt", gt ]
+
+        zfield = items.get('zfield', None)
+        if zfield:
+            command += ["-zfield", zfield ]
+
+        clipsrc = items.get('clipsrc', None)
+        if clipsrc:
+            command += ["-clipsrc", clipsrc ]
+
+        clipsrcsql = items.get('clipsrcsql', None)
+        if clipsrcsql:
+            command += ["-clipsrcsql", clipsrcsql ]
+
+        clipsrclayer = items.get('clipsrclayer', None)
+        if clipsrclayer:
+            command += ["-clipsrclayer", clipsrclayer ]
+
+        clipsrcwhere = items.get('clipsrcwhere', None)
+        if clipsrcwhere:
+            command += ["-clipsrcwhere", clipsrcwhere ]
+
+        clipdst = items.get('clipdst', None)
+        if clipdst:
+            command += ["-clipdst", clipdst ]
+
+        clipdstsql  = items.get('clipdstsql', None)
+        if clipdstsql :
+            command += ["-clipdstsql", clipdstsql  ]
+
+        clipdstlayer = items.get('clipdstlayer', None)
+        if clipdstlayer:
+            command += ["-clipdstlayer", clipdstlayer ]
+
+        clipdstwhere = items.get('clipdstwhere', None)
+        if clipdstwhere:
+            command += ["-clipdstwhere", clipdstwhere ]
+
+        simplify = items.get('simplify', None)
+        if simplify:
+            command += ["-simplify", simplify ]
+
+        segmentize = items.get('segmentize', None)
+        if segmentize:
+            command += ["-segmentize", segmentize ]
+
+        mapFieldType = items.get('mapFieldType', None)
+        if mapFieldType:
+            command += ["-mapFieldType", mapFieldType ]
+
+        explodecollections = items.get('explodecollections', False)
+        if explodecollections:
+            command += ["-explodecollections" ]
+
+        relaxedFieldNameMatch = items.get('relaxedFieldNameMatch', False)
+        if relaxedFieldNameMatch:
+            command += ["-relaxedFieldNameMatch" ]
+
+        forceNullable = items.get('forceNullable', False)
+        if forceNullable:
+            command += ["-forceNullable" ]
+
+        unsetDefault = items.get('unsetDefault', False)
+        if unsetDefault:
+            command += ["-unsetDefault" ]
+
+        mo = items.get('mo', None)
+        if mo:
+            command += ["-mo",mo ]
+
+        addfields = items.get('addfields', False)
+        if addfields:
+             command += ["-addfields" ]
+
         update = items.get('update', True)
         if update:
             # Don't provide update option if SQLite file does not exist yet
@@ -630,4 +742,3 @@ if __name__ == "__main__":
     o = OGR2OGR()
     o.logger.info(o)
     sys.exit()
-

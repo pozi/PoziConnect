@@ -265,6 +265,50 @@ Example:
 
     OGRInfoOnly: true
 
+## Advanced
+
+A number of other OGR commands are available for advanced use within POZI Connect. These operate as per the ogr2ogr cli. Currently, the following commands are supported.
+
+### OGR Commands
+
+* dim
+* spat
+* spat_srs
+* gt
+* zfield
+* clipsrc
+* clipsrcsql
+* clipsrclayer
+* clipsrcwhere
+* clipdest
+* clipdestsql
+* clipdestlayer
+* clipdestwhere
+* simplify
+* segmentize
+* mapFieldType
+* explodecollections
+* addfields
+* relaxedFieldNameMatch
+* forceNullable
+* unsetDefault
+* mo
+
+Example:
+
+    Simplify: 4
+
+The following commands can have multiple options specified, separated by a pipe '|' character
+
+* dsco
+* lco
+* doo
+* oo
+
+Example:
+
+    LCO: SHPT=POLYGONZ|RESIZE=YES
+
 ---
 
 ## Usage
@@ -337,4 +381,3 @@ Example:
     Command: {ZipSession}.close()
     [Display in Windows Explorer]
     Command: startfile('{Output_Folder}\\')
-
