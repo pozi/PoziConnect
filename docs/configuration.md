@@ -265,38 +265,190 @@ Example:
 
     OGRInfoOnly: true
 
+---
+
 ## Advanced
 
-A number of other OGR commands are available for advanced use within POZI Connect. These operate as per the ogr2ogr cli. Currently, the following commands are supported.
+A number of other OGR commands are available for advanced use within POZI Connect. These operate as per the ogr2ogr cli. Currently, the following commands are supported. For advanced usage, see the [ogr2ogr](http://www.gdal.org/ogr2ogr.html) documentation.
 
-### OGR Commands
+### Dim
 
-* dim
-* spat
-* spat_srs
-* gt
-* zfield
-* clipsrc
-* clipsrcsql
-* clipsrclayer
-* clipsrcwhere
-* clipdest
-* clipdestsql
-* clipdestlayer
-* clipdestwhere
-* simplify
-* segmentize
-* mapFieldType
-* explodecollections
-* addfields
-* relaxedFieldNameMatch
-* forceNullable
-* unsetDefault
-* mo
+Defines the dimentions of the output layer. Supported values are XY, XYZ, XYM, and XYZM. layer_dim can also be specified to copy the dimention of the output layer.
 
 Example:
 
-    Simplify: 4
+    Dim: XY
+
+### SPAT
+
+Defines the spatial query extents for the source layer. Allows spatial filtering of the source features prior to processing.
+
+Example:
+
+    SPAT: 0 0 1000 1000
+
+### SPAT_SRS
+
+Defines the SRS of the spatial query extent, provided in SPAT
+
+Example:
+
+    SPAT_SRS: EPSG:3111
+
+### GT
+
+Defines the number of features grouped per transaction. Defaults to 20000. Changing this value may provide performance improvements for some data sources.
+
+Example:
+
+    GT: 2000
+
+### ZFIELD
+
+Defines the field of the source layer which will be written to the Z dimention of XYZ or XYZM layers.
+
+Example:
+
+    ZFIELD: alt
+
+### CLIPSRC
+
+Defines a layer/feature used to clip the source layer before processing. A bounding box, WKT Geomerty or a datasource can be provided to the tool.
+
+Example:
+
+    CLIPSRC: d:\test.shp
+
+### CLIPSRCSQL
+
+Defines the SQL to run against CLIPSRC to use in the clip.
+
+Example:
+
+    CLIPSRCSQL: SELECT * FROM test where group = 1  
+
+### CLIPSRCLAYER
+
+Defines the named layer of the CLIPSRC to use in the clip.
+
+Example:
+
+    CLIPSRCLAYER: Test
+
+### CLIPSRCWHERE
+
+Defines an attribute query on the CLIPSRC to use in the clip.
+
+Example:
+
+    CLIPSRCLAYER: Test
+
+
+### CLIPDST
+
+As per CLIPSRC, except the clip operation is completed after data has been processed.
+
+Example:
+
+    CLIPDST: d:\test.shp
+
+### CLIPDSTSQL
+
+As per CLIPDSTSQL.
+
+Example:
+
+    CLIPDSTSQL: SELECT * FROM test where group = 1  
+
+### CLIPDSTLAYER
+
+As per CLIPDSTLAYER.
+
+Example:
+
+    CLIPDSTLAYER: Test
+
+### CLIPDSTWHERE
+
+As per CLIPDSTWHERE.
+
+Example:
+
+    CLIPDSTLAYER: Test
+
+### SIMPLIFY
+
+Simplifies a complex layer, using an algorithm which preserves topology per feature, but not the layer. This option accepts a tollerance value.
+
+Example:
+
+    SIMPLIFY: 5
+
+### SEGMENTIZE
+
+Segmentizes a layer by adding nodes. This option accepts a maximum node distance value.
+
+Example:
+
+    SEGMENTIZE: 10
+
+### EXPLODECOLLECTIONS
+
+Exploding collections takes a multipart feature and breaks it into its single part components.
+
+Example:
+
+    EXPLODECOLLECTIONS: True
+
+### MAPFIELDTYPE
+
+Similar to SQL's CAST, this function allows the change of field type. All={type} can be used to change all values to a particular type. Accepts Integer, Integer64, Real, String, Date, Time, DateTime and Binary.
+
+Example:
+
+    MAPFIELDTYPE: ALL|String
+
+### ADDFIELDS
+
+Similar to append, this function also add any new field in the source to the destination.
+
+Example:
+
+    ADDFIELDS: True
+
+### RELAXEDFIELDNAMEMATCH
+
+Relaxes the matching of field names between source and destination
+
+Example:
+
+    RELAXEDFIELDNAMEMATCH: True
+
+### FORCENULLABLE
+
+Do not propogate NOT NULL constraints between source and destination
+
+Example:
+
+    FORCENULLABLE: True
+
+### UNSETDEFAULT
+
+Do not propogate DEFAULT constraints between source and destination
+
+Example:
+
+    UNSETDEFAULT: True
+
+### MO
+
+Adds metadata to the destintion, if the layers supports it.
+
+Example:
+
+    MO: True
+
+### Open & Creation Options
 
 The following commands can have multiple options specified, separated by a pipe '|' character
 
