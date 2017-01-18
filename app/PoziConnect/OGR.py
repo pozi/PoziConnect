@@ -252,11 +252,13 @@ class OGRBase():
         if mo:
             command += ["-mo",mo ]
 
-        addfields = items.get('addfields', False)
-        if addfields:
-             command += ["-addfields" ]
+        ignoreoverwrite = False
 
+        overwrite = items.get('overwrite', True)
         update = items.get('update', True)
+        append = items.get('append', False)
+        addfields = items.get('addfields', False)
+
         if update:
             # Don't provide update option if SQLite file does not exist yet
             formats = ['SQLite']
@@ -265,14 +267,15 @@ class OGRBase():
             else:
                 pass
 
-        append = items.get('append', False)
         if append:
+            ignoreoverwrite = True
             command += ["-append"]
 
-        # By default, overwriting the output file
-        overwrite = items.get('overwrite', True)
+        if addfields:
+            ignoreoverwrite = True
+            command += ["-addfields" ]
 
-        if overwrite:
+        if overwrite and not ignoreoverwrite:
             # OGR's SQLite driver does not support DROPping tables,
             # so we do it ourselves
             if os.path.isfile(destination):
