@@ -145,17 +145,14 @@ class OGRBase():
             command += ["-nln", name ]
 
         dsco = items.get('dsco', None)
-        print dsco
         if dsco:
             for value in dsco.split('|'):
                 command += ["-dsco", value ]
 
         lco = items.get('lco', None)
-        print lco
         if lco:
             for value in lco.split('|'):
                 command += ["-lco", value ]
-
 
         oo = items.get('oo', None)
         if oo:
@@ -163,7 +160,6 @@ class OGRBase():
                 command += ["-oo", value ]
 
         doo = items.get('doo', None)
-        print doo
         if doo:
             for value in doo.split('|'):
                 command += ["-doo", value ]
@@ -228,25 +224,25 @@ class OGRBase():
         if segmentize:
             command += ["-segmentize", segmentize ]
 
-        mapFieldType = items.get('mapFieldType', None)
+        mapFieldType = items.get('mapfieldtype', None)
         if mapFieldType:
-            command += ["-mapFieldType", mapFieldType ]
+            command += ["-mapfieldtype", mapFieldType ]
 
         explodecollections = items.get('explodecollections', False)
         if explodecollections:
             command += ["-explodecollections" ]
 
-        relaxedFieldNameMatch = items.get('relaxedFieldNameMatch', False)
+        relaxedFieldNameMatch = items.get('relaxedfieldnamematch', False)
         if relaxedFieldNameMatch:
-            command += ["-relaxedFieldNameMatch" ]
+            command += ["-relaxedfieldnamematch" ]
 
-        forceNullable = items.get('forceNullable', False)
+        forceNullable = items.get('forcenullable', False)
         if forceNullable:
-            command += ["-forceNullable" ]
+            command += ["-forcenullable" ]
 
-        unsetDefault = items.get('unsetDefault', False)
+        unsetDefault = items.get('unsetdefault', False)
         if unsetDefault:
-            command += ["-unsetDefault" ]
+            command += ["-unsetdefault" ]
 
         mo = items.get('mo', None)
         if mo:
