@@ -38,6 +38,9 @@ Spatial Files: PoziConnect\output\Spatial
 The new audits are documented here: [http://groundtruth.viewdocs.io/poziconnect/m1s/audits](http://groundtruth.viewdocs.io/poziconnect/m1s/audits)
 
 ## Subscribe
+
+Do you want to know as soon as Pozi Connect updates are published, even minor ones? Follow the Pozi Connect code repository on GitHub. *(Requires GitHub account)*
+
 [https://github.com/groundtruth/PoziConnect/subscription](https://github.com/groundtruth/PoziConnect/subscription)
 
 ## FAQ
