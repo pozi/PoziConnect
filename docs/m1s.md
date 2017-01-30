@@ -102,6 +102,12 @@ For more details about how Pozi Connect determines which records are included in
 * [Edit Code S](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Edits.md)
 * [Edit Code S (proposed)](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Proposed%20Edits.md)
 
+After the M1 is submitted in NES, Jacobs will process the edits in the following order:
+
+```
+Z, R, P, S, E, C, A
+```
+
 ## Data Audits
 
 [Audits](/poziconnect/m1s/audits)
