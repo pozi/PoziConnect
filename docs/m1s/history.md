@@ -5,6 +5,14 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
+##### Feb 2017
+
+* prevent retirement of NCPR properties
+* prevent retirement of properties for which the council doesn't have any parcel records
+* re-add SPI attribute for all P edits
+* fix audit message pointing to wrong field
+* add crown status to Vicmap Parcel audit
+
 ##### Jan 2017
 
 * add Valuer General Reports for all councils
