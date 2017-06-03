@@ -59,7 +59,7 @@ runtime directories and configuration taken from the top level of this repositor
 
 #### Customising Logo:
 
-Logos are compiled when the application is built using build.bat. To update 
+Logos are compiled when the application is built using build.bat. To update
 a logo, simply edit/replace the file at app\PoziConnect\gui\gui_logo.png
 
 #### Program Icon
@@ -204,4 +204,4 @@ Where `recipies/example_01.txt` is a text file with a list of tasks to run
 
 ## Copyright
 
-Groundtruth &copy; 2009-2013
+Groundtruth &copy; 2009-2017
