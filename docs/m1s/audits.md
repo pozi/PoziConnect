@@ -29,7 +29,7 @@ When opening a spreadsheet:
 ![](http://i.imgur.com/rjvYdGt.png)
 
 
-## Parcel
+## Council Parcel
 
 Audit file: `Audit - Council Parcels.csv`
 
@@ -96,7 +96,7 @@ https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/Reference/V
 
 You can type the code (without the 'PP') into the 'Search this file...' section to quickly find the parish or township name.
 
-## Property Address
+## Council Property Address
 
 Audit file: `Audit - Council Property Address.csv`
 
@@ -130,3 +130,14 @@ Column|Description|Usage
 Filter
 
 * `locality_match_in_vicmap`: N
+* `is_primary`: not N
+* `house_number_1`: not blank
+
+## Vicmap Property address
+
+### Examples
+
+#### Fragmented Properties
+
+* `cohesion`: < 0.001
+* `propnum`: not blank
