@@ -5,6 +5,14 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
+##### Jun 2017
+
+* add support for M1 exception list
+* prevent replacement of NCPR properties that contain addresses
+* enable R edits on some previously excluded properties
+* prevent Mt/Mount road name discrepancy triggering S edit
+* upgrade GDAL library from `release-1800-gdal-2-1-2-mapserver-7-0-2` to `release-1800-x64-gdal-2-1-3-mapserver-7-0-4`
+
 ##### Feb 2017
 
 * prevent retirement of NCPR properties
