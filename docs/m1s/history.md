@@ -11,7 +11,8 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 * prevent replacement of NCPR properties that contain addresses
 * enable R edits on some previously excluded properties
 * prevent Mt/Mount road name discrepancy triggering S edit
-* upgrade GDAL library from `release-1800-gdal-2-1-2-mapserver-7-0-2` to `release-1800-x64-gdal-2-1-3-mapserver-7-0-4`
+* improve parcel matching for Valuer General report
+* upgrade GDAL library from `release-1800-gdal-2-1-2-mapserver-7-0-2` to `release-1800-gdal-2-1-3-mapserver-7-0-4`
 
 ##### Feb 2017
 

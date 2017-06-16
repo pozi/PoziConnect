@@ -14,6 +14,6 @@ PATH=%PYTHON_DIR%;%PATH%
 ECHO PATH is %PATH%
 
 REM Needed for OCI driver
-CALL %VENDOR%\release-1800-x64-gdal-2-1-3-mapserver-7-0-4\SDKShell.bat setenv
+CALL %VENDOR%\release-1800-gdal-2-1-3-mapserver-7-0-4\SDKShell.bat setenv
 
 @echo on
