@@ -12,6 +12,7 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 * enable R edits on some previously excluded properties
 * prevent Mt/Mount road name discrepancy triggering S edit
 * improve parcel matching for Valuer General report
+* update Valuer General report output format to CSV to avoid formatting issues
 * upgrade GDAL library from `release-1800-gdal-2-1-2-mapserver-7-0-2` to `release-1800-gdal-2-1-3-mapserver-7-0-4`
 
 ##### Feb 2017
