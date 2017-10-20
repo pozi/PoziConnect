@@ -277,14 +277,14 @@ class GUI_Main(Main ):
         """
         Process the task update.
         """
-        dlg = wx.MessageDialog(self,
-            "Pressing OK will download the latest tasks.\nThis might take a few seconds.",
-            "", wx.OK|wx.ICON_INFORMATION)
-        result = dlg.ShowModal()
-        dlg.Destroy()
-        if result == wx.ID_OK:
-            url = "https://github.com/groundtruth/PoziConnectConfig/archive/master.zip"
-            urllib.urlretrieve(url, "PoziConnectConfig-master.zip")
+        # dlg = wx.MessageDialog(self,
+            # "Pressing OK will download the latest tasks.\nThis might take a few seconds.",
+            # "", wx.OK|wx.ICON_INFORMATION)
+        # result = dlg.ShowModal()
+        # dlg.Destroy()
+        # if result == wx.ID_OK:
+            # url = "https://github.com/groundtruth/PoziConnectConfig/archive/master.zip"
+            # urllib.urlretrieve(url, "PoziConnectConfig-master.zip")
 
     def _show_dialog(self, evt, dialog_cb, title):
         """
@@ -705,4 +705,3 @@ if __name__ == "__main__":
 
     print "END"
     sys.exit()
-
