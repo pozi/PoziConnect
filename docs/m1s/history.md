@@ -5,7 +5,15 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
-##### Jun 2017
+##### Oct 2017 (v2.05)
+
+* populate most suitable property_pfi for multi-property parcels
+* enforce geometry types for output layers
+* update Pozi web links to new format
+* update Exception table generation
+* upgrade GDAL library to `release-1800-gdal-2-1-3-mapserver-7-0-6`
+
+##### Jun 2017 (v2.04)
 
 * add support for M1 exception list
 * prevent replacement of NCPR properties that contain addresses
@@ -13,7 +21,7 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 * prevent Mt/Mount road name discrepancy triggering S edit
 * improve parcel matching for Valuer General report
 * update Valuer General report output format to CSV to avoid formatting issues
-* upgrade GDAL library from `release-1800-gdal-2-1-2-mapserver-7-0-2` to `release-1800-gdal-2-1-3-mapserver-7-0-4`
+* upgrade GDAL library to `release-1800-gdal-2-1-3-mapserver-7-0-4`
 
 ##### Feb 2017
 
