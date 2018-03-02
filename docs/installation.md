@@ -1,9 +1,9 @@
 # Pozi Connect Installation
 ## Instructions
 1. go to [https://github.com/groundtruth/PoziConnect/releases/latest](https://github.com/groundtruth/PoziConnect/releases/latest)
-2. in the Downloads section, click on the link to the .msi file to download the installer
+2. click on the link to the .msi file to download the installer
 3. run the installer
-4. change the default path to the desired PoziConnect location on your network
+4. change the default path to the desired PoziConnect location on your network (pick the location of the existing installation if you have previously installed it)
 5. follow the prompts to complete the installation
 
 <img src="http://i.imgur.com/yvkIfL9.png" alt="Pozi Connect Setup" width="350">
