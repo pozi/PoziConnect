@@ -94,13 +94,13 @@ In the case of a new property, there would be a P edit to allocate the new prope
 
 For more details about how Pozi Connect determines which records are included in which scenarios, see the dedicated explanations of the logic for each edit code:
 
-* [Edit Code A](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20A%20Edits.md)
-* [Edit Code C](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20C%20Edits.md)
-* [Edit Code E](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20E%20Edits.md)
-* [Edit Code P](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20P%20Edits.md)
-* [Edit Code R](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20R%20Edits.md)
-* [Edit Code S](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Edits.md)
-* [Edit Code S (proposed)](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Proposed%20Edits.md)
+* [Edit Code A](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20A%20Edits.md/)
+* [Edit Code C](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20C%20Edits.md/)
+* [Edit Code E](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20E%20Edits.md/)
+* [Edit Code P](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20P%20Edits.md/)
+* [Edit Code R](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20R%20Edits.md/)
+* [Edit Code S](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Edits.md/)
+* [Edit Code S (proposed)](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Proposed%20Edits.md/)
 
 After the M1 is submitted in NES, Jacobs will process the edits in the following order:
 
