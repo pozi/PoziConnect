@@ -5,6 +5,21 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
+##### Version 2.7 (Jun 2018)
+
+* prevent overwriting addresses if there are multiple unique addresses already associated with that property number in Vicmap
+* exclude from A edits any properties associated with current R edits
+* improve detection of most appropriate pfi to use when updating multi-property parcels
+* detect new hotel style addresses
+* improve performance of Vicmap Property Address audit
+* update M1 R edit comments to include all parcels that property will be later matched to
+* add support for CP and PC plans in SPEAR report
+* move Parcel Audit address field closer to front to improve readability
+* update VMREFTAB look-up tables
+* upgrade GDAL library to `release-1911-gdal-2-2-3-mapserver-7-0-7`
+* switch application version numbering to Semantic Versioning standards
+* configuration updates for Ballarat, Bass Coast, Buloke, Cardinia, Glen Eira, Golden Plains, Latrobe, Maribyrnong, Maroondah, Mitchell, Monash, Moonee Valley, Moreland, Nillumbik, Northern Grampians, South Gippsland, Stonnington, Swan Hill
+
 ##### Version 2.06 (Oct 2017)
 
 * prevent unneeded house number removal warning
