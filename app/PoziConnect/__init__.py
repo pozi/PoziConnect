@@ -1,15 +1,15 @@
 
 """
-This is the library of PlaceLab components.
+This is the library of Pozi Connect components.
 
 Description:
 
 PlaceLab is a very flexible tool for converting and merging spatial and
 non-spatial data
 
-Copyright: Groundtruth Mapping Systems
+Copyright: Pozi Pty Ltd
 License: All rights reserved.
-Web page: http://groundtruth.com/placelab
+Web page: https://www.pozi.com/pozi-connect
 
 PlaceLab Version: 1.0 ($Rev$)
 
@@ -20,4 +20,4 @@ $Id$
 """
 
 __version__ = "1.0.0"
-__author__ = "Groundtruth Mapping Systems <info@groundtruth.com>, Something Spatial <info@somethingspatial.com.au>"
+__author__ = "Pozi Pty Ltd <info@pozi.com>"

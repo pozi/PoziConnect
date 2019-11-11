@@ -142,7 +142,7 @@ script.
 
 ### Working with PoziConnectConfig
 
-The Pozi Connect tasks that Groundtruth maintains for its clients are kept in a separate repository. To test Pozi Connect with the available tasks, set up a symlink so that Pozi Connect can read the tasks from the PoziConnectConfig repository.
+The Pozi Connect tasks that Pozi maintains for its clients are kept in a separate repository. To test Pozi Connect with the available tasks, set up a symlink so that Pozi Connect can read the tasks from the PoziConnectConfig repository.
 
 ```
 mklink /D C:\Users\Simon\GitHub\PoziConnect\tasks C:\Users\Simon\GitHub\PoziConnectConfig
@@ -204,4 +204,4 @@ Where `recipies/example_01.txt` is a text file with a list of tasks to run
 
 ## Copyright
 
-Groundtruth &copy; 2009-2017
+Pozi Pty Ltd &copy; 2009-2019

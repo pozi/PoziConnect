@@ -4,7 +4,7 @@ Each year, Victoria's [Department of Environment, Land, Water & Planning](http:/
 
 The process of extracting, filtering and formatting this data is time consuming and often overwhelming for councils, and can require the participation and co-operation of council staff members across GIS, Rates and IT departments.
 
-[Pozi Connect](https://www.groundtruth.com.au/pozi-connect/) (formerly known as PlaceLab) is a tool developed by Groundtruth, with financial support of DELWP, that enables councils to quickly and accurately compile their property and address information into the required PIQA format.
+[Pozi Connect](https://www.pozi.com/pozi-connect/) (formerly known as PlaceLab) is a tool developed by Pozi, with financial support of DELWP, that enables councils to quickly and accurately compile their property and address information into the required PIQA format.
 
 ## Instructions For PIQA Participants
 
@@ -42,6 +42,6 @@ Pozi Connect extracts tables from your council’s property database and imports
 
 Pozi Connect has other tricks up its sleeve. It generates map layers from corporate databases (spatial and non-spatial), performs spatial data analysis, converts between data formats (Esri SHP, MapInfo TAB, DXF, KML, and others), loads data into spatial databases (SQL Server 2008, PostGIS, Oracle Spatial), and generally automates many of the tasks that GIS Administrators find themselves doing on a regular basis.
 
-Most importantly, it can [automate your M1 workflow](https://www.groundtruth.com.au/pozi-connect-for-m1s).
+Most importantly, it can [automate your M1 workflow](https://www.pozi.com/pozi-connect-for-m1s).
 
-Contact Groundtruth to find out how you can put Pozi Connect to work in your council’s GIS.
+Contact Pozi to find out how you can put Pozi Connect to work in your council’s GIS.

@@ -407,7 +407,7 @@
                                         <property name="pin_button">1</property>
                                         <property name="pos"></property>
                                         <property name="resize">Resizable</property>
-                                        <property name="settings"> &#x09;&#x09;self.helpLink.SetURL(URL=&apos;http://www.groundtruth.com.au/pozi-connect-admin-guide/&apos;)&#x0A;&#x09;&#x09;self.helpLink.SetLabel(label=&apos;Help&apos;)&#x0A;&#x09;&#x09;self.helpLink.SetToolTipString(tip=&apos;Visit website for help&apos;)</property>
+                                        <property name="settings"> &#x09;&#x09;self.helpLink.SetURL(URL=&apos;https://www.pozi.com/pozi-connect-admin-guide/&apos;)&#x0A;&#x09;&#x09;self.helpLink.SetLabel(label=&apos;Help&apos;)&#x0A;&#x09;&#x09;self.helpLink.SetToolTipString(tip=&apos;Visit website for help&apos;)</property>
                                         <property name="show">1</property>
                                         <property name="size"></property>
                                         <property name="subclass"></property>
@@ -492,7 +492,7 @@
                                         <property name="pin_button">1</property>
                                         <property name="pos"></property>
                                         <property name="resize">Resizable</property>
-                                        <property name="settings"> &#x09;&#x09;self.aboutLink.SetURL(URL=&apos;http://www.groundtruth.com.au/pozi-connect/&apos;)&#x0A;&#x09;&#x09;self.aboutLink.SetLabel(label=&apos;About&apos;)&#x0A;&#x09;&#x09;self.aboutLink.SetToolTipString(tip=&apos;Visit website for more info&apos;)</property>
+                                        <property name="settings"> &#x09;&#x09;self.aboutLink.SetURL(URL=&apos;https://www.pozi.com/pozi-connect/&apos;)&#x0A;&#x09;&#x09;self.aboutLink.SetLabel(label=&apos;About&apos;)&#x0A;&#x09;&#x09;self.aboutLink.SetToolTipString(tip=&apos;Visit website for more info&apos;)</property>
                                         <property name="show">1</property>
                                         <property name="size"></property>
                                         <property name="subclass"></property>
