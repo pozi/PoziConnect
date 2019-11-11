@@ -30,11 +30,11 @@ if VERSION is not version:
 
 import py2exe
 
-COMPANY_NAME = 'Groundtruth Mapping Systems'
-COPYRIGHT = '(c) 2010 ' + COMPANY_NAME
-AUTHOR_NAME = 'Groundtruth Mapping Systems & Something Spatial'
-AUTHOR_EMAIL = 'info@groundtruth.com.au'
-AUTHOR_URL = "http://groundtruth.com.au/placelab"
+COMPANY_NAME = 'Pozi'
+COPYRIGHT = '(c) 2009-2019 ' + COMPANY_NAME
+AUTHOR_NAME = 'Pozi'
+AUTHOR_EMAIL = 'info@pozi.com'
+AUTHOR_URL = "https://www.pozi.com"
 PRODUCT_NAME = "Pozi Connect"
 SCRIPT_MAIN = os.path.join(APP_DIR, 'PoziConnect.py')
 VERSIONSTRING = PRODUCT_NAME + " BETA " + VERSION
