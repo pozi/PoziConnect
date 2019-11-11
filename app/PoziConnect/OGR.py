@@ -362,6 +362,11 @@ class OGRBase():
                 else:
                     command += ["-lco", 'SPATIAL_INDEX=NO']
 
+                # Force the geometry name to be 'geometry'. GDAL x64 seems
+                # to name it '_ogr_geometry_' by default.
+                if geometrytype != "NONE":
+                    command += ["-lco", 'GEOMETRY_NAME=geometry']
+
             # Keep existing casing for table and column names (don't make it lower)
             launder = items.get('launder', False)
             if launder:
