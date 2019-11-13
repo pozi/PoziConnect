@@ -5,6 +5,23 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
+##### Version 2.8 (Nov 2019)
+
+* detect new distance-based addresses
+* detect new floor and building details
+* include property_pfi for multi-property parcels
+* enable Township parcels to be recognised in multi-assessments
+* allow NCPRs to be replaced if address is the same
+* allow invalid property numbers to be replaced with NCPR
+* improve formatting of Pozi map links to better enable Excel to recognise them as links
+* prevent locality conflict warning if name contains a bracket
+* remove note about parcel linking to multiple properties
+* enable user editing of database connection
+* upgrade to GDAL 3.0.0
+* various bug-fixes
+* change branding from Groundtruth to Pozi
+* configuration updates for Maribyrnong, Loddon, Mitchell, Moorabool, Murrindindi, Moira, Bass Coast, Northern Grampians, South Gippsland, Moonee Valley, Alpine, Colac Otway, Latrobe, Frankston, Hindmarsh, Bendigo, Mornington Peninsula, Ballarat, Melton, Towong, Swan Hill, Casey, Mount Alexander, Indigo
+
 ##### Version 2.7 (Jun 2018)
 
 * prevent overwriting addresses if there are multiple unique addresses already associated with that property number in Vicmap
