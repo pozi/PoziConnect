@@ -5,11 +5,7 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
-##### Version 2.8.1 (Dec 2019)
-
-* revert to 32-bit GDAL to resolve compatibility issues with existing client DSNs
-
-##### Version 2.8 (Nov 2019)
+##### Version 2.8 (Dec 2019)
 
 * detect new distance-based addresses
 * detect new floor and building details
