@@ -1,6 +1,6 @@
 # Pozi Connect: Documentation
 
-![](http://i.imgur.com/5z7GoTA.png)
+![](https://i.imgur.com/baCP3vn.png)
 
 ## About Pozi Connect
 
