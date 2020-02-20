@@ -5,7 +5,7 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 
-### Version 2.8 (Jan 2020)
+### Version 2.8 (Feb 2020)
 
 * improve performance of P edit query
 * detect new distance-based addresses
@@ -21,7 +21,7 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 * upgrade to GDAL 3.0.0
 * various bug-fixes
 * change branding from Groundtruth to Pozi
-* configuration updates for Maribyrnong, Loddon, Mitchell, Moorabool, Murrindindi, Moira, Bass Coast, Northern Grampians, South Gippsland, Moonee Valley, Alpine, Colac Otway, Latrobe, Frankston, Hindmarsh, Bendigo, Mornington Peninsula, Ballarat, Melton, Towong, Swan Hill, Casey, Mount Alexander, Indigo, Baw Baw
+* configuration updates for Maribyrnong, Loddon, Mitchell, Moorabool, Murrindindi, Moira, Bass Coast, Northern Grampians, South Gippsland, Moonee Valley, Alpine, Colac Otway, Latrobe, Frankston, Hindmarsh, Bendigo, Mornington Peninsula, Ballarat, Melton, Towong, Swan Hill, Casey, Mount Alexander, Indigo, Baw Baw, Pyrenees
 
 ### Version 2.7 (Jun 2018)
 
