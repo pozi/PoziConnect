@@ -89,10 +89,10 @@ It's possible these will clear up in subsequent M1s after Pozi Connect removes a
 The `suggested_spi` field will often contain a parish/township code. To find the parish/township names that correspond with the codes, use the following lists.
 
 Parish codes (PP2..., PP3..., PP4...):
-https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/Reference/VMADMIN_PARISH.csv
+https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/Reference/VMADMIN_PARISH.csv
 
 Township codes (PP5...):
-https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/Reference/VMADMIN_TOWNSHIP.csv
+https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/Reference/VMADMIN_TOWNSHIP.csv
 
 You can type the code (without the 'PP') into the 'Search this file...' section to quickly find the parish or township name.
 

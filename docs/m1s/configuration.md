@@ -18,7 +18,7 @@ Start Configuration
 * create new folder _Council Name_ based on client name
 * copy INI and SQL files from similar site (based on an existing site using the same property system) into new folder
 * replace references to previous council SQLite file name with new council name
-* look up [LGA code](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/Reference/VMADMIN_LGA.csv) and update INI settings in Process Vicmap task and both SQL files
+* look up [LGA code](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/Reference/VMADMIN_LGA.csv) and update INI settings in Process Vicmap task and both SQL files
 
 For each of Parcel and Property/Address SQL:
 
@@ -37,9 +37,9 @@ For each of Parcel and Property/Address SQL:
 * eliminate null values (replace with blanks if appropriate), *especially spi, propnum*
 * test query against council's data
 * check that address values comply with:
-  * [BLG_UNIT_TYPE](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/Reference/VMADD_BLG_UNIT_TYPE.csv)
-  * [FLOOR_TYPE](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/Reference/VMADD_FLOOR_TYPE.csv)
-  * [LOCATION_DESCRIPTOR](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/Reference/VMADD_LOCATION_DESCRIPTOR.csv)
+  * [BLG_UNIT_TYPE](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/Reference/VMADD_BLG_UNIT_TYPE.csv)
+  * [FLOOR_TYPE](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/Reference/VMADD_FLOOR_TYPE.csv)
+  * [LOCATION_DESCRIPTOR](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/Reference/VMADD_LOCATION_DESCRIPTOR.csv)
 * test if the Parcel and Property/Address queries return the same set of property numbers
   * check for parcels without properties: `select * from pc_council_parcel where propnum not in ( select propnum from pc_council_property_address )`
   * check for properties without parcels: `select * from pc_council_property_address where propnum not in ( select propnum from pc_council_parcel )`

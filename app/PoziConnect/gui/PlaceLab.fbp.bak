@@ -288,7 +288,7 @@
                                         <property name="name">helpLink</property>
                                         <property name="permission">protected</property>
                                         <property name="pos"></property>
-                                        <property name="settings"> &#x09;&#x09;self.helpLink.SetURL(URL=&apos;http://www.groundtruth.com.au/placelab/&apos;)&#x0A;&#x09;&#x09;self.helpLink.SetLabel(label=&apos;Help&apos;)&#x0A;&#x09;&#x09;self.helpLink.SetToolTipString(tip=&apos;Visit website for help&apos;)</property>
+                                        <property name="settings"> &#x09;&#x09;self.helpLink.SetURL(URL=&apos;https://pozi.com/pozi-connect/&apos;)&#x0A;&#x09;&#x09;self.helpLink.SetLabel(label=&apos;Help&apos;)&#x0A;&#x09;&#x09;self.helpLink.SetToolTipString(tip=&apos;Visit website for help&apos;)</property>
                                         <property name="size"></property>
                                         <property name="subclass"></property>
                                         <property name="tooltip"></property>
@@ -346,7 +346,7 @@
                                         <property name="name">aboutLink</property>
                                         <property name="permission">protected</property>
                                         <property name="pos"></property>
-                                        <property name="settings"> &#x09;&#x09;self.aboutLink.SetURL(URL=&apos;http://www.groundtruth.com.au/placelab/&apos;)&#x0A;&#x09;&#x09;self.aboutLink.SetLabel(label=&apos;About&apos;)&#x0A;&#x09;&#x09;self.aboutLink.SetToolTipString(tip=&apos;Visit website for more info&apos;)</property>
+                                        <property name="settings"> &#x09;&#x09;self.aboutLink.SetURL(URL=&apos;https://pozi.com/pozi-connect/&apos;)&#x0A;&#x09;&#x09;self.aboutLink.SetLabel(label=&apos;About&apos;)&#x0A;&#x09;&#x09;self.aboutLink.SetToolTipString(tip=&apos;Visit website for more info&apos;)</property>
                                         <property name="size"></property>
                                         <property name="subclass"></property>
                                         <property name="tooltip"></property>

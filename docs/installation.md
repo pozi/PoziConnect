@@ -2,7 +2,7 @@
 
 ## Instructions
 
-1. go to [https://github.com/groundtruth/PoziConnect/releases/latest](https://github.com/groundtruth/PoziConnect/releases/latest)
+1. go to [https://github.com/pozi/PoziConnect/releases/latest](https://github.com/pozi/PoziConnect/releases/latest)
 2. click on the link to the .msi file to download the installer
 3. run the installer
 4. change the default path to the desired PoziConnect location on your network (pick the location of the existing installation if you have previously installed it)
@@ -42,7 +42,7 @@ Download and install the [Microsoft Visual C++ 2008 Redistributable Package (x86
 
 If you encounter an error saying 'Incorrect padding', it may be because your database password contains a special character (such as '&') that interferes with the database connection string.
 
-Reset your password so that it doesn't contain any special characters. (If your password needs to use at least one special character, use '#'.) 
+Reset your password so that it doesn't contain any special characters. (If your password needs to use at least one special character, use '#'.)
 
 ### Cannot connect to data source
 

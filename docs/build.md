@@ -22,11 +22,11 @@ To create a new release:
 * launch Advanced Installer
 * update version number (eg update 1.32.14 to 1.32.15) (and when prompted about the product code, choose 'Generate new', not 'Keep existing')
 * build new version - new msi file is created in C:\Temp\
-* go to https://github.com/groundtruth/PoziConnect/releases, and create new release
+* go to https://github.com/pozi/PoziConnect/releases, and create new release
 * update
   * tag (eg v1.32.14)
   * release name (eg Release 1.32.14)
   * upload new msi
   * notes (use previous releases as examples of what to write)
 * publish
-* notify relevant users to download from https://github.com/groundtruth/PoziConnect/releases/latest
+* notify relevant users to download from https://github.com/pozi/PoziConnect/releases/latest

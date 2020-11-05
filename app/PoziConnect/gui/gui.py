@@ -283,7 +283,7 @@ class GUI_Main(Main ):
         # result = dlg.ShowModal()
         # dlg.Destroy()
         # if result == wx.ID_OK:
-            # url = "https://github.com/groundtruth/PoziConnectConfig/archive/master.zip"
+            # url = "https://github.com/pozi/PoziConnectConfig/archive/master.zip"
             # urllib.urlretrieve(url, "PoziConnectConfig-master.zip")
 
     def _show_dialog(self, evt, dialog_cb, title):
