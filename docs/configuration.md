@@ -14,7 +14,7 @@ It uses the power of the popular open source [GDAL/OGR translator library](http:
 
 ## Running as a batch task
 
-To run multiple Pozi Connect tasks sequetially and avoid having to open up Pozi Connect and pick and run individual tasks, you can configure a 'recipe' for Pozi Connect to follow. This is useful if you have a series of tasks you regularly need to run (for example, M1s) or for setting up as a scheduled task.
+To run multiple Pozi Connect tasks sequentially and avoid having to open up Pozi Connect and pick and run individual tasks, you can configure a 'recipe' for Pozi Connect to follow. This is useful if you have a series of tasks you regularly need to run (for example, M1s) or for setting up as a scheduled task.
 
 Here we will use the Melton M1 tasks as an example.
 
