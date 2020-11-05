@@ -3,7 +3,7 @@
 ## Highlights
 
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
-https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
+https://github.com/pozi/PoziConnectConfig/commits/master/~Shared/))
 
 ### Version 2.8 (Feb 2020)
 
@@ -198,7 +198,7 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 * improve comments on M1s to clarify which propnums and crefnos being replaced do not exist in council
 * improve readability of documentation with new webpage template (`viewdocs-yeti`)
 * add parcel area to Vicmap audit
-* provide central location for latest releases: https://github.com/groundtruth/PoziConnect/releases/latest
+* provide central location for latest releases: https://github.com/pozi/PoziConnect/releases/latest
 
 ### Feb 2015
 
@@ -282,4 +282,4 @@ https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/))
 ## Complete History
 
 For a complete history of all changes, see:
-https://github.com/groundtruth/PoziConnectConfig/commits/master/~Shared/
+https://github.com/pozi/PoziConnectConfig/commits/master/~Shared/

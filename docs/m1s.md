@@ -6,7 +6,7 @@ Pozi Connect generates council 'M1' reports that are critical link for updating 
 
 Pozi Connect compares the council's property data with the latest Vicmap data and determines what updates are required in Vicmap to accurately reflect the council's property and address information.
 
-After Groundtruth configures and implements Pozi Connect for your council, you can generate M1s at any time by launching Pozi Connect and running the three or four M1 tasks from the picklist. Your M1 report will be generated to a pre-defined location, and it is ready to be submitted via the [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) system.
+After Pozi configures and implements Pozi Connect for your council, you can generate M1s at any time by launching Pozi Connect and running the three or four M1 tasks from the picklist. Your M1 report will be generated to a pre-defined location, and it is ready to be submitted via the [NES](http://nes.land.vic.gov.au/WebSite/Login.aspx) system.
 
 (See Pozi Connect's [history](/poziconnect/m1s/history) to see the our most recent changes.)
 
@@ -94,13 +94,13 @@ In the case of a new property, there would be a P edit to allocate the new prope
 
 For more details about how Pozi Connect determines which records are included in which scenarios, see the dedicated explanations of the logic for each edit code:
 
-* [Edit Code A](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20A%20Edits.md/)
-* [Edit Code C](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20C%20Edits.md/)
-* [Edit Code E](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20E%20Edits.md/)
-* [Edit Code P](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20P%20Edits.md/)
-* [Edit Code R](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20R%20Edits.md/)
-* [Edit Code S](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Edits.md/)
-* [Edit Code S (proposed)](https://github.com/groundtruth/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Proposed%20Edits.md/)
+* [Edit Code A](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/SQL/M1%20A%20Edits.md/)
+* [Edit Code C](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/SQL/M1%20C%20Edits.md/)
+* [Edit Code E](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/SQL/M1%20E%20Edits.md/)
+* [Edit Code P](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/SQL/M1%20P%20Edits.md/)
+* [Edit Code R](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/SQL/M1%20R%20Edits.md/)
+* [Edit Code S](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Edits.md/)
+* [Edit Code S (proposed)](https://github.com/pozi/PoziConnectConfig/blob/master/~Shared/SQL/M1%20S%20Proposed%20Edits.md/)
 
 After the M1 is submitted in NES, Jacobs will process the edits in the following order:
 
@@ -123,6 +123,6 @@ Z, R, P, S, E, C, A
 
 ## Support
 
-Groundtruth offers consulting services to improve councils' property data maintenance processes.
+Pozi offers consulting services to improve councils' property data maintenance processes.
 
-[Read more](http://www.groundtruth.com.au/property-data-maintenance/), or [contact](http://www.groundtruth.com.au/contact/) Groundtruth.
+[Read more](https://pozi.com/pozi-connect/), or [contact](https://pozi.com/contact/) Pozi.
