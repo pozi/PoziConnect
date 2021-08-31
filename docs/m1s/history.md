@@ -5,6 +5,25 @@
 Here are some of the improvements and bug fixes. (For a complete history of all changes, see [here](
 https://github.com/pozi/PoziConnectConfig/commits/master/~Shared/))
 
+### Version 2.9 (Sep 2021)
+
+* support for new Datashare data supplies
+* prevent property number updates where existing address is a complex site
+* include parcel pfi for proposed parcels
+* populate floor type only if floor number exists
+* don't trigger update for unit type if unit number doesn't exist
+* improve handling of building/complex name changes
+* ensure property_pfi is not empty for A edits
+* remove distance_related_flag when house number is blank
+* don't populate building names greater than 45 characters
+* populate road name with existing road name from Vicmap if council road name is a close match but not an exact match
+* remove rural address when house number is blank
+* prevent Comments being null when address isn't perfectly formed
+* update all references from Groundtruth to Pozi
+* upgrade GDAL library to v3.1.4
+* various bug fixes
+* configuration updates for Frankston, Strathbogie, Wangaratta, Maribyrnong, West Wimmera, Campaspe, Melton, Warrnambool, Surf Coast, Murrindindi, Glen Eira, Manningham, Hobsons Bay, Kingston, Indigo, Latrobe, Hepburn, Swan Hill, Monash, Baw Baw, Mitchell, Mildura, Maroondah and Ballarat
+
 ### Version 2.8 (Feb 2020)
 
 * improve performance of P edit query
