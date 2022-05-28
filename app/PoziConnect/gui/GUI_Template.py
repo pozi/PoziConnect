@@ -52,7 +52,7 @@ class Main ( wx.Frame ):
 		headerSizerRight.Add( self.headerSizerSpacerText, 0, wx.ALL, 5 )
 
 		self.helpLink = agw.hyperlink.HyperLinkCtrl(parent=self, pos=(225, 60))
-		self.helpLink.SetURL(URL='https://docs.pozi.com/pozi-connect/')
+		self.helpLink.SetURL(URL='https://pozi.com/pozi-connect/')
 		self.helpLink.SetLabel(label='Help')
 		self.helpLink.SetToolTipString(tip='Visit website for help')
 		headerSizerRight.Add( self.helpLink, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
@@ -63,7 +63,7 @@ class Main ( wx.Frame ):
 		self.aboutLink.SetToolTipString(tip='Visit website for more info')
 		headerSizerRight.Add( self.aboutLink, 0, wx.ALIGN_RIGHT|wx.ALL, 5 )
 
-		self.updateLink = wx.StaticText( self, wx.ID_ANY, u".", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.updateLink = wx.StaticText( self, wx.ID_ANY, u"", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.updateLink.Wrap( -1 )
 		self.updateLink.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), 70, 90, 91, False, wx.EmptyString ) )
 

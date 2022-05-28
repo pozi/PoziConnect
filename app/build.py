@@ -31,10 +31,10 @@ if VERSION is not version:
 import py2exe
 
 COMPANY_NAME = 'Pozi'
-COPYRIGHT = '(c) 2009-2019 ' + COMPANY_NAME
+COPYRIGHT = '(c) 2009-2022 ' + COMPANY_NAME
 AUTHOR_NAME = 'Pozi'
 AUTHOR_EMAIL = 'info@pozi.com'
-AUTHOR_URL = "https://www.pozi.com"
+AUTHOR_URL = "https://pozi.com"
 PRODUCT_NAME = "Pozi Connect"
 SCRIPT_MAIN = os.path.join(APP_DIR, 'PoziConnect.py')
 VERSIONSTRING = PRODUCT_NAME + " BETA " + VERSION
