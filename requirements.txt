@@ -10,7 +10,7 @@ stevedore==0.11
 # gdal (invoked via the command line only, not using python bindings)
 GDAL==1.10.0
 libxml2-python==2.9.1
-numpy==1.7.1
+numpy==1.22.0
 
 # wxPython
 wxPython==2.9.4.0
