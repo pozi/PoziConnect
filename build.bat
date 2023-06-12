@@ -23,7 +23,6 @@ copy "dist\vendor\%GDAL_NAME%\bin\libeay32.dll" "dist\vendor\%GDAL_NAME%\bin\gda
 copy PoziConnect.ini dist\
 xcopy /E tasks dist\tasks\
 xcopy /E recipes dist\recipes\
-xcopy /E docs dist\docs\
 mkdir dist\output
 copy post-install.bat dist\
 
